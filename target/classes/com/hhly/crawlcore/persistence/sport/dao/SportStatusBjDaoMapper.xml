@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportStatusBjDaoMapper">
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportStatusBjPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId" />
+    <result column="status_let_wdf" jdbcType="INTEGER" property="statusLetWdf"/>
+    <result column="status_goal" jdbcType="INTEGER" property="statusGoal"/>
+    <result column="status_hf_wdf" jdbcType="INTEGER" property="statusHfWdf"/>
+    <result column="status_ud_sd" jdbcType="INTEGER" property="statusUdSd"/>
+    <result column="status_score" jdbcType="INTEGER" property="statusScore"/>
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status_let_wf" jdbcType="INTEGER" property="statusLetWf"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    id, sport_against_info_id, status_let_wdf, status_goal, status_hf_wdf, status_ud_sd,
+    status_score, modify_by, modify_time, update_time, create_time, status_let_wf
+  </sql>
+
+    <select id="select" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sport_status_bj
+        where sport_against_info_id = (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+        AND issue_code=#{issueCode,jdbcType=VARCHAR}
+        AND bj_num=#{bjNum,jdbcType=INTEGER})
+  </select>
+
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBjPO">
+      insert into sport_status_bj
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+          <if test="id != null">
+              id,
+          </if>
+          <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+              sport_against_info_id,
+          </if>
+          <if test="statusLetWdf != null">
+              status_let_wdf,
+          </if>
+          <if test="statusGoal != null">
+              status_goal,
+          </if>
+          <if test="statusHfWdf != null">
+              status_hf_wdf,
+          </if>
+          <if test="statusUdSd != null">
+              status_ud_sd,
+          </if>
+          <if test="statusScore != null">
+              status_score,
+          </if>
+          <if test="modifyBy != null">
+              modify_by,
+          </if>
+          modify_time,
+          update_time,
+          create_time,
+          <if test="statusLetWf != null">
+              status_let_wf,
+          </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides=",">
+          <if test="id != null">
+              #{id,jdbcType=INTEGER},
+          </if>
+          <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+              (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+              AND issue_code=#{issueCode,jdbcType=VARCHAR}
+              AND bj_num=#{bjNum,jdbcType=INTEGER}),
+          </if>
+          <if test="statusLetWdf != null">
+              #{statusLetWdf,jdbcType=BIT},
+          </if>
+          <if test="statusGoal != null">
+              #{statusGoal,jdbcType=BIT},
+          </if>
+          <if test="statusHfWdf != null">
+              #{statusHfWdf,jdbcType=BIT},
+          </if>
+          <if test="statusUdSd != null">
+              #{statusUdSd,jdbcType=BIT},
+          </if>
+          <if test="statusScore != null">
+              #{statusScore,jdbcType=BIT},
+          </if>
+          <if test="modifyBy != null">
+              #{modifyBy,jdbcType=VARCHAR},
+          </if>
+          now(),
+          now(),
+          now(),
+          <if test="statusLetWf != null">
+              #{statusLetWf,jdbcType=BIT},
+          </if>
+      </trim>
+
+
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBjPO">
+    update sport_status_bj
+    <set>
+      <if test="statusLetWdf != null">
+        status_let_wdf = #{statusLetWdf,jdbcType=BIT},
+      </if>
+      <if test="statusGoal != null">
+        status_goal = #{statusGoal,jdbcType=BIT},
+      </if>
+      <if test="statusHfWdf != null">
+        status_hf_wdf = #{statusHfWdf,jdbcType=BIT},
+      </if>
+      <if test="statusUdSd != null">
+        status_ud_sd = #{statusUdSd,jdbcType=BIT},
+      </if>
+      <if test="statusScore != null">
+        status_score = #{statusScore,jdbcType=BIT},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime == null">
+        modify_time = now(),
+      </if>
+      <if test="updateTime == null">
+        update_time = now(),
+      </if>
+      <if test="createTime != null">
+        create_time = now(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ <!-- 新版2.0 sql 优化 -->
+ <select id="findByMatchId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+ 	select <include refid="Base_Column_List" />
+ 	from sport_status_bj
+ 	where sport_against_info_id = #{sportAgainstInfoId, jdbcType=DECIMAL}
+ </select>
+ 
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBjPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_status_bj (sport_against_info_id, status_let_wdf, 
+      status_goal, status_hf_wdf, status_ud_sd, 
+      status_score, modify_by, modify_time, 
+      update_time, create_time, status_let_wf
+      )
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{statusLetWdf,jdbcType=BIT}, 
+      #{statusGoal,jdbcType=BIT}, #{statusHfWdf,jdbcType=BIT}, #{statusUdSd,jdbcType=BIT}, 
+      #{statusScore,jdbcType=BIT}, #{modifyBy,jdbcType=VARCHAR}, now(), 
+      now(), now(), #{statusLetWf,jdbcType=BIT}
+      )
+  </insert> 
+</mapper>

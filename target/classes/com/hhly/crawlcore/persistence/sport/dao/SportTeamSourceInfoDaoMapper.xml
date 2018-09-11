@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportTeamSourceInfoDaoMapper">
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportTeamSourceInfoPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="team_name" jdbcType="VARCHAR" property="teamName" />
+    <result column="team_abbr_name" jdbcType="VARCHAR" property="teamAbbrName" />
+    <result column="team_type" jdbcType="BIT" property="teamType" />
+    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+    <result column="source" jdbcType="TINYINT" property="source" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, team_id, team_name, team_abbr_name, team_type, source_id, source, create_time, 
+    update_time
+  </sql>
+  
+  <select id="find" parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamSourceInfoPO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sport_team_source_info
+    <where>
+    	<if test="id != null">
+    		and id = #{id,jdbcType=INTEGER}
+    	</if>
+      <if test="teamName != null">
+        	and team_name = #{teamName,jdbcType=VARCHAR}
+      </if>
+      <if test="teamAbbrName != null">
+        	and team_abbr_name = #{teamAbbrName,jdbcType=VARCHAR}
+      </if>
+      <if test="teamType != null">
+        	and team_type = #{teamType,jdbcType=BIT}
+      </if>
+      <if test="sourceId != null">
+        	and source_id = #{sourceId,jdbcType=INTEGER}
+      </if>
+      <if test="source != null">
+        	and source = #{source,jdbcType=TINYINT}
+      </if>
+    </where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from sport_team_source_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamSourceInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_team_source_info (team_id, team_name, 
+      team_abbr_name, team_type, source_id, 
+      source, create_time)
+    values (#{teamId,jdbcType=INTEGER}, #{teamName,jdbcType=VARCHAR}, 
+      #{teamAbbrName,jdbcType=VARCHAR}, #{teamType,jdbcType=BIT}, #{sourceId,jdbcType=INTEGER}, 
+      #{source,jdbcType=TINYINT}, now()
+      )
+  </insert>
+  
+  <update id="updateById" parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamSourceInfoPO">
+    update sport_team_source_info
+    <set>
+      <if test="teamId != null">
+        team_id = #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="teamName != null">
+        team_name = #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamAbbrName != null">
+        team_abbr_name = #{teamAbbrName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamType != null">
+        team_type = #{teamType,jdbcType=BIT},
+      </if>
+      <if test="sourceId != null">
+        source_id = #{sourceId,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

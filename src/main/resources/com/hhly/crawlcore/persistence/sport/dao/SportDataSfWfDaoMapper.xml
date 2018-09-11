@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataSfWfDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBjWfPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sport_against_info_id" jdbcType="DECIMAL" property="sportAgainstInfoId"/>
+        <result column="let_score" jdbcType="DECIMAL" property="letScore"/>
+        <result column="sp_win" jdbcType="DECIMAL" property="spWin"/>
+        <result column="sp_fail" jdbcType="DECIMAL" property="spFail"/>
+        <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 查看数据库是否存在 -->
+    <select id="selectByUnionValueCount" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBjWfPO"
+            resultType="int">
+        SELECT count(1)
+        FROM sport_data_sf_wf
+        WHERE md5_value = #{md5Value,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBjWfPO">
+        insert into sport_data_sf_wf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                sport_against_info_id,
+            </if>
+            <if test="letScore != null">
+                let_score,
+            </if>
+            <if test="spWin != null">
+                sp_win,
+            </if>
+            <if test="spFail != null">
+                sp_fail,
+            </if>
+            release_time,
+            update_time,
+            create_time
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+                AND issue_code=#{issueCode,jdbcType=VARCHAR}
+                AND bj_num=#{bjNum,jdbcType=INTEGER}),
+            </if>
+            <if test="letScore != null">
+                #{letScore,jdbcType=DECIMAL},
+            </if>
+            <if test="spWin != null">
+                #{spWin,jdbcType=DECIMAL},
+            </if>
+            <if test="spFail != null">
+                #{spFail,jdbcType=DECIMAL},
+            </if>
+            now(),
+            now(),
+            now()
+        </trim>
+    </insert>
+
+</mapper>

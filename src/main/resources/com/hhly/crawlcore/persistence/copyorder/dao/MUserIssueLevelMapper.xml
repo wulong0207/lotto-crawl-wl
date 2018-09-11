@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.copyorder.dao.MUserIssueLevelMapper">
+
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.copyorder.po.MUserIssueLevel">
+    insert into m_user_issue_level (id, user_issue_info_id, lottery_code, 
+      level, is_automatic, create_time, 
+      modify_by, modify_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userIssueInfoId,jdbcType=INTEGER}, #{lotteryCode,jdbcType=INTEGER},
+      #{level,jdbcType=INTEGER}, #{isAutomatic,jdbcType=INTEGER}, now(),
+      #{modifyBy,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+
+
+</mapper>

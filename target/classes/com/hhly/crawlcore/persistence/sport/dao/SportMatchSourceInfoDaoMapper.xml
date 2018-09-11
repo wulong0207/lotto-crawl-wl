@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportMatchSourceInfoDaoMapper">
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportMatchSourceInfoPO">
+  
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="match_id" jdbcType="INTEGER" property="matchId" />
+    <result column="match_name" jdbcType="VARCHAR" property="matchName" />
+    <result column="match_abbr_name" jdbcType="VARCHAR" property="matchAbbrName" />
+    <result column="match_type" jdbcType="TINYINT" property="matchType" />
+    <result column="source_id" jdbcType="INTEGER" property="sourceId" />
+    <result column="source" jdbcType="TINYINT" property="source" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, match_id, match_name, match_abbr_name, match_type, source_id, source, create_time, 
+    update_time
+  </sql>
+ 
+  <select id="find" parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchSourceInfoPO" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sport_match_source_info
+    <where>
+      <if test="id != null">
+      	and id = #{id,jdbcType=INTEGER}
+      </if>
+      <if test="matchId != null">
+        and match_id = #{matchId,jdbcType=INTEGER}
+      </if>
+      <if test="matchName != null">
+        and match_name = #{matchName,jdbcType=VARCHAR}
+      </if>
+      <if test="matchAbbrName != null">
+        and match_abbr_name = #{matchAbbrName,jdbcType=VARCHAR}
+      </if>
+      <if test="matchType != null">
+        and match_type = #{matchType,jdbcType=TINYINT}
+      </if>
+      <if test="sourceId != null">
+        and source_id = #{sourceId,jdbcType=INTEGER}
+      </if>
+      <if test="source != null">
+        and source = #{source,jdbcType=TINYINT}
+      </if>  	
+    </where>
+  </select>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from sport_match_source_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchSourceInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_match_source_info (match_id, match_name, 
+      match_abbr_name, match_type, source_id, 
+      source, create_time
+      )
+    values (#{matchId,jdbcType=INTEGER}, #{matchName,jdbcType=VARCHAR}, 
+      #{matchAbbrName,jdbcType=VARCHAR}, #{matchType,jdbcType=TINYINT}, #{sourceId,jdbcType=INTEGER}, 
+      #{source,jdbcType=TINYINT}, now())
+  </insert>
+  
+  <insert id="insertBatch">
+     insert into sport_match_source_info (match_id, match_name, 
+      match_abbr_name, match_type, source_id, 
+      source, create_time
+      ) values
+    <foreach collection="list" separator="," item="item" close=";">
+        (#{item.matchId,jdbcType=INTEGER}, #{item.matchName,jdbcType=VARCHAR}, 
+      #{item.matchAbbrName,jdbcType=VARCHAR}, #{item.matchType,jdbcType=TINYINT}, #{item.sourceId,jdbcType=INTEGER}, 
+      #{item.source,jdbcType=TINYINT}, now())
+    </foreach>
+  </insert>  
+
+  <update id="updateById" parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchSourceInfoPO">
+    update sport_match_source_info
+    <set>
+      <if test="matchId != null">
+        match_id = #{matchId,jdbcType=INTEGER},
+      </if>
+      <if test="matchName != null">
+        match_name = #{matchName,jdbcType=VARCHAR},
+      </if>
+      <if test="matchAbbrName != null">
+        match_abbr_name = #{matchAbbrName,jdbcType=VARCHAR},
+      </if>
+      <if test="matchType != null">
+        match_type = #{matchType,jdbcType=TINYINT},
+      </if>
+      <if test="sourceId != null">
+        source_id = #{sourceId,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

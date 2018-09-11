@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDrawWfDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDrawWfPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId"/>
+        <result column="full_score" jdbcType="VARCHAR" property="fullScore"/>
+        <result column="let_num" jdbcType="DECIMAL" property="letNum"/>
+        <result column="let_sf" jdbcType="VARCHAR" property="letSf"/>
+        <result column="sp_let_wf" jdbcType="DOUBLE" property="spLetWf"/>
+        <result column="draw_time" jdbcType="TIMESTAMP" property="drawTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawWfPO">
+        insert into sport_draw_wf
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                sport_against_info_id,
+            </if>
+            <if test="fullScore != null">
+                full_score,
+            </if>
+            <if test="letNum != null">
+                let_num,
+            </if>
+            <if test="letSf != null">
+                let_sf,
+            </if>
+            <if test="spLetWf != null">
+                sp_let_wf,
+            </if>
+            <if test="drawTime != null">
+                draw_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+                AND issue_code=#{issueCode,jdbcType=VARCHAR}
+                AND bj_num=#{bjNum,jdbcType=INTEGER}),
+            </if>
+            <if test="fullScore != null">
+                #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="letNum != null">
+                #{letNum,jdbcType=DECIMAL},
+            </if>
+            <if test="letSf != null">
+                #{letSf,jdbcType=VARCHAR},
+            </if>
+            <if test="spLetWf != null">
+                #{spLetWf,jdbcType=DOUBLE},
+            </if>
+            <if test="drawTime != null">
+                #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawWfPO">
+        update sport_draw_wf
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="sportAgainstInfoId != null">
+                sport_against_info_id = #{sportAgainstInfoId,jdbcType=INTEGER},
+            </if>
+            <if test="fullScore != null">
+                full_score = #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="letNum != null">
+                let_num = #{letNum,jdbcType=DECIMAL},
+            </if>
+            <if test="letSf != null">
+                let_sf = #{letSf,jdbcType=VARCHAR},
+            </if>
+            <if test="spLetWf != null">
+                sp_let_wf = #{spLetWf,jdbcType=DOUBLE},
+            </if>
+            <if test="drawTime != null">
+                draw_time = #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where sport_against_info_id = (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+        AND issue_code=#{issueCode,jdbcType=VARCHAR}
+        AND bj_num=#{bjNum,jdbcType=INTEGER})
+    </update>
+    
+    <!-- 新版2.0  start -->
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawWfPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_draw_wf (sport_against_info_id, full_score, 
+      let_num, let_sf, sp_let_wf, 
+      draw_time, modify_by, modify_time, 
+      update_time, create_time)
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{fullScore,jdbcType=VARCHAR}, 
+      #{letNum,jdbcType=DECIMAL}, #{letSf,jdbcType=BIT}, #{spLetWf,jdbcType=DOUBLE}, 
+      #{drawTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR}, now(), 
+      now(), now())
+      ON DUPLICATE KEY UPDATE
+      <if test="fullScore != null and fullScore != ''">
+          full_score = values(full_score),
+      </if>
+      <if test="letNum != null">
+          let_num = values(let_num),
+      </if>
+      <if test="letSf != null and letSf != ''">
+          let_sf = values(let_sf),
+      </if>
+      <if test="spLetWf != null">
+          sp_let_wf = values(sp_let_wf),
+      </if>
+      <if test="modifyBy != null and modifyBy != ''">
+          modify_by = values(modify_by),
+      </if>         
+      update_time = now();  
+  </insert>    
+    <!-- 新版2.0  end -->    
+</mapper>

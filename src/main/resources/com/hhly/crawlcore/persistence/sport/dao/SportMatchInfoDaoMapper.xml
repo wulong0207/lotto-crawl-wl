@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportMatchInfoDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportMatchInfoPO">
+        <id column="id" property="id" jdbcType="DECIMAL"/>
+        <result column="match_data_url" property="matchDataUrl" jdbcType="VARCHAR"/>
+        <result column="match_full_name" property="matchFullName" jdbcType="VARCHAR"/>
+        <result column="match_short_name" property="matchShortName" jdbcType="VARCHAR"/>
+        <result column="logo_url" property="logoUrl" jdbcType="VARCHAR"/>
+        <result column="match_type" property="matchType" jdbcType="DECIMAL"/>
+        <result column="modify_by" property="modifyBy" jdbcType="VARCHAR"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="md5_value" property="md5Value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, match_data_url, match_full_name, match_short_name, logo_url,
+        match_type, modify_by, modify_time, update_time,
+        create_time, remark,md5_value
+  </sql>
+
+    <!-- 查询对阵信息 -->
+    <select id="findMatch" resultMap="BaseResultMap"
+            parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchInfoPO">
+        select
+        <include refid="Base_Column_List"/>
+        from sport_match_info
+        <where>
+          	<if test="matchFullName != null and matchFullName != ''">
+          		and match_full_name = #{matchFullName,jdbcType=VARCHAR}
+          	</if>        
+          	<if test="matchShortName != null and matchShortName != ''">
+          		and match_short_name = #{matchShortName,jdbcType=VARCHAR}
+          	</if>
+        	<if test="matchType != null">
+        		and match_type = #{matchType,jdbcType=TINYINT}
+        	</if>
+        </where>
+    </select>
+
+
+    <!-- 批量更新赛事信息 -->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update sport_match_info
+            <set>
+	            <if test="item.matchId != null">
+	                match_id = #{item.matchId,jdbcType=INTEGER},
+	            </if>            
+                <if test="item.matchDataUrl != null">
+                    match_data_url = #{item.matchDataUrl},
+                </if>
+	            <if test="item.matchFullName != null">
+	                match_full_name = #{item.matchFullName,jdbcType=VARCHAR},
+	            </if>                
+                <if test="item.matchShortName != null">
+                    match_short_name = #{item.matchShortName},
+                </if>
+                <if test="item.logoUrl != null">
+                    logo_url = #{item.logoUrl},
+                </if>
+                <if test="item.matchType != null">
+                    match_type = #{item.matchType},
+                </if>
+                <if test="item.modifyBy != null">
+                    modify_by = #{item.modifyBy},
+                </if>
+                <if test="item.remark != null">
+                    remark = #{item.remark},
+                </if>
+                update_time=now()
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+
+
+    
+   <!-- V2.0 数据抓取   start -->
+    
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_match_info (match_id, match_data_url, 
+      match_full_name, match_short_name, logo_url, 
+      match_type, match_color, modify_by, modify_time, update_time, create_time, 
+      remark, md5_value
+      )
+    values (#{matchId,jdbcType=INTEGER}, #{matchDataUrl,jdbcType=VARCHAR}, 
+      #{matchFullName,jdbcType=VARCHAR}, #{matchShortName,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, 
+      #{matchType,jdbcType=TINYINT}, #{matchColor,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR}, now(), now(), now(), 
+      #{remark,jdbcType=VARCHAR}, #{md5Value,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.hhly.crawlcore.persistence.sport.po.SportMatchInfoPO">
+        update sport_match_info
+        <set>
+            <if test="matchId != null">
+                match_id = #{matchId,jdbcType=INTEGER},
+            </if>
+            <if test="matchDataUrl != null">
+                match_data_url = #{matchDataUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="matchFullName != null">
+                match_full_name = #{matchFullName,jdbcType=VARCHAR},
+            </if>
+            <if test="matchShortName != null">
+                match_short_name = #{matchShortName,jdbcType=VARCHAR},
+            </if>
+            <if test="logoUrl != null">
+                logo_url = #{logoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="matchType != null">
+                match_type = #{matchType,jdbcType=TINYINT},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+              update_time=now()
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+   </update>
+   
+   <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sport_match_info where id = #{id}   	
+   </select>      
+       
+   <!-- V2.0 数据抓取   end -->
+</mapper>

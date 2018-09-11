@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDrawBjDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDrawBjPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId"/>
+        <result column="half_score" jdbcType="VARCHAR" property="halfScore"/>
+        <result column="full_score" jdbcType="VARCHAR" property="fullScore"/>
+        <result column="let_num" jdbcType="TINYINT" property="letNum"/>
+        <result column="let_wdf" jdbcType="VARCHAR" property="letWdf"/>
+        <result column="goal_num" jdbcType="VARCHAR" property="goalNum"/>
+        <result column="hf_wdf" jdbcType="VARCHAR" property="hfWdf"/>
+        <result column="ud_sd" jdbcType="VARCHAR" property="udSd"/>
+        <result column="score" jdbcType="VARCHAR" property="score"/>
+        <result column="sp_let_wdf" jdbcType="DOUBLE" property="spLetWdf"/>
+        <result column="sp_goal_num" jdbcType="DOUBLE" property="spGoalNum"/>
+        <result column="sp_hf_wdf" jdbcType="DOUBLE" property="spHfWdf"/>
+        <result column="sp_ud_sd" jdbcType="DOUBLE" property="spUdSd"/>
+        <result column="sp_score" jdbcType="DOUBLE" property="spScore"/>
+        <result column="draw_time" jdbcType="TIMESTAMP" property="drawTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawBjPO">
+        insert into sport_draw_bj
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                sport_against_info_id,
+            </if>
+            <if test="halfScore != null">
+                half_score,
+            </if>
+            <if test="fullScore != null">
+                full_score,
+            </if>
+            <if test="letNum != null">
+                let_num,
+            </if>
+            <if test="letWdf != null">
+                let_wdf,
+            </if>
+            <if test="goalNum != null">
+                goal_num,
+            </if>
+            <if test="hfWdf != null">
+                hf_wdf,
+            </if>
+            <if test="udSd != null">
+                ud_sd,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="spLetWdf != null">
+                sp_let_wdf,
+            </if>
+            <if test="spGoalNum != null">
+                sp_goal_num,
+            </if>
+            <if test="spHfWdf != null">
+                sp_hf_wdf,
+            </if>
+            <if test="spUdSd != null">
+                sp_ud_sd,
+            </if>
+            <if test="spScore != null">
+                sp_score,
+            </if>
+            <if test="drawTime != null">
+                draw_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            modify_time,
+            update_time,
+            create_time,
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+                (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+                AND issue_code=#{issueCode,jdbcType=VARCHAR}
+                AND bj_num=#{bjNum,jdbcType=INTEGER}),
+            </if>
+            <if test="halfScore != null">
+                #{halfScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullScore != null">
+                #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="letNum != null">
+                #{letNum,jdbcType=TINYINT},
+            </if>
+            <if test="letWdf != null">
+                #{letWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="goalNum != null">
+                #{goalNum,jdbcType=VARCHAR},
+            </if>
+            <if test="hfWdf != null">
+                #{hfWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="udSd != null">
+                #{udSd,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=VARCHAR},
+            </if>
+            <if test="spLetWdf != null">
+                #{spLetWdf,jdbcType=DOUBLE},
+            </if>
+            <if test="spGoalNum != null">
+                #{spGoalNum,jdbcType=DOUBLE},
+            </if>
+            <if test="spHfWdf != null">
+                #{spHfWdf,jdbcType=DOUBLE},
+            </if>
+            <if test="spUdSd != null">
+                #{spUdSd,jdbcType=DOUBLE},
+            </if>
+            <if test="spScore != null">
+                #{spScore,jdbcType=DOUBLE},
+            </if>
+            <if test="drawTime != null">
+                #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            now(),
+            now(),
+            now()
+        </trim>
+    </insert>
+    <update id="updateSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawBjPO">
+        update sport_draw_bj
+        <set>
+            <if test="halfScore != null">
+                half_score = #{halfScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullScore != null">
+                full_score = #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="letNum != null">
+                let_num = #{letNum,jdbcType=TINYINT},
+            </if>
+            <if test="letWdf != null">
+                let_wdf = #{letWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="goalNum != null">
+                goal_num = #{goalNum,jdbcType=VARCHAR},
+            </if>
+            <if test="hfWdf != null">
+                hf_wdf = #{hfWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="udSd != null">
+                ud_sd = #{udSd,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=VARCHAR},
+            </if>
+            <if test="spLetWdf != null">
+                sp_let_wdf = #{spLetWdf,jdbcType=DOUBLE},
+            </if>
+            <if test="spGoalNum != null">
+                sp_goal_num = #{spGoalNum,jdbcType=DOUBLE},
+            </if>
+            <if test="spHfWdf != null">
+                sp_hf_wdf = #{spHfWdf,jdbcType=DOUBLE},
+            </if>
+            <if test="spUdSd != null">
+                sp_ud_sd = #{spUdSd,jdbcType=DOUBLE},
+            </if>
+            <if test="spScore != null">
+                sp_score = #{spScore,jdbcType=DOUBLE},
+            </if>
+            <if test="drawTime != null">
+                draw_time = #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = now(),
+        </set>
+        where sport_against_info_id = (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+        AND issue_code=#{issueCode,jdbcType=VARCHAR}
+        AND bj_num=#{bjNum,jdbcType=INTEGER})
+    </update>
+    
+    <!-- 新版2.0 start -->
+    
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawBjPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_draw_bj (sport_against_info_id, half_score, 
+      full_score, let_num, let_wdf, 
+      goal_num, hf_wdf, ud_sd, score, 
+      sp_let_wdf, sp_goal_num, sp_hf_wdf, 
+      sp_ud_sd, sp_score, draw_time, 
+      modify_by, modify_time, update_time, 
+      create_time)
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{halfScore,jdbcType=VARCHAR}, 
+      #{fullScore,jdbcType=VARCHAR}, #{letNum,jdbcType=TINYINT}, #{letWdf,jdbcType=BIT}, 
+      #{goalNum,jdbcType=BIT}, #{hfWdf,jdbcType=VARCHAR}, #{udSd,jdbcType=BIT}, #{score,jdbcType=VARCHAR}, 
+      #{spLetWdf,jdbcType=DOUBLE}, #{spGoalNum,jdbcType=DOUBLE}, #{spHfWdf,jdbcType=DOUBLE}, 
+      #{spUdSd,jdbcType=DOUBLE}, #{spScore,jdbcType=DOUBLE}, #{drawTime,jdbcType=TIMESTAMP}, 
+      #{modifyBy,jdbcType=VARCHAR}, now(), now(), now())
+      ON DUPLICATE KEY UPDATE
+      <if test="halfScore != null and halfScore != ''">
+          half_score = values(half_score),
+      </if>
+      <if test="fullScore != null and fullScore != ''">
+          full_score = values(full_score),
+      </if>
+      <if test="letNum != null">
+          let_num = values(let_num),
+      </if>
+      <if test="letWdf != null and letWdf != ''">
+          let_wdf = values(let_wdf),
+      </if>
+      <if test="goalNum != null and goalNum != ''">
+          goal_num = values(goal_num),
+      </if>
+      <if test="hfWdf != null and hfWdf != ''">
+          hf_wdf = values(hf_wdf),
+      </if>
+      <if test="udSd != null and udSd != ''">
+          ud_sd = values(ud_sd),
+      </if>
+      <if test="score != null and score != ''">
+          score = values(score),
+      </if>
+      <if test="spLetWdf != null">
+          sp_let_wdf = values(sp_let_wdf),
+      </if>
+      <if test="spGoalNum != null">
+          sp_goal_num = values(sp_goal_num),
+      </if>
+      <if test="spHfWdf != null">
+          sp_hf_wdf = values(sp_hf_wdf),
+      </if>
+      <if test="spUdSd != null">
+          sp_ud_sd = values(sp_ud_sd),
+      </if>
+      <if test="spScore != null">
+          sp_score = values(sp_score),
+      </if>
+      <if test="modifyBy != null and modifyBy !=''">
+          modify_by = values(modify_by),
+      </if>           
+      update_time = now();
+  </insert>    
+</mapper>

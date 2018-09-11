@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.database.dao.OddsFbEuropeOddsPOMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="schedule_id" jdbcType="INTEGER" property="scheduleId"/>
+        <result column="europe_id" jdbcType="INTEGER" property="europeId"/>
+        <result column="homewin_f" jdbcType="DECIMAL" property="homewinF"/>
+        <result column="draw_f" jdbcType="DECIMAL" property="drawF"/>
+        <result column="guestwin_f" jdbcType="DECIMAL" property="guestwinF"/>
+        <result column="homewin_n" jdbcType="DECIMAL" property="homewinN"/>
+        <result column="draw_n" jdbcType="DECIMAL" property="drawN"/>
+        <result column="guestwin_n" jdbcType="DECIMAL" property="guestwinN"/>
+        <result column="probability_h_f" jdbcType="DECIMAL" property="probabilityHF"/>
+        <result column="Probability_d_f" jdbcType="DECIMAL" property="probabilityDF"/>
+        <result column="probability_g_f" jdbcType="DECIMAL" property="probabilityGF"/>
+        <result column="probability_t_f" jdbcType="DECIMAL" property="probabilityTF"/>
+        <result column="probability_h_n" jdbcType="DECIMAL" property="probabilityHN"/>
+        <result column="probability_d_n" jdbcType="DECIMAL" property="probabilityDN"/>
+        <result column="probability_g_n" jdbcType="DECIMAL" property="probabilityGN"/>
+        <result column="probability_t_n" jdbcType="DECIMAL" property="probabilityTN"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="let_ball" jdbcType="TINYINT" property="letBall"/>
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId"/>
+        <result column="source_type" jdbcType="BIT" property="sourceType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, schedule_id, europe_id, homewin_f, draw_f, guestwin_f, homewin_n, draw_n, guestwin_n,
+        probability_h_f, Probability_d_f, probability_g_f, probability_t_f, probability_h_n,
+        probability_d_n, probability_g_n, probability_t_n, type, let_ball, source_id, source_type,
+        create_time, modify_time, modify_by, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from odds_fb_europeodds
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据id查询欧赔数据 -->
+    <select id="findOddsBySourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from odds_fb_europeodds
+        where source_id = #{sourceId,jdbcType=INTEGER}
+        and source_type=#{sourceType}
+        and europe_id=#{europeId}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM odds_fb_europeodds
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsPO">
+        INSERT INTO odds_fb_europeodds (schedule_id, europe_id,
+                                        homewin_f, draw_f, guestwin_f,
+                                        homewin_n, draw_n, guestwin_n,
+                                        probability_h_f, Probability_d_f, probability_g_f,
+                                        probability_t_f, probability_h_n, probability_d_n,
+                                        probability_g_n, probability_t_n, type,
+                                        let_ball, source_id, source_type,
+                                        create_time, modify_time, modify_by,
+                                        update_time)
+        VALUES (#{scheduleId,jdbcType=INTEGER}, #{europeId,jdbcType=INTEGER},
+                                                #{homewinF,jdbcType=DECIMAL}, #{drawF,jdbcType=DECIMAL},
+                                                #{guestwinF,jdbcType=DECIMAL},
+                                                #{homewinN,jdbcType=DECIMAL}, #{drawN,jdbcType=DECIMAL},
+                                                #{guestwinN,jdbcType=DECIMAL},
+                                                #{probabilityHF,jdbcType=DECIMAL}, #{probabilityDF,jdbcType=DECIMAL},
+                                                #{probabilityGF,jdbcType=DECIMAL},
+            #{probabilityTF,jdbcType=DECIMAL}, #{probabilityHN,jdbcType=DECIMAL}, #{probabilityDN,jdbcType=DECIMAL},
+            #{probabilityGN,jdbcType=DECIMAL}, #{probabilityTN,jdbcType=DECIMAL}, #{type,jdbcType=BIT},
+            #{letBall,jdbcType=TINYINT}, #{sourceId,jdbcType=VARCHAR}, #{sourceType,jdbcType=BIT},
+                #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsPO">
+        insert into odds_fb_europeodds
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="scheduleId != null">
+                schedule_id,
+            </if>
+            <if test="europeId != null">
+                europe_id,
+            </if>
+            <if test="homewinF != null">
+                homewin_f,
+            </if>
+            <if test="drawF != null">
+                draw_f,
+            </if>
+            <if test="guestwinF != null">
+                guestwin_f,
+            </if>
+            <if test="homewinN != null">
+                homewin_n,
+            </if>
+            <if test="drawN != null">
+                draw_n,
+            </if>
+            <if test="guestwinN != null">
+                guestwin_n,
+            </if>
+            <if test="probabilityHF != null">
+                probability_h_f,
+            </if>
+            <if test="probabilityDF != null">
+                Probability_d_f,
+            </if>
+            <if test="probabilityGF != null">
+                probability_g_f,
+            </if>
+            <if test="probabilityTF != null">
+                probability_t_f,
+            </if>
+            <if test="probabilityHN != null">
+                probability_h_n,
+            </if>
+            <if test="probabilityDN != null">
+                probability_d_n,
+            </if>
+            <if test="probabilityGN != null">
+                probability_g_n,
+            </if>
+            <if test="probabilityTN != null">
+                probability_t_n,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="letBall != null">
+                let_ball,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="scheduleId != null">
+                #{scheduleId,jdbcType=INTEGER},
+            </if>
+            <if test="europeId != null">
+                #{europeId,jdbcType=INTEGER},
+            </if>
+            <if test="homewinF != null">
+                #{homewinF,jdbcType=DECIMAL},
+            </if>
+            <if test="drawF != null">
+                #{drawF,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwinF != null">
+                #{guestwinF,jdbcType=DECIMAL},
+            </if>
+            <if test="homewinN != null">
+                #{homewinN,jdbcType=DECIMAL},
+            </if>
+            <if test="drawN != null">
+                #{drawN,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwinN != null">
+                #{guestwinN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityHF != null">
+                #{probabilityHF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityDF != null">
+                #{probabilityDF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityGF != null">
+                #{probabilityGF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityTF != null">
+                #{probabilityTF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityHN != null">
+                #{probabilityHN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityDN != null">
+                #{probabilityDN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityGN != null">
+                #{probabilityGN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityTN != null">
+                #{probabilityTN,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIT},
+            </if>
+            <if test="letBall != null">
+                #{letBall,jdbcType=TINYINT},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsPO">
+        update odds_fb_europeodds
+        <set>
+            <if test="scheduleId != null">
+                schedule_id = #{scheduleId,jdbcType=INTEGER},
+            </if>
+            <if test="europeId != null">
+                europe_id = #{europeId,jdbcType=INTEGER},
+            </if>
+            <if test="homewinF != null">
+                homewin_f = #{homewinF,jdbcType=DECIMAL},
+            </if>
+            <if test="drawF != null">
+                draw_f = #{drawF,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwinF != null">
+                guestwin_f = #{guestwinF,jdbcType=DECIMAL},
+            </if>
+            <if test="homewinN != null">
+                homewin_n = #{homewinN,jdbcType=DECIMAL},
+            </if>
+            <if test="drawN != null">
+                draw_n = #{drawN,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwinN != null">
+                guestwin_n = #{guestwinN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityHF != null">
+                probability_h_f = #{probabilityHF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityDF != null">
+                Probability_d_f = #{probabilityDF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityGF != null">
+                probability_g_f = #{probabilityGF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityTF != null">
+                probability_t_f = #{probabilityTF,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityHN != null">
+                probability_h_n = #{probabilityHN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityDN != null">
+                probability_d_n = #{probabilityDN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityGN != null">
+                probability_g_n = #{probabilityGN,jdbcType=DECIMAL},
+            </if>
+            <if test="probabilityTN != null">
+                probability_t_n = #{probabilityTN,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIT},
+            </if>
+            <if test="letBall != null">
+                let_ball = #{letBall,jdbcType=TINYINT},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where source_id = #{sourceId,jdbcType=INTEGER}
+        and source_type=#{sourceType}
+        and europe_id=#{europeId}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsPO">
+        UPDATE odds_fb_europeodds
+        SET schedule_id     = #{scheduleId,jdbcType=INTEGER},
+            europe_id       = #{europeId,jdbcType=INTEGER},
+            homewin_f       = #{homewinF,jdbcType=DECIMAL},
+            draw_f          = #{drawF,jdbcType=DECIMAL},
+            guestwin_f      = #{guestwinF,jdbcType=DECIMAL},
+            homewin_n       = #{homewinN,jdbcType=DECIMAL},
+            draw_n          = #{drawN,jdbcType=DECIMAL},
+            guestwin_n      = #{guestwinN,jdbcType=DECIMAL},
+            probability_h_f = #{probabilityHF,jdbcType=DECIMAL},
+            Probability_d_f = #{probabilityDF,jdbcType=DECIMAL},
+            probability_g_f = #{probabilityGF,jdbcType=DECIMAL},
+            probability_t_f = #{probabilityTF,jdbcType=DECIMAL},
+            probability_h_n = #{probabilityHN,jdbcType=DECIMAL},
+            probability_d_n = #{probabilityDN,jdbcType=DECIMAL},
+            probability_g_n = #{probabilityGN,jdbcType=DECIMAL},
+            probability_t_n = #{probabilityTN,jdbcType=DECIMAL},
+            type            = #{type,jdbcType=BIT},
+            let_ball        = #{letBall,jdbcType=TINYINT},
+            source_id       = #{sourceId,jdbcType=VARCHAR},
+            source_type     = #{sourceType,jdbcType=BIT},
+            create_time     = #{createTime,jdbcType=TIMESTAMP},
+            modify_time     = #{modifyTime,jdbcType=TIMESTAMP},
+            modify_by       = #{modifyBy,jdbcType=VARCHAR},
+            update_time     = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

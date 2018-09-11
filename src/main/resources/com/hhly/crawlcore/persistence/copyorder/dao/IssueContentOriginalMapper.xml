@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.copyorder.dao.IssueContentOriginalMapper">
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.copyorder.po.IssueContentOriginal" useGeneratedKeys="true"
+          keyProperty="id">
+    insert into issue_content_original (id, original_id_list, master_id, 
+      status, create_time, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{originalIdList,jdbcType=VARCHAR}, #{masterId,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, now(), #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+
+  <select id="queryNewestRecord" resultType="String">
+      select original_id_list from issue_content_original  order by create_time desc limit 1
+  </select>
+
+</mapper>

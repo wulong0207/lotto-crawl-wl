@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataFbScoreDaoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataFbScorePO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId" />
+    <result column="sp_1_0" jdbcType="DECIMAL" property="sp10" />
+    <result column="sp_2_0" jdbcType="DECIMAL" property="sp20" />
+    <result column="sp_2_1" jdbcType="DECIMAL" property="sp21" />
+    <result column="sp_3_0" jdbcType="DECIMAL" property="sp30" />
+    <result column="sp_3_1" jdbcType="DECIMAL" property="sp31" />
+    <result column="sp_3_2" jdbcType="DECIMAL" property="sp32" />
+    <result column="sp_4_0" jdbcType="DECIMAL" property="sp40" />
+    <result column="sp_4_1" jdbcType="DECIMAL" property="sp41" />
+    <result column="sp_4_2" jdbcType="DECIMAL" property="sp42" />
+    <result column="sp_5_0" jdbcType="DECIMAL" property="sp50" />
+    <result column="sp_5_1" jdbcType="DECIMAL" property="sp51" />
+    <result column="sp_5_2" jdbcType="DECIMAL" property="sp52" />
+    <result column="sp_w_other" jdbcType="DECIMAL" property="spWOther" />
+    <result column="sp_0_0" jdbcType="DECIMAL" property="sp00" />
+    <result column="sp_1_1" jdbcType="DECIMAL" property="sp11" />
+    <result column="sp_2_2" jdbcType="DECIMAL" property="sp22" />
+    <result column="sp_3_3" jdbcType="DECIMAL" property="sp33" />
+    <result column="sp_d_other" jdbcType="DECIMAL" property="spDOther" />
+    <result column="sp_0_1" jdbcType="DECIMAL" property="sp01" />
+    <result column="sp_0_2" jdbcType="DECIMAL" property="sp02" />
+    <result column="sp_1_2" jdbcType="DECIMAL" property="sp12" />
+    <result column="sp_0_3" jdbcType="DECIMAL" property="sp03" />
+    <result column="sp_1_3" jdbcType="DECIMAL" property="sp13" />
+    <result column="sp_2_3" jdbcType="DECIMAL" property="sp23" />
+    <result column="sp_0_4" jdbcType="DECIMAL" property="sp04" />
+    <result column="sp_1_4" jdbcType="DECIMAL" property="sp14" />
+    <result column="sp_2_4" jdbcType="DECIMAL" property="sp24" />
+    <result column="sp_0_5" jdbcType="DECIMAL" property="sp05" />
+    <result column="sp_1_5" jdbcType="DECIMAL" property="sp15" />
+    <result column="sp_2_5" jdbcType="DECIMAL" property="sp25" />
+    <result column="sp_f_other" jdbcType="DECIMAL" property="spFOther" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>	
+
+  <sql id="Base_Column_List" >
+    ID, SPORT_AGAINST_INFO_ID, SP_1_0, SP_2_0, SP_2_1, SP_3_0, SP_3_1,
+    SP_3_2, SP_4_0, SP_4_1, SP_4_2, SP_5_0, SP_5_1, SP_5_2, SP_W_OTHER, SP_0_0, SP_1_1, 
+    SP_2_2, SP_3_3, SP_D_OTHER, SP_0_1, SP_0_2, SP_1_2, SP_0_3, SP_1_3, SP_2_3, SP_0_4, 
+    SP_1_4, SP_2_4, SP_0_5, SP_1_5, SP_2_5, SP_F_OTHER, RELEASE_TIME, UPDATE_TIME, CREATE_TIME
+  </sql>
+
+   <select id="selectCount" resultType="int"
+            parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbScorePO">
+        select count(1) from sport_data_fb_score
+        where release_time = #{releaseTime,jdbcType=TIMESTAMP}
+        and sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+    </select>
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbScorePO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_fb_score (sport_against_info_id, sp_1_0, 
+      sp_2_0, sp_2_1, sp_3_0, sp_3_1, 
+      sp_3_2, sp_4_0, sp_4_1, sp_4_2, 
+      sp_5_0, sp_5_1, sp_5_2, sp_w_other, 
+      sp_0_0, sp_1_1, sp_2_2, sp_3_3, 
+      sp_d_other, sp_0_1, sp_0_2, 
+      sp_1_2, sp_0_3, sp_1_3, sp_2_3, 
+      sp_0_4, sp_1_4, sp_2_4, sp_0_5, 
+      sp_1_5, sp_2_5, sp_f_other, 
+      release_time, update_time, create_time
+      )
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{sp10,jdbcType=DECIMAL}, 
+      #{sp20,jdbcType=DECIMAL}, #{sp21,jdbcType=DECIMAL}, #{sp30,jdbcType=DECIMAL}, #{sp31,jdbcType=DECIMAL}, 
+      #{sp32,jdbcType=DECIMAL}, #{sp40,jdbcType=DECIMAL}, #{sp41,jdbcType=DECIMAL}, #{sp42,jdbcType=DECIMAL}, 
+      #{sp50,jdbcType=DECIMAL}, #{sp51,jdbcType=DECIMAL}, #{sp52,jdbcType=DECIMAL}, #{spWOther,jdbcType=DECIMAL}, 
+      #{sp00,jdbcType=DECIMAL}, #{sp11,jdbcType=DECIMAL}, #{sp22,jdbcType=DECIMAL}, #{sp33,jdbcType=DECIMAL}, 
+      #{spDOther,jdbcType=DECIMAL}, #{sp01,jdbcType=DECIMAL}, #{sp02,jdbcType=DECIMAL}, 
+      #{sp12,jdbcType=DECIMAL}, #{sp03,jdbcType=DECIMAL}, #{sp13,jdbcType=DECIMAL}, #{sp23,jdbcType=DECIMAL}, 
+      #{sp04,jdbcType=DECIMAL}, #{sp14,jdbcType=DECIMAL}, #{sp24,jdbcType=DECIMAL}, #{sp05,jdbcType=DECIMAL}, 
+      #{sp15,jdbcType=DECIMAL}, #{sp25,jdbcType=DECIMAL}, #{spFOther,jdbcType=DECIMAL}, 
+      #{releaseTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+  </insert>
+  
+  <insert id="insertBatch">
+    insert into sport_data_fb_score (sport_against_info_id, sp_1_0,
+    sp_2_0, sp_2_1, sp_3_0, sp_3_1,
+    sp_3_2, sp_4_0, sp_4_1, sp_4_2,
+    sp_5_0, sp_5_1, sp_5_2, sp_w_other,
+    sp_0_0, sp_1_1, sp_2_2, sp_3_3,
+    sp_d_other, sp_0_1, sp_0_2,
+    sp_1_2, sp_0_3, sp_1_3, sp_2_3,
+    sp_0_4, sp_1_4, sp_2_4, sp_0_5,
+    sp_1_5, sp_2_5, sp_f_other,
+    release_time, update_time, create_time
+    )
+    values
+    <foreach collection="list" separator="," item="item" index="index">
+        (#{item.sportAgainstInfoId,jdbcType=INTEGER},#{item.sp10,jdbcType=DECIMAL},
+      #{item.sp20,jdbcType=DECIMAL}, #{item.sp21,jdbcType=DECIMAL}, #{item.sp30,jdbcType=DECIMAL}, #{item.sp31,jdbcType=DECIMAL},
+      #{item.sp32,jdbcType=DECIMAL}, #{item.sp40,jdbcType=DECIMAL}, #{item.sp41,jdbcType=DECIMAL}, #{item.sp42,jdbcType=DECIMAL},
+      #{item.sp50,jdbcType=DECIMAL}, #{item.sp51,jdbcType=DECIMAL}, #{item.sp52,jdbcType=DECIMAL}, #{item.spWOther,jdbcType=DECIMAL},
+      #{item.sp00,jdbcType=DECIMAL}, #{item.sp11,jdbcType=DECIMAL}, #{item.sp22,jdbcType=DECIMAL}, #{item.sp33,jdbcType=DECIMAL},
+      #{item.spDOther,jdbcType=DECIMAL}, #{item.sp01,jdbcType=DECIMAL}, #{item.sp02,jdbcType=DECIMAL},
+      #{item.sp12,jdbcType=DECIMAL}, #{item.sp03,jdbcType=DECIMAL}, #{item.sp13,jdbcType=DECIMAL}, #{item.sp23,jdbcType=DECIMAL},
+      #{item.sp04,jdbcType=DECIMAL}, #{item.sp14,jdbcType=DECIMAL}, #{item.sp24,jdbcType=DECIMAL}, #{item.sp05,jdbcType=DECIMAL},
+      #{item.sp15,jdbcType=DECIMAL}, #{item.sp25,jdbcType=DECIMAL}, #{item.spFOther,jdbcType=DECIMAL},
+      #{item.releaseTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+
+    </foreach>
+  </insert>
+  
+   <select id="findLast" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> 
+		from sport_data_fb_score where sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+		order by release_time desc limit 0,1
+   </select>  
+
+</mapper>

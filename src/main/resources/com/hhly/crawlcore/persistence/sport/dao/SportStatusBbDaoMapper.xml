@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportStatusBbDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportStatusBbPO">
+        <id column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="SPORT_AGAINST_INFO_ID" property="sportAgainstInfoId" jdbcType="DECIMAL"/>
+        <result column="STATUS_WF" property="statusWf" jdbcType="DECIMAL"/>
+        <result column="STATUS_LET_WF" property="statusLetWf" jdbcType="DECIMAL"/>
+        <result column="STATUS_BIG_SMALL" property="statusBigSmall" jdbcType="DECIMAL"/>
+        <result column="STATUS_SCORE_WF" property="statusScoreWf" jdbcType="DECIMAL"/>
+        <result column="MODIFY_BY" property="modifyBy" jdbcType="OTHER"/>
+        <result column="MODIFY_TIME" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, sport_against_info_id, status_wf, status_let_wf, status_big_small,
+        status_score_wf, modify_by, modify_time, update_time, create_time
+  </sql>
+    
+	<!-- v2.0版本,数据抓取 start-->
+	<insert id="insert"
+		parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBbPO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sport_status_bb (sport_against_info_id, status_wf,
+		status_let_wf, status_big_small, status_score_wf,
+		modify_by, modify_time, update_time,create_time)
+		values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{statusWf,jdbcType=BIT},
+		#{statusLetWf,jdbcType=BIT}, #{statusBigSmall,jdbcType=BIT},
+		#{statusScoreWf,jdbcType=BIT},
+		#{modifyBy,jdbcType=VARCHAR},now(),now(),now())
+	</insert>
+	
+    <update id="update" parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBbPO">
+        update sport_status_bb
+        <set>
+            <if test="statusWf != null">
+                status_wf = #{statusWf,jdbcType=BIT},
+            </if>
+            <if test="statusLetWf != null">
+                status_let_wf = #{statusLetWf,jdbcType=BIT},
+            </if>
+            <if test="statusBigSmall != null">
+                status_big_small = #{statusBigSmall,jdbcType=BIT},
+            </if>
+            <if test="statusScoreWf != null">
+                status_score_wf = #{statusScoreWf,jdbcType=BIT},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            modify_time = now(),
+            update_time = now()
+        </set>
+        where sport_against_info_id = #{sportAgainstInfoId,jdbcType=INTEGER}
+    </update>
+    
+	<insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBbPO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into sport_status_bb (sport_against_info_id, status_wf,
+		status_let_wf, status_big_small, status_score_wf,
+		modify_by, modify_time, update_time,create_time)
+		values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{statusWf,jdbcType=BIT},
+		#{statusLetWf,jdbcType=BIT}, #{statusBigSmall,jdbcType=BIT},
+		#{statusScoreWf,jdbcType=BIT},
+		#{modifyBy,jdbcType=VARCHAR},now(),now(),now())
+		ON DUPLICATE KEY UPDATE
+		status_wf = values(status_wf),
+		status_let_wf = values(status_let_wf),
+		status_big_small = values(status_big_small),
+		status_score_wf = values(status_score_wf),
+		modify_by = values(modify_by),
+        modify_time = now()
+	</insert>    	
+
+	<select id="selectCount" resultType="int"
+		parameterType="com.hhly.crawlcore.persistence.sport.po.SportStatusBbPO">
+		SELECT count(1)
+		FROM sport_status_bb
+		WHERE sport_against_info_id = #{sportAgainstInfoId,jdbcType=INTEGER}
+	</select> 
+	
+	<!-- v2.0版本,数据抓取  end -->	 	       
+</mapper>

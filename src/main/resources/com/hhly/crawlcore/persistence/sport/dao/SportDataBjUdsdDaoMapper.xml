@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBjUdsdDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBjUdsdPO">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="SPORT_AGAINST_INFO_ID" jdbcType="DECIMAL" property="sportAgainstInfoId"/>
+        <result column="SP_UP_SINGLE" jdbcType="DECIMAL" property="spUpSingle"/>
+        <result column="SP_UP_DOUBLE" jdbcType="DECIMAL" property="spUpDouble"/>
+        <result column="SP_DOWN_SINGLE" jdbcType="DECIMAL" property="spDownSingle"/>
+        <result column="SP_DOWN_DOUBLE" jdbcType="DECIMAL" property="spDownDouble"/>
+        <result column="RELEASE_TIME" jdbcType="DATE" property="releaseTime"/>
+        <result column="UPDATE_TIME" jdbcType="DATE" property="updateTime"/>
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+</mapper>

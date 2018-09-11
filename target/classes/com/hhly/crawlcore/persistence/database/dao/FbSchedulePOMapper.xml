@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.database.dao.FbSchedulePOMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sclass_id" jdbcType="INTEGER" property="sclassId"/>
+        <result column="round_id" jdbcType="INTEGER" property="roundId"/>
+        <result column="isneutral" jdbcType="BIT" property="isneutral"/>
+        <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId"/>
+        <result column="guest_team_id" jdbcType="INTEGER" property="guestTeamId"/>
+        <result column="match_time" jdbcType="TIMESTAMP" property="matchTime"/>
+        <result column="isdelayed" jdbcType="BIT" property="isdelayed"/>
+        <result column="final_time" jdbcType="TIMESTAMP" property="finalTime"/>
+        <result column="location" jdbcType="VARCHAR" property="location"/>
+        <result column="home_f_half" jdbcType="SMALLINT" property="homeFHalf"/>
+        <result column="home_s_half" jdbcType="SMALLINT" property="homeSHalf"/>
+        <result column="guest_f_half" jdbcType="SMALLINT" property="guestFHalf"/>
+        <result column="guest_s_half" jdbcType="SMALLINT" property="guestSHalf"/>
+        <result column="home_f_add" jdbcType="SMALLINT" property="homeFAdd"/>
+        <result column="home_s_add" jdbcType="SMALLINT" property="homeSAdd"/>
+        <result column="guest_f_add" jdbcType="SMALLINT" property="guestFAdd"/>
+        <result column="guest_s_add" jdbcType="SMALLINT" property="guestSAdd"/>
+        <result column="home_score" jdbcType="SMALLINT" property="homeScore"/>
+        <result column="guest_score" jdbcType="SMALLINT" property="guestScore"/>
+        <result column="match_status" jdbcType="SMALLINT" property="matchStatus"/>
+        <result column="Home_rd" jdbcType="TINYINT" property="homeRd"/>
+        <result column="guest_rd" jdbcType="TINYINT" property="guestRd"/>
+        <result column="home_yl" jdbcType="TINYINT" property="homeYl"/>
+        <result column="guest_yl" jdbcType="TINYINT" property="guestYl"/>
+        <result column="tv" jdbcType="VARCHAR" property="tv"/>
+        <result column="umpire" jdbcType="VARCHAR" property="umpire"/>
+        <result column="visitor" jdbcType="INTEGER" property="visitor"/>
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId"/>
+        <result column="source_type" jdbcType="BIT" property="sourceType"/>
+        <result column="season" jdbcType="VARCHAR" property="season"/>
+        <result column="rounds" jdbcType="SMALLINT" property="rounds"/>
+        <result column="home_ranking" jdbcType="INTEGER" property="homeRanking"/>
+        <result column="guest_ranking" jdbcType="INTEGER" property="guestRanking"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, sclass_id, round_id, isneutral, home_team_id, guest_team_id, match_time, isdelayed,
+        final_time, location, home_f_half, home_s_half, guest_f_half, guest_s_half, home_f_add,
+        home_s_add, guest_f_add, guest_s_add, home_score, guest_score, match_status, Home_rd,
+        guest_rd, home_yl, guest_yl, tv, umpire, visitor, source_id, source_type, season,
+        rounds, home_ranking, guest_ranking, create_time, modify_time, modify_by, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fb_schedule
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM fb_schedule
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <select id="findScheduleBySourceId" resultMap="BaseResultMap"
+            parameterType="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        select
+        <include refid="Base_Column_List"/>
+        from fb_schedule
+        where source_id= #{sourceId,jdbcType=INTEGER} and source_type=#{sourceType}
+    </select>
+
+
+    <select id="findInitSchedule" resultType="map">
+        SELECT
+            a.id,
+        match_info_url AS matchInfoUrl,
+        match_analysis_url as matchAnalysisUrl
+        FROM sport_against_info a
+            INNER JOIN sport_match_info b ON a.sport_match_info_id = b.id AND b.match_type = 1
+        WHERE a.match_info_url IS NOT NULL AND a.match_info_url != ''
+              and sale_end_time > now()
+    </select>
+
+    <!-- 更新购彩对阵表 -->
+    <update id="updateSportAgainstInfoByMatchInfoUrl" parameterType="map">
+        UPDATE sport_against_info a
+        SET a.fb_schedule_id = (SELECT id
+                                FROM fb_schedule
+                                WHERE source_id = #{matchInfoUrl})
+        WHERE a.match_info_url = #{matchInfoUrl}
+    </update>
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        INSERT INTO fb_schedule (id, sclass_id, round_id,
+                                 isneutral, home_team_id, guest_team_id,
+                                 match_time, isdelayed, final_time,
+                                 location, home_f_half, home_s_half,
+                                 guest_f_half, guest_s_half, home_f_add,
+                                 home_s_add, guest_f_add, guest_s_add,
+                                 home_score, guest_score, match_status,
+                                 Home_rd, guest_rd, home_yl,
+                                 guest_yl, tv, umpire,
+                                 visitor, source_id, source_type,
+                                 season, rounds, home_ranking,
+                                 guest_ranking, create_time, modify_time,
+                                 modify_by, update_time)
+        VALUES (#{id,jdbcType=INTEGER}, #{sclassId,jdbcType=INTEGER}, #{roundId,jdbcType=INTEGER},
+                                        #{isneutral,jdbcType=BIT}, #{homeTeamId,jdbcType=INTEGER},
+                                        #{guestTeamId,jdbcType=INTEGER},
+                                        #{matchTime,jdbcType=TIMESTAMP}, #{isdelayed,jdbcType=BIT},
+                                        #{finalTime,jdbcType=TIMESTAMP},
+                                        #{location,jdbcType=VARCHAR}, #{homeFHalf,jdbcType=SMALLINT},
+            #{homeSHalf,jdbcType=SMALLINT},
+            #{guestFHalf,jdbcType=SMALLINT}, #{guestSHalf,jdbcType=SMALLINT}, #{homeFAdd,jdbcType=SMALLINT},
+            #{homeSAdd,jdbcType=SMALLINT}, #{guestFAdd,jdbcType=SMALLINT}, #{guestSAdd,jdbcType=SMALLINT},
+            #{homeScore,jdbcType=SMALLINT}, #{guestScore,jdbcType=SMALLINT}, #{matchStatus,jdbcType=SMALLINT},
+            #{homeRd,jdbcType=TINYINT}, #{guestRd,jdbcType=TINYINT}, #{homeYl,jdbcType=TINYINT},
+            #{guestYl,jdbcType=TINYINT}, #{tv,jdbcType=VARCHAR}, #{umpire,jdbcType=VARCHAR},
+            #{visitor,jdbcType=INTEGER}, #{sourceId,jdbcType=VARCHAR}, #{sourceType,jdbcType=BIT},
+            #{season,jdbcType=VARCHAR}, #{rounds,jdbcType=SMALLINT}, #{homeRanking,jdbcType=INTEGER},
+                #{guestRanking,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP},
+                #{modifyBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        insert into fb_schedule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sclassId != null">
+                sclass_id,
+            </if>
+            <if test="roundId != null">
+                round_id,
+            </if>
+            <if test="isneutral != null">
+                isneutral,
+            </if>
+            <if test="homeTeamId != null">
+                home_team_id,
+            </if>
+            <if test="guestTeamId != null">
+                guest_team_id,
+            </if>
+            <if test="matchTime != null">
+                match_time,
+            </if>
+            <if test="isdelayed != null">
+                isdelayed,
+            </if>
+            <if test="finalTime != null">
+                final_time,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="homeFHalf != null">
+                home_f_half,
+            </if>
+            <if test="homeSHalf != null">
+                home_s_half,
+            </if>
+            <if test="guestFHalf != null">
+                guest_f_half,
+            </if>
+            <if test="guestSHalf != null">
+                guest_s_half,
+            </if>
+            <if test="homeFAdd != null">
+                home_f_add,
+            </if>
+            <if test="homeSAdd != null">
+                home_s_add,
+            </if>
+            <if test="guestFAdd != null">
+                guest_f_add,
+            </if>
+            <if test="guestSAdd != null">
+                guest_s_add,
+            </if>
+            <if test="homeScore != null">
+                home_score,
+            </if>
+            <if test="guestScore != null">
+                guest_score,
+            </if>
+            <if test="matchStatus != null">
+                match_status,
+            </if>
+            <if test="homeRd != null">
+                Home_rd,
+            </if>
+            <if test="guestRd != null">
+                guest_rd,
+            </if>
+            <if test="homeYl != null">
+                home_yl,
+            </if>
+            <if test="guestYl != null">
+                guest_yl,
+            </if>
+            <if test="tv != null">
+                tv,
+            </if>
+            <if test="umpire != null">
+                umpire,
+            </if>
+            <if test="visitor != null">
+                visitor,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="season != null">
+                season,
+            </if>
+            <if test="rounds != null">
+                rounds,
+            </if>
+            <if test="homeRanking != null">
+                home_ranking,
+            </if>
+            <if test="guestRanking != null">
+                guest_ranking,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="sclassId != null">
+                #{sclassId,jdbcType=INTEGER},
+            </if>
+            <if test="roundId != null">
+                #{roundId,jdbcType=INTEGER},
+            </if>
+            <if test="isneutral != null">
+                #{isneutral,jdbcType=BIT},
+            </if>
+            <if test="homeTeamId != null">
+                #{homeTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="guestTeamId != null">
+                #{guestTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="matchTime != null">
+                #{matchTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isdelayed != null">
+                #{isdelayed,jdbcType=BIT},
+            </if>
+            <if test="finalTime != null">
+                #{finalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="homeFHalf != null">
+                #{homeFHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="homeSHalf != null">
+                #{homeSHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="guestFHalf != null">
+                #{guestFHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="guestSHalf != null">
+                #{guestSHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="homeFAdd != null">
+                #{homeFAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="homeSAdd != null">
+                #{homeSAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="guestFAdd != null">
+                #{guestFAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="guestSAdd != null">
+                #{guestSAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="homeScore != null">
+                #{homeScore,jdbcType=SMALLINT},
+            </if>
+            <if test="guestScore != null">
+                #{guestScore,jdbcType=SMALLINT},
+            </if>
+            <if test="matchStatus != null">
+                #{matchStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="homeRd != null">
+                #{homeRd,jdbcType=TINYINT},
+            </if>
+            <if test="guestRd != null">
+                #{guestRd,jdbcType=TINYINT},
+            </if>
+            <if test="homeYl != null">
+                #{homeYl,jdbcType=TINYINT},
+            </if>
+            <if test="guestYl != null">
+                #{guestYl,jdbcType=TINYINT},
+            </if>
+            <if test="tv != null">
+                #{tv,jdbcType=VARCHAR},
+            </if>
+            <if test="umpire != null">
+                #{umpire,jdbcType=VARCHAR},
+            </if>
+            <if test="visitor != null">
+                #{visitor,jdbcType=INTEGER},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="season != null">
+                #{season,jdbcType=VARCHAR},
+            </if>
+            <if test="rounds != null">
+                #{rounds,jdbcType=SMALLINT},
+            </if>
+            <if test="homeRanking != null">
+                #{homeRanking,jdbcType=INTEGER},
+            </if>
+            <if test="guestRanking != null">
+                #{guestRanking,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        update fb_schedule
+        <set>
+            <if test="sclassId != null">
+                sclass_id = #{sclassId,jdbcType=INTEGER},
+            </if>
+            <if test="roundId != null">
+                round_id = #{roundId,jdbcType=INTEGER},
+            </if>
+            <if test="isneutral != null">
+                isneutral = #{isneutral,jdbcType=BIT},
+            </if>
+            <if test="homeTeamId != null">
+                home_team_id = #{homeTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="guestTeamId != null">
+                guest_team_id = #{guestTeamId,jdbcType=INTEGER},
+            </if>
+            <if test="matchTime != null">
+                match_time = #{matchTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isdelayed != null">
+                isdelayed = #{isdelayed,jdbcType=BIT},
+            </if>
+            <if test="finalTime != null">
+                final_time = #{finalTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="homeFHalf != null">
+                home_f_half = #{homeFHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="homeSHalf != null">
+                home_s_half = #{homeSHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="guestFHalf != null">
+                guest_f_half = #{guestFHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="guestSHalf != null">
+                guest_s_half = #{guestSHalf,jdbcType=SMALLINT},
+            </if>
+            <if test="homeFAdd != null">
+                home_f_add = #{homeFAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="homeSAdd != null">
+                home_s_add = #{homeSAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="guestFAdd != null">
+                guest_f_add = #{guestFAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="guestSAdd != null">
+                guest_s_add = #{guestSAdd,jdbcType=SMALLINT},
+            </if>
+            <if test="homeScore != null">
+                home_score = #{homeScore,jdbcType=SMALLINT},
+            </if>
+            <if test="guestScore != null">
+                guest_score = #{guestScore,jdbcType=SMALLINT},
+            </if>
+            <if test="matchStatus != null">
+                match_status = #{matchStatus,jdbcType=SMALLINT},
+            </if>
+            <if test="homeRd != null">
+                Home_rd = #{homeRd,jdbcType=TINYINT},
+            </if>
+            <if test="guestRd != null">
+                guest_rd = #{guestRd,jdbcType=TINYINT},
+            </if>
+            <if test="homeYl != null">
+                home_yl = #{homeYl,jdbcType=TINYINT},
+            </if>
+            <if test="guestYl != null">
+                guest_yl = #{guestYl,jdbcType=TINYINT},
+            </if>
+            <if test="tv != null">
+                tv = #{tv,jdbcType=VARCHAR},
+            </if>
+            <if test="umpire != null">
+                umpire = #{umpire,jdbcType=VARCHAR},
+            </if>
+            <if test="visitor != null">
+                visitor = #{visitor,jdbcType=INTEGER},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="season != null">
+                season = #{season,jdbcType=VARCHAR},
+            </if>
+            <if test="rounds != null">
+                rounds = #{rounds,jdbcType=SMALLINT},
+            </if>
+            <if test="homeRanking != null">
+                home_ranking = #{homeRanking,jdbcType=INTEGER},
+            </if>
+            <if test="guestRanking != null">
+                guest_ranking = #{guestRanking,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="id != null">
+                where id = #{id,jdbcType=INTEGER}
+            </if>
+        </set>
+
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.database.po.FbSchedulePO">
+        UPDATE fb_schedule
+        SET sclass_id     = #{sclassId,jdbcType=INTEGER},
+            round_id      = #{roundId,jdbcType=INTEGER},
+            isneutral     = #{isneutral,jdbcType=BIT},
+            home_team_id  = #{homeTeamId,jdbcType=INTEGER},
+            guest_team_id = #{guestTeamId,jdbcType=INTEGER},
+            match_time    = #{matchTime,jdbcType=TIMESTAMP},
+            isdelayed     = #{isdelayed,jdbcType=BIT},
+            final_time    = #{finalTime,jdbcType=TIMESTAMP},
+            location      = #{location,jdbcType=VARCHAR},
+            home_f_half   = #{homeFHalf,jdbcType=SMALLINT},
+            home_s_half   = #{homeSHalf,jdbcType=SMALLINT},
+            guest_f_half  = #{guestFHalf,jdbcType=SMALLINT},
+            guest_s_half  = #{guestSHalf,jdbcType=SMALLINT},
+            home_f_add    = #{homeFAdd,jdbcType=SMALLINT},
+            home_s_add    = #{homeSAdd,jdbcType=SMALLINT},
+            guest_f_add   = #{guestFAdd,jdbcType=SMALLINT},
+            guest_s_add   = #{guestSAdd,jdbcType=SMALLINT},
+            home_score    = #{homeScore,jdbcType=SMALLINT},
+            guest_score   = #{guestScore,jdbcType=SMALLINT},
+            match_status  = #{matchStatus,jdbcType=SMALLINT},
+            Home_rd       = #{homeRd,jdbcType=TINYINT},
+            guest_rd      = #{guestRd,jdbcType=TINYINT},
+            home_yl       = #{homeYl,jdbcType=TINYINT},
+            guest_yl      = #{guestYl,jdbcType=TINYINT},
+            tv            = #{tv,jdbcType=VARCHAR},
+            umpire        = #{umpire,jdbcType=VARCHAR},
+            visitor       = #{visitor,jdbcType=INTEGER},
+            source_id     = #{sourceId,jdbcType=VARCHAR},
+            source_type   = #{sourceType,jdbcType=BIT},
+            season        = #{season,jdbcType=VARCHAR},
+            rounds        = #{rounds,jdbcType=SMALLINT},
+            home_ranking  = #{homeRanking,jdbcType=INTEGER},
+            guest_ranking = #{guestRanking,jdbcType=INTEGER},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            modify_time   = #{modifyTime,jdbcType=TIMESTAMP},
+            modify_by     = #{modifyBy,jdbcType=VARCHAR},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

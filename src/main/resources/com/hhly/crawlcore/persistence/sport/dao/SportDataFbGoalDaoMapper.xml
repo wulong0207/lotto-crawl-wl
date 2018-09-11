@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataFbGoalDaoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataFbGoalPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId" />
+    <result column="sp_0_goal" jdbcType="DECIMAL" property="sp0Goal" />
+    <result column="sp_1_goal" jdbcType="DECIMAL" property="sp1Goal" />
+    <result column="sp_2_goal" jdbcType="DECIMAL" property="sp2Goal" />
+    <result column="sp_3_goal" jdbcType="DECIMAL" property="sp3Goal" />
+    <result column="sp_4_goal" jdbcType="DECIMAL" property="sp4Goal" />
+    <result column="sp_5_goal" jdbcType="DECIMAL" property="sp5Goal" />
+    <result column="sp_6_goal" jdbcType="DECIMAL" property="sp6Goal" />
+    <result column="sp_7_goal" jdbcType="DECIMAL" property="sp7Goal" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+      id, sport_against_info_id, sp_0_goal, sp_1_goal, sp_2_goal, sp_3_goal,
+      sp_4_goal, sp_5_goal, sp_6_goal, sp_7_goal, release_time, update_time, create_time
+  </sql>
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbGoalPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_fb_goal (sport_against_info_id, sp_0_goal, 
+      sp_1_goal, sp_2_goal, sp_3_goal, 
+      sp_4_goal, sp_5_goal, sp_6_goal, 
+      sp_7_goal, release_time, update_time, 
+      create_time)
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{sp0Goal,jdbcType=DECIMAL}, 
+      #{sp1Goal,jdbcType=DECIMAL}, #{sp2Goal,jdbcType=DECIMAL}, #{sp3Goal,jdbcType=DECIMAL}, 
+      #{sp4Goal,jdbcType=DECIMAL}, #{sp5Goal,jdbcType=DECIMAL}, #{sp6Goal,jdbcType=DECIMAL}, 
+      #{sp7Goal,jdbcType=DECIMAL}, #{releaseTime,jdbcType=TIMESTAMP}, now(), 
+      now())
+  </insert>
+
+   <select id="selectCount" resultType="int" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbGoalPO">
+        select count(1) from sport_data_fb_goal
+        where release_time = #{releaseTime,jdbcType=TIMESTAMP}
+        and sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+    </select>
+    
+  <insert id="insertBatch">
+    insert into sport_data_fb_goal ( sport_against_info_id, sp_0_goal,
+    sp_1_goal, sp_2_goal, sp_3_goal,
+    sp_4_goal, sp_5_goal, sp_6_goal,
+    sp_7_goal, release_time, update_time,
+    create_time)
+    values
+    <foreach collection="list" separator="," item="item">
+      (#{item.sportAgainstInfoId,jdbcType=INTEGER},#{item.sp0Goal,jdbcType=DECIMAL},
+      #{item.sp1Goal,jdbcType=DECIMAL}, #{item.sp2Goal,jdbcType=DECIMAL}, #{item.sp3Goal,jdbcType=DECIMAL},
+      #{item.sp4Goal,jdbcType=DECIMAL}, #{item.sp5Goal,jdbcType=DECIMAL}, #{item.sp6Goal,jdbcType=DECIMAL},
+      #{item.sp7Goal,jdbcType=DECIMAL}, #{item.releaseTime,jdbcType=TIMESTAMP}, now(),
+      now())
+    </foreach>
+  </insert>
+
+    <select id="findLast" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from sport_data_fb_goal where sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+		order by release_time desc limit 0,1
+    </select>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataFbHfWdfDaoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataFbHfWdfPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId" />
+    <result column="sp_w_w" jdbcType="DECIMAL" property="spWW" />
+    <result column="sp_w_d" jdbcType="DECIMAL" property="spWD" />
+    <result column="sp_w_f" jdbcType="DECIMAL" property="spWF" />
+    <result column="sp_d_w" jdbcType="DECIMAL" property="spDW" />
+    <result column="sp_d_d" jdbcType="DECIMAL" property="spDD" />
+    <result column="sp_d_f" jdbcType="DECIMAL" property="spDF" />
+    <result column="sp_f_w" jdbcType="DECIMAL" property="spFW" />
+    <result column="sp_f_d" jdbcType="DECIMAL" property="spFD" />
+    <result column="sp_f_f" jdbcType="DECIMAL" property="spFF" />
+    <result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>	
+
+  <sql id="Base_Column_List" >
+    ID, SPORT_AGAINST_INFO_ID, SP_W_W, SP_W_D, SP_W_F, SP_D_W, SP_D_D,
+    SP_D_F, SP_F_W, SP_F_D, SP_F_F, RELEASE_TIME, UPDATE_TIME, CREATE_TIME
+  </sql>
+
+    <select id="selectCount" resultType="int" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbHfWdfPO">
+        select count(1) from sport_data_fb_hf_wdf
+        where release_time = #{releaseTime,jdbcType=TIMESTAMP}
+        and sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+    </select>
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbHfWdfPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_fb_hf_wdf (sport_against_info_id, sp_w_w, 
+      sp_w_d, sp_w_f, sp_d_w, sp_d_d, 
+      sp_d_f, sp_f_w, sp_f_d, sp_f_f, 
+      release_time, update_time, create_time
+      )
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{spWW,jdbcType=DECIMAL}, 
+      #{spWD,jdbcType=DECIMAL}, #{spWF,jdbcType=DECIMAL}, #{spDW,jdbcType=DECIMAL}, #{spDD,jdbcType=DECIMAL}, 
+      #{spDF,jdbcType=DECIMAL}, #{spFW,jdbcType=DECIMAL}, #{spFD,jdbcType=DECIMAL}, #{spFF,jdbcType=DECIMAL}, 
+      #{releaseTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+  </insert>
+
+  <insert id="insertBatch">
+    insert into sport_data_fb_hf_wdf (sport_against_info_id, sp_w_w,
+    sp_w_d, sp_w_f, sp_d_w, sp_d_d,
+    sp_d_f, sp_f_w, sp_f_d, sp_f_f,
+    release_time, update_time, create_time
+    )
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+        (#{item.sportAgainstInfoId,jdbcType=INTEGER},
+        #{item.spWW,jdbcType=DECIMAL},
+      #{item.spWD,jdbcType=DECIMAL}, #{item.spWF,jdbcType=DECIMAL}, #{item.spDW,jdbcType=DECIMAL}, #{item.spDD,jdbcType=DECIMAL},
+      #{item.spDF,jdbcType=DECIMAL}, #{item.spFW,jdbcType=DECIMAL}, #{item.spFD,jdbcType=DECIMAL}, #{item.spFF,jdbcType=DECIMAL},
+      #{item.releaseTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+    </foreach>
+  </insert>
+
+    <select id="findLast" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from sport_data_fb_hf_wdf where sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+		order by release_time desc limit 0,1
+    </select>	
+</mapper>

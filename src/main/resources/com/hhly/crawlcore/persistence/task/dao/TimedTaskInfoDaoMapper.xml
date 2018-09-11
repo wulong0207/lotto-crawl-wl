@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.task.dao.TimedTaskInfoDaoMapper">
+    <insert id="addListLogs">
+
+        insert into TIMED_TASK_INFO ( TIMED_TASK_ID, RUN_TIME,
+        RUN_WAY, STATUS, START_TIME,
+        END_TIME, SPEND_TIME, RESULT,
+        UPDATE_TIME, CREATE_TIME, REMARK,
+        TYPE)
+        values
+        <foreach collection="logs" item="item" index="index" separator=",">
+            (#{item.timedTaskId,jdbcType=DECIMAL}, #{item.runTime,jdbcType=TIMESTAMP},
+            #{item.runWay,jdbcType=DECIMAL}, #{item.status,jdbcType=DECIMAL}, #{item.startTime,jdbcType=TIMESTAMP},
+            #{item.endTime,jdbcType=TIMESTAMP}, #{item.spendTime,jdbcType=DECIMAL}, #{item.result,jdbcType=DECIMAL},
+            now(), now(), #{item.remark,jdbcType=OTHER},
+            1)
+        </foreach>
+    </insert>
+</mapper>

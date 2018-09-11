@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBbWsDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBbWsPO">
+        <id column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="SPORT_AGAINST_INFO_ID" property="sportAgainstInfoId" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_1_5" property="spFail15" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_6_10" property="spFail610" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_11_15" property="spFail1115" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_16_20" property="spFail1620" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_21_25" property="spFail2125" jdbcType="DECIMAL"/>
+        <result column="SP_FAIL_26" property="spFail26" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_1_5" property="spWin15" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_6_10" property="spWin610" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_11_15" property="spWin1115" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_16_20" property="spWin1620" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_21_25" property="spWin2125" jdbcType="DECIMAL"/>
+        <result column="SP_WIN_26" property="spWin26" jdbcType="DECIMAL"/>
+        <result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    ID, SPORT_AGAINST_INFO_ID, SP_FAIL_1_5, SP_FAIL_6_10, SP_FAIL_11_15,
+    SP_FAIL_16_20, SP_FAIL_21_25, SP_FAIL_26, SP_WIN_1_5, SP_WIN_6_10, SP_WIN_11_15,
+    SP_WIN_16_20, SP_WIN_21_25, SP_WIN_26, RELEASE_TIME, UPDATE_TIME, CREATE_TIME
+  </sql>
+
+
+    <select id="selectCount" resultType="int" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBbWsPO">
+        SELECT count(1)
+        FROM sport_data_bb_ws
+        WHERE RELEASE_TIME = #{releaseTime,jdbcType=TIMESTAMP}
+              AND SPORT_AGAINST_INFO_ID = #{sportAgainstInfoId,jdbcType=DECIMAL}
+    </select>
+    
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBbWsPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_bb_ws (sport_against_info_id, sp_fail_1_5, 
+      sp_fail_6_10, sp_fail_11_15, sp_fail_16_20, 
+      sp_fail_21_25, sp_fail_26, sp_win_1_5, 
+      sp_win_6_10, sp_win_11_15, sp_win_16_20, 
+      sp_win_21_25, sp_win_26, release_time, 
+      update_time, create_time)
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{spFail15,jdbcType=DECIMAL}, 
+      #{spFail610,jdbcType=DECIMAL}, #{spFail1115,jdbcType=DECIMAL}, #{spFail1620,jdbcType=DECIMAL}, 
+      #{spFail2125,jdbcType=DECIMAL}, #{spFail26,jdbcType=DECIMAL}, #{spWin15,jdbcType=DECIMAL}, 
+      #{spWin610,jdbcType=DECIMAL}, #{spWin1115,jdbcType=DECIMAL}, #{spWin1620,jdbcType=DECIMAL}, 
+      #{spWin2125,jdbcType=DECIMAL}, #{spWin26,jdbcType=DECIMAL}, #{releaseTime,jdbcType=TIMESTAMP}, 
+      now(), now())
+  </insert>
+    
+    <insert id="insertBatch">
+        insert into sport_data_bb_ws (sport_against_info_id, sp_fail_1_5,
+        sp_fail_6_10, sp_fail_11_15, sp_fail_16_20,
+        sp_fail_21_25, sp_fail_26, sp_win_1_5,
+        sp_win_6_10, sp_win_11_15, sp_win_16_20,
+        sp_win_21_25, sp_win_26, release_time,
+        update_time, create_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.sportAgainstInfoId,jdbcType=INTEGER}, #{item.spFail15,jdbcType=DECIMAL},
+            #{item.spFail610,jdbcType=DECIMAL}, #{item.spFail1115,jdbcType=DECIMAL}, #{item.spFail1620,jdbcType=DECIMAL},
+            #{item.spFail2125,jdbcType=DECIMAL}, #{item.spFail26,jdbcType=DECIMAL}, #{item.spWin15,jdbcType=DECIMAL},
+            #{item.spWin610,jdbcType=DECIMAL}, #{item.spWin1115,jdbcType=DECIMAL}, #{item.spWin1620,jdbcType=DECIMAL},
+            #{item.spWin2125,jdbcType=DECIMAL}, #{item.spWin26,jdbcType=DECIMAL}, #{item.releaseTime,jdbcType=TIMESTAMP},
+            now(), now())
+        </foreach>
+    </insert>
+    
+   <select id="findLast" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from sport_data_bb_ws where sport_against_info_id = #{sportAgainstInfoId,jdbcType=DECIMAL}
+		order by release_time desc limit 0,1  	
+   </select>          
+
+</mapper>

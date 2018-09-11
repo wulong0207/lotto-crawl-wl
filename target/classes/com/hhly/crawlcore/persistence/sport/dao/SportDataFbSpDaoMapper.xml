@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataFbSpDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataFbSpPO">
+        <result column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="SPORT_AGAINST_INFO_ID" property="sportAgainstInfoId" jdbcType="DECIMAL"/>
+        <result column="INITIAL_LET_NUM" property="initialLetNum" jdbcType="DECIMAL"/>
+        <result column="INITIAL_LET_SP_WIN" property="initialLetSpWin" jdbcType="DECIMAL"/>
+        <result column="INITIAL_LET_SP_DRAW" property="initialLetSpDraw" jdbcType="DECIMAL"/>
+        <result column="INITIAL_LET_SP_FAIL" property="initialLetSpFail" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_WIN" property="initialSpWin" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_DRAW" property="initialSpDraw" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_FAIL" property="initialSpFail" jdbcType="DECIMAL"/>
+        <result column="NEWEST_LET_NUM" property="newestLetNum" jdbcType="DECIMAL"/>
+        <result column="NEWEST_LET_SP_WIN" property="newestLetSpWin" jdbcType="DECIMAL"/>
+        <result column="NEWEST_LET_SP_DRAW" property="newestLetSpDraw" jdbcType="DECIMAL"/>
+        <result column="NEWEST_LET_SP_FAIL" property="newestLetSpFail" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_WIN" property="newestSpWin" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_DRAW" property="newestSpDraw" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_FAIL" property="newestSpFail" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_GOAL" property="initialSp0Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_GOAL" property="initialSp1Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_GOAL" property="initialSp2Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_3_GOAL" property="initialSp3Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_4_GOAL" property="initialSp4Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_5_GOAL" property="initialSp5Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_6_GOAL" property="initialSp6Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_7_GOAL" property="initialSp7Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_GOAL" property="newestSp0Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_GOAL" property="newestSp1Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_GOAL" property="newestSp2Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_3_GOAL" property="newestSp3Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_4_GOAL" property="newestSp4Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_5_GOAL" property="newestSp5Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_6_GOAL" property="newestSp6Goal" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_7_GOAL" property="newestSp7Goal" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_W_W" property="initialSpWW" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_W_D" property="initialSpWD" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_W_F" property="initialSpWF" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_D_W" property="initialSpDW" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_D_D" property="initialSpDD" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_D_F" property="initialSpDF" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_F_W" property="initialSpFW" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_F_D" property="initialSpFD" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_F_F" property="initialSpFF" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_W_W" property="newestSpWW" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_W_D" property="newestSpWD" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_W_F" property="newestSpWF" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_D_W" property="newestSpDW" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_D_D" property="newestSpDD" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_D_F" property="newestSpDF" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_F_W" property="newestSpFW" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_F_D" property="newestSpFD" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_F_F" property="newestSpFF" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_0" property="initialSp10" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_0" property="initialSp20" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_1" property="initialSp21" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_3_0" property="initialSp30" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_3_1" property="initialSp31" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_3_2" property="initialSp32" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_4_0" property="initialSp40" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_4_1" property="initialSp41" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_4_2" property="initialSp42" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_5_0" property="initialSp50" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_5_1" property="initialSp51" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_5_2" property="initialSp52" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_W_OTHER" property="initialSpWOther" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_0" property="initialSp00" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_1" property="initialSp11" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_2" property="initialSp22" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_D_OTHER" property="initialSpDOther" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_1" property="initialSp01" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_2" property="initialSp02" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_2" property="initialSp12" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_3" property="initialSp03" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_3" property="initialSp13" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_3" property="initialSp23" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_4" property="initialSp04" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_4" property="initialSp14" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_4" property="initialSp24" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_0_5" property="initialSp05" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_1_5" property="initialSp15" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_2_5" property="initialSp25" jdbcType="DECIMAL"/>
+        <result column="INITIAL_SP_F_OTHER" property="initialSpFOther" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_0" property="newestSp10" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_0" property="newestSp20" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_1" property="newestSp21" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_3_0" property="newestSp30" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_3_1" property="newestSp31" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_3_2" property="newestSp32" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_4_0" property="newestSp40" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_4_1" property="newestSp41" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_4_2" property="newestSp42" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_5_0" property="newestSp50" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_5_1" property="newestSp51" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_5_2" property="newestSp52" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_W_OTHER" property="newestSpWOther" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_0" property="newestSp00" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_1" property="newestSp11" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_2" property="newestSp22" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_3_3" property="newestSp33" jdbcType="DECIMAL"/>        
+        <result column="NEWEST_SP_D_OTHER" property="newestSpDOther" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_1" property="newestSp01" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_2" property="newestSp02" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_2" property="newestSp12" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_3" property="newestSp03" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_3" property="newestSp13" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_3" property="newestSp23" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_4" property="newestSp04" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_4" property="newestSp14" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_4" property="newestSp24" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_0_5" property="newestSp05" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_1_5" property="newestSp15" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_2_5" property="newestSp25" jdbcType="DECIMAL"/>
+        <result column="NEWEST_SP_F_OTHER" property="newestSpFOther" jdbcType="DECIMAL"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    ID, SPORT_AGAINST_INFO_ID, INITIAL_LET_NUM, INITIAL_LET_SP_WIN,
+    INITIAL_LET_SP_DRAW, INITIAL_LET_SP_FAIL, INITIAL_SP_WIN, INITIAL_SP_DRAW, INITIAL_SP_FAIL,
+    NEWEST_LET_NUM, NEWEST_LET_SP_WIN, NEWEST_LET_SP_DRAW, NEWEST_LET_SP_FAIL, NEWEST_SP_WIN,
+    NEWEST_SP_DRAW, NEWEST_SP_FAIL, INITIAL_SP_0_GOAL, INITIAL_SP_1_GOAL, INITIAL_SP_2_GOAL,
+    INITIAL_SP_3_GOAL, INITIAL_SP_4_GOAL, INITIAL_SP_5_GOAL, INITIAL_SP_6_GOAL, INITIAL_SP_7_GOAL,
+    NEWEST_SP_0_GOAL, NEWEST_SP_1_GOAL, NEWEST_SP_2_GOAL, NEWEST_SP_3_GOAL, NEWEST_SP_4_GOAL,
+    NEWEST_SP_5_GOAL, NEWEST_SP_6_GOAL, NEWEST_SP_7_GOAL, INITIAL_SP_W_W, INITIAL_SP_W_D,
+    INITIAL_SP_W_F, INITIAL_SP_D_W, INITIAL_SP_D_D, INITIAL_SP_D_F, INITIAL_SP_F_W, INITIAL_SP_F_D,
+    INITIAL_SP_F_F, NEWEST_SP_W_W, NEWEST_SP_W_D, NEWEST_SP_W_F, NEWEST_SP_D_W, NEWEST_SP_D_D,
+    NEWEST_SP_D_F, NEWEST_SP_F_W, NEWEST_SP_F_D, NEWEST_SP_F_F, INITIAL_SP_1_0, INITIAL_SP_2_0,
+    INITIAL_SP_2_1, INITIAL_SP_3_0, INITIAL_SP_3_1, INITIAL_SP_3_2, INITIAL_SP_4_0, INITIAL_SP_4_1,
+    INITIAL_SP_4_2, INITIAL_SP_5_0, INITIAL_SP_5_1, INITIAL_SP_5_2, INITIAL_SP_W_OTHER,
+    INITIAL_SP_0_0, INITIAL_SP_1_1, INITIAL_SP_2_2, INITIAL_SP_3_3, INITIAL_SP_D_OTHER, INITIAL_SP_0_1,
+    INITIAL_SP_0_2, INITIAL_SP_1_2, INITIAL_SP_0_3, INITIAL_SP_1_3, INITIAL_SP_2_3, INITIAL_SP_0_4,
+    INITIAL_SP_1_4, INITIAL_SP_2_4, INITIAL_SP_0_5, INITIAL_SP_1_5, INITIAL_SP_2_5, INITIAL_SP_F_OTHER,
+    NEWEST_SP_1_0, NEWEST_SP_2_0, NEWEST_SP_2_1, NEWEST_SP_3_0, NEWEST_SP_3_1, NEWEST_SP_3_2,
+    NEWEST_SP_4_0, NEWEST_SP_4_1, NEWEST_SP_4_2, NEWEST_SP_5_0, NEWEST_SP_5_1, NEWEST_SP_5_2,
+    NEWEST_SP_W_OTHER, NEWEST_SP_0_0, NEWEST_SP_1_1, NEWEST_SP_2_2, NEWEST_SP_3_3, NEWEST_SP_D_OTHER,
+    NEWEST_SP_0_1, NEWEST_SP_0_2, NEWEST_SP_1_2, NEWEST_SP_0_3, NEWEST_SP_1_3, NEWEST_SP_2_3,
+    NEWEST_SP_0_4, NEWEST_SP_1_4, NEWEST_SP_2_4, NEWEST_SP_0_5, NEWEST_SP_1_5, NEWEST_SP_2_5,
+    NEWEST_SP_F_OTHER, UPDATE_TIME, CREATE_TIME
+    </sql>
+
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataFbSpPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_fb_sp (sport_against_info_id, initial_let_num, 
+      initial_let_sp_win, initial_let_sp_draw, initial_let_sp_fail, 
+      initial_sp_win, initial_sp_draw, initial_sp_fail, 
+      newest_let_num, newest_let_sp_win, newest_let_sp_draw, 
+      newest_let_sp_fail, newest_sp_win, newest_sp_draw, 
+      newest_sp_fail, initial_sp_0_goal, initial_sp_1_goal, 
+      initial_sp_2_goal, initial_sp_3_goal, initial_sp_4_goal, 
+      initial_sp_5_goal, initial_sp_6_goal, initial_sp_7_goal, 
+      newest_sp_0_goal, newest_sp_1_goal, newest_sp_2_goal, 
+      newest_sp_3_goal, newest_sp_4_goal, newest_sp_5_goal, 
+      newest_sp_6_goal, newest_sp_7_goal, initial_sp_w_w, 
+      initial_sp_w_d, initial_sp_w_f, initial_sp_d_w, 
+      initial_sp_d_d, initial_sp_d_f, initial_sp_f_w, 
+      initial_sp_f_d, initial_sp_f_f, newest_sp_w_w, 
+      newest_sp_w_d, newest_sp_w_f, newest_sp_d_w, 
+      newest_sp_d_d, newest_sp_d_f, newest_sp_f_w, 
+      newest_sp_f_d, newest_sp_f_f, initial_sp_1_0, 
+      initial_sp_2_0, initial_sp_2_1, initial_sp_3_0, 
+      initial_sp_3_1, initial_sp_3_2, initial_sp_4_0, 
+      initial_sp_4_1, initial_sp_4_2, initial_sp_5_0, 
+      initial_sp_5_1, initial_sp_5_2, initial_sp_w_other, 
+      initial_sp_0_0, initial_sp_1_1, initial_sp_2_2, 
+      initial_sp_d_other, initial_sp_0_1, initial_sp_0_2, 
+      initial_sp_1_2, initial_sp_0_3, initial_sp_1_3, 
+      initial_sp_2_3, initial_sp_0_4, initial_sp_1_4, 
+      initial_sp_2_4, initial_sp_0_5, initial_sp_1_5, 
+      initial_sp_2_5, initial_sp_f_other, newest_sp_1_0, 
+      newest_sp_2_0, newest_sp_2_1, newest_sp_3_0, 
+      newest_sp_3_1, newest_sp_3_2, newest_sp_4_0, 
+      newest_sp_4_1, newest_sp_4_2, newest_sp_5_0, 
+      newest_sp_5_1, newest_sp_5_2, newest_sp_w_other, 
+      newest_sp_0_0, newest_sp_1_1, newest_sp_2_2, 
+      newest_sp_d_other, newest_sp_0_1, newest_sp_0_2, 
+      newest_sp_1_2, newest_sp_0_3, newest_sp_1_3, 
+      newest_sp_2_3, newest_sp_0_4, newest_sp_1_4, 
+      newest_sp_2_4, newest_sp_0_5, newest_sp_1_5, 
+      newest_sp_2_5, newest_sp_f_other, update_time, 
+      create_time, initial_sp_3_3, newest_sp_3_3
+      )
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{initialLetNum,jdbcType=TINYINT}, 
+      #{initialLetSpWin,jdbcType=DECIMAL}, #{initialLetSpDraw,jdbcType=DECIMAL}, #{initialLetSpFail,jdbcType=DECIMAL}, 
+      #{initialSpWin,jdbcType=DECIMAL}, #{initialSpDraw,jdbcType=DECIMAL}, #{initialSpFail,jdbcType=DECIMAL}, 
+      #{newestLetNum,jdbcType=DECIMAL}, #{newestLetSpWin,jdbcType=DECIMAL}, #{newestLetSpDraw,jdbcType=DECIMAL}, 
+      #{newestLetSpFail,jdbcType=DECIMAL}, #{newestSpWin,jdbcType=DECIMAL}, #{newestSpDraw,jdbcType=DECIMAL}, 
+      #{newestSpFail,jdbcType=DECIMAL}, #{initialSp0Goal,jdbcType=DECIMAL}, #{initialSp1Goal,jdbcType=DECIMAL}, 
+      #{initialSp2Goal,jdbcType=DECIMAL}, #{initialSp3Goal,jdbcType=DECIMAL}, #{initialSp4Goal,jdbcType=DECIMAL}, 
+      #{initialSp5Goal,jdbcType=DECIMAL}, #{initialSp6Goal,jdbcType=DECIMAL}, #{initialSp7Goal,jdbcType=DECIMAL}, 
+      #{newestSp0Goal,jdbcType=DECIMAL}, #{newestSp1Goal,jdbcType=DECIMAL}, #{newestSp2Goal,jdbcType=DECIMAL}, 
+      #{newestSp3Goal,jdbcType=DECIMAL}, #{newestSp4Goal,jdbcType=DECIMAL}, #{newestSp5Goal,jdbcType=DECIMAL}, 
+      #{newestSp6Goal,jdbcType=DECIMAL}, #{newestSp7Goal,jdbcType=DECIMAL}, #{initialSpWW,jdbcType=DECIMAL}, 
+      #{initialSpWD,jdbcType=DECIMAL}, #{initialSpWF,jdbcType=DECIMAL}, #{initialSpDW,jdbcType=DECIMAL}, 
+      #{initialSpDD,jdbcType=DECIMAL}, #{initialSpDF,jdbcType=DECIMAL}, #{initialSpFW,jdbcType=DECIMAL}, 
+      #{initialSpFD,jdbcType=DECIMAL}, #{initialSpFF,jdbcType=DECIMAL}, #{newestSpWW,jdbcType=DECIMAL}, 
+      #{newestSpWD,jdbcType=DECIMAL}, #{newestSpWF,jdbcType=DECIMAL}, #{newestSpDW,jdbcType=DECIMAL}, 
+      #{newestSpDD,jdbcType=DECIMAL}, #{newestSpDF,jdbcType=DECIMAL}, #{newestSpFW,jdbcType=DECIMAL}, 
+      #{newestSpFD,jdbcType=DECIMAL}, #{newestSpFF,jdbcType=DECIMAL}, #{initialSp10,jdbcType=DECIMAL}, 
+      #{initialSp20,jdbcType=DECIMAL}, #{initialSp21,jdbcType=DECIMAL}, #{initialSp30,jdbcType=DECIMAL}, 
+      #{initialSp31,jdbcType=DECIMAL}, #{initialSp32,jdbcType=DECIMAL}, #{initialSp40,jdbcType=DECIMAL}, 
+      #{initialSp41,jdbcType=DECIMAL}, #{initialSp42,jdbcType=DECIMAL}, #{initialSp50,jdbcType=DECIMAL}, 
+      #{initialSp51,jdbcType=DECIMAL}, #{initialSp52,jdbcType=DECIMAL}, #{initialSpWOther,jdbcType=DECIMAL}, 
+      #{initialSp00,jdbcType=DECIMAL}, #{initialSp11,jdbcType=DECIMAL}, #{initialSp22,jdbcType=DECIMAL}, 
+      #{initialSpDOther,jdbcType=DECIMAL}, #{initialSp01,jdbcType=DECIMAL}, #{initialSp02,jdbcType=DECIMAL}, 
+      #{initialSp12,jdbcType=DECIMAL}, #{initialSp03,jdbcType=DECIMAL}, #{initialSp13,jdbcType=DECIMAL}, 
+      #{initialSp23,jdbcType=DECIMAL}, #{initialSp04,jdbcType=DECIMAL}, #{initialSp14,jdbcType=DECIMAL}, 
+      #{initialSp24,jdbcType=DECIMAL}, #{initialSp05,jdbcType=DECIMAL}, #{initialSp15,jdbcType=DECIMAL}, 
+      #{initialSp25,jdbcType=DECIMAL}, #{initialSpFOther,jdbcType=DECIMAL}, #{newestSp10,jdbcType=DECIMAL}, 
+      #{newestSp20,jdbcType=DECIMAL}, #{newestSp21,jdbcType=DECIMAL}, #{newestSp30,jdbcType=DECIMAL}, 
+      #{newestSp31,jdbcType=DECIMAL}, #{newestSp32,jdbcType=DECIMAL}, #{newestSp40,jdbcType=DECIMAL}, 
+      #{newestSp41,jdbcType=DECIMAL}, #{newestSp42,jdbcType=DECIMAL}, #{newestSp50,jdbcType=DECIMAL}, 
+      #{newestSp51,jdbcType=DECIMAL}, #{newestSp52,jdbcType=DECIMAL}, #{newestSpWOther,jdbcType=DECIMAL}, 
+      #{newestSp00,jdbcType=DECIMAL}, #{newestSp11,jdbcType=DECIMAL}, #{newestSp22,jdbcType=DECIMAL}, 
+      #{newestSpDOther,jdbcType=DECIMAL}, #{newestSp01,jdbcType=DECIMAL}, #{newestSp02,jdbcType=DECIMAL}, 
+      #{newestSp12,jdbcType=DECIMAL}, #{newestSp03,jdbcType=DECIMAL}, #{newestSp13,jdbcType=DECIMAL}, 
+      #{newestSp23,jdbcType=DECIMAL}, #{newestSp04,jdbcType=DECIMAL}, #{newestSp14,jdbcType=DECIMAL}, 
+      #{newestSp24,jdbcType=DECIMAL}, #{newestSp05,jdbcType=DECIMAL}, #{newestSp15,jdbcType=DECIMAL}, 
+      #{newestSp25,jdbcType=DECIMAL}, #{newestSpFOther,jdbcType=DECIMAL}, now(), 
+      now(), #{initialSp33,jdbcType=DECIMAL}, #{newestSp33,jdbcType=DECIMAL})
+      ON DUPLICATE KEY UPDATE
+      <if test="newestLetNum != null and newestLetNum != ''">
+       newest_let_num = values(newest_let_num),      	
+      </if>
+      <if test="newestLetSpWin != null and newestLetSpWin != ''">      
+      newest_let_sp_win = values(newest_let_sp_win), 
+      </if>
+      <if test="newestLetSpDraw != null and newestLetSpDraw != ''">
+      newest_let_sp_draw = values(newest_let_sp_draw), 
+      </if>
+      <if test="newestLetSpFail != null and newestLetSpFail != ''">      
+      newest_let_sp_fail = values(newest_let_sp_fail),  
+      </if>
+      <if test="newestSpWin != null and newestSpWin != ''">      
+      newest_sp_win = values(newest_sp_win), 
+      </if>
+      <if test="newestSpDraw != null and newestSpDraw != ''">      
+      newest_sp_draw = values(newest_sp_draw), 
+      </if>
+      <if test="newestSpFail != null and newestSpFail != ''">      
+      newest_sp_fail = values(newest_sp_fail),
+      </if>
+      <if test="newestSp0Goal != null and newestSp0Goal != ''">      
+      newest_sp_0_goal = values(newest_sp_0_goal),
+      </if>
+      <if test="newestSp1Goal != null and newestSp1Goal != ''">      
+      newest_sp_1_goal = values(newest_sp_1_goal), 
+      </if> 
+      <if test="newestSp2Goal != null and newestSp2Goal != ''">      
+      newest_sp_2_goal = values(newest_sp_2_goal), 
+      </if> 
+      <if test="newestSp3Goal != null and newestSp3Goal != ''">      
+      newest_sp_3_goal = values(newest_sp_3_goal),  
+      </if> 
+      <if test="newestSp4Goal != null and newestSp4Goal != ''">      
+      newest_sp_4_goal = values(newest_sp_4_goal), 
+      </if>
+      <if test="newestSp5Goal != null and newestSp5Goal != ''">      
+      newest_sp_5_goal = values(newest_sp_5_goal), 
+      </if>
+      <if test="newestSp6Goal != null and newestSp6Goal != ''">      
+      newest_sp_6_goal = values(newest_sp_6_goal), 
+      </if> 
+      <if test="newestSp7Goal != null and newestSp7Goal != ''">      
+      newest_sp_7_goal = values(newest_sp_7_goal), 
+      </if> 
+      <if test="newestSpWW != null and newestSpWW != ''">      
+      newest_sp_w_w = values(newest_sp_w_w),
+      </if>
+      <if test="newestSpWD != null and newestSpWD != ''">      
+	  newest_sp_w_d = values(newest_sp_w_d), 
+      </if>
+      <if test="newestSpWF != null and newestSpWF != ''">      
+      newest_sp_w_f = values(newest_sp_w_f), 
+      </if>                                                                                                
+      <if test="newestSpDW != null and newestSpDW != ''">      
+      newest_sp_d_w = values(newest_sp_d_w),  
+      </if> 
+      <if test="newestSpDD != null and newestSpDD != ''">      
+      newest_sp_d_d = values(newest_sp_d_d), 
+      </if> 
+      <if test="newestSpDF != null and newestSpDF != ''">      
+      newest_sp_d_f = values(newest_sp_d_f), 
+      </if> 
+      <if test="newestSpFW != null and newestSpFW != ''">      
+      newest_sp_f_w = values(newest_sp_f_w), 
+      </if>
+      <if test="newestSpFD != null and newestSpFD != ''">      
+      newest_sp_f_d = values(newest_sp_f_d),  
+      </if>
+      <if test="newestSpFF != null and newestSpFF != ''">      
+      newest_sp_f_f = values(newest_sp_f_f),  
+      </if>
+      <if test="newestSp10 != null and newestSp10 != ''">      
+      newest_sp_1_0 = values(newest_sp_1_0),
+      </if>
+      <if test="newestSp20 != null and newestSp20 != ''">      
+      newest_sp_2_0 = values(newest_sp_2_0), 
+      </if>
+      <if test="newestSp21 != null and newestSp21 != ''">      
+      newest_sp_2_1 = values(newest_sp_2_1), 
+      </if>
+      <if test="newestSp30 != null and newestSp30 != ''">      
+      newest_sp_3_0 = values(newest_sp_3_0),  
+      </if>
+      <if test="newestSp31 != null and newestSp31 != ''">      
+      newest_sp_3_1 = values(newest_sp_3_1), 
+      </if>
+      <if test="newestSp32 != null and newestSp32 != ''">      
+      newest_sp_3_2 = values(newest_sp_3_2), 
+      </if>
+      <if test="newestSp40 != null and newestSp40 != ''">      
+      newest_sp_4_0 = values(newest_sp_4_0), 
+      </if>
+      <if test="newestSp41 != null and newestSp41 != ''">      
+      newest_sp_4_1 = values(newest_sp_4_1),  
+      </if>
+      <if test="newestSp42 != null and newestSp42 != ''">      
+      newest_sp_4_2 = values(newest_sp_4_2), 
+      </if>
+      <if test="newestSp50 != null and newestSp50 != ''">      
+      newest_sp_5_0 = values(newest_sp_5_0), 
+      </if>
+      <if test="newestSp51 != null and newestSp51 != ''">      
+      newest_sp_5_1 = values(newest_sp_5_1), 
+      </if>
+      <if test="newestSp52 != null and newestSp52 != ''">      
+      newest_sp_5_2 = values(newest_sp_5_2),  
+      </if>
+      <if test="newestSpWOther != null and newestSpWOther != ''">      
+      newest_sp_w_other = values(newest_sp_w_other),     
+      </if>
+      <if test="newestSp00 != null and newestSp00 != ''">      
+      newest_sp_0_0 = values(newest_sp_0_0),   
+      </if>  
+      <if test="newestSp11 != null and newestSp11 != ''">      
+      newest_sp_1_1 = values(newest_sp_1_1), 
+      </if> 
+      <if test="newestSp22 != null and newestSp22 != ''">      
+      newest_sp_2_2 = values(newest_sp_2_2),  
+      </if> 
+      <if test="newestSp33 != null and newestSp33 != ''">      
+      newest_sp_3_3 = values(newest_sp_3_3), 
+      </if> 
+      <if test="newestSpDOther != null and newestSpDOther != ''">      
+      newest_sp_d_other = values(newest_sp_d_other),  
+      </if>
+      <if test="newestSp01 != null and newestSp01 != ''">      
+      newest_sp_0_1 = values(newest_sp_0_1), 
+      </if>  
+      <if test="newestSp02 != null and newestSp02 != ''">      
+      newest_sp_0_2 = values(newest_sp_0_2), 
+      </if>  
+      <if test="newestSp12 != null and newestSp12 != ''">      
+      newest_sp_1_2 = values(newest_sp_1_2), 
+      </if> 
+      <if test="newestSp03 != null and newestSp03 != ''">      
+      newest_sp_0_3 = values(newest_sp_0_3),  
+      </if>
+      <if test="newestSp13 != null and newestSp13 != ''">      
+      newest_sp_1_3 = values(newest_sp_1_3), 
+      </if>
+      <if test="newestSp23 != null and newestSp23 != ''">      
+      newest_sp_2_3 = values(newest_sp_2_3), 
+      </if>
+      <if test="newestSp04 != null and newestSp04 != ''">      
+      newest_sp_0_4 = values(newest_sp_0_4), 
+      </if>
+      <if test="newestSp14 != null and newestSp14 != ''">      
+      newest_sp_1_4 = values(newest_sp_1_4), 
+      </if>
+      <if test="newestSp24 != null and newestSp24 != ''">      
+      newest_sp_2_4 = values(newest_sp_2_4), 
+      </if> 
+      <if test="newestSp05 != null and newestSp05 != ''">      
+      newest_sp_0_5 = values(newest_sp_0_5), 
+      </if> 
+      <if test="newestSp15 != null and newestSp15 != ''">      
+      newest_sp_1_5 = values(newest_sp_1_5), 
+      </if> 
+      <if test="newestSp25 != null and newestSp25 != ''">      
+      newest_sp_2_5 = values(newest_sp_2_5),  
+      </if> 
+      <if test="newestSpFOther != null and newestSpFOther != ''">      
+      newest_sp_f_other = values(newest_sp_f_other),  
+      </if> 
+      update_time = now();
+  </insert>
+  
+</mapper>

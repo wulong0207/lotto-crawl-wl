@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.lottery.dao.LotteryIssueDaoMapper">
+
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="lottery_code" jdbcType="SMALLINT" property="lotteryCode" />
+	    <result column="issue_code" jdbcType="VARCHAR" property="issueCode" />
+	    <result column="lottery_name" jdbcType="VARCHAR" property="lotteryName" />
+	    <result column="current_issue" jdbcType="BIT" property="currentIssue" />
+	    <result column="sale_status" jdbcType="BIT" property="saleStatus" />
+	    <result column="official_end_time" jdbcType="TIMESTAMP" property="officialEndTime" />
+	    <result column="lottery_time" jdbcType="TIMESTAMP" property="lotteryTime" />
+	    <result column="sale_time" jdbcType="TIMESTAMP" property="saleTime" />
+	    <result column="sale_end_time" jdbcType="TIMESTAMP" property="saleEndTime" />
+	    <result column="sales_amount" jdbcType="INTEGER" property="salesAmount" />
+	    <result column="jackpot_amount" jdbcType="BIGINT" property="jackpotAmount" />
+	    <result column="draw_code" jdbcType="VARCHAR" property="drawCode" />
+	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+	    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+	    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="remark" jdbcType="VARCHAR" property="remark" />
+	    <result column="official_start_time" jdbcType="TIMESTAMP" property="officialStartTime" />
+	    <result column="issue_lastest" jdbcType="BIT" property="issueLastest" />
+	    <result column="draw_code_test" jdbcType="VARCHAR" property="drawCodeTest" />
+	  </resultMap>
+
+	<!-- 获取当前期以后彩期的信息 -->
+	<select id="getIssueInfo" resultType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO">
+		select * from (select
+		id,
+		issue_code issueCode,
+		lottery_code lotteryCode,
+		sale_end_time saleEndTime,
+		lottery_name lotteryName,
+		sale_time saleTime,
+		lottery_time lotteryTime,
+		official_end_time officialEndTime
+		from lottery_issue
+		where lottery_code = #{lotteryCode}
+		and issue_code <![CDATA[<]]> (select issue_code issueCode
+		from lottery_issue
+		where current_issue = 1
+		and lottery_code = #{lotteryCode})
+		order by issue_code desc
+		limit 0, 2) as t1
+		union
+		select * from (
+		select
+			id,
+			issue_code        issueCode,
+			lottery_code      lotteryCode,
+			sale_end_time     saleEndTime,
+			lottery_name      lotteryName,
+			sale_time         saleTime,
+			lottery_time      lotteryTime,
+			official_end_time officialEndTime
+		from lottery_issue
+		where lottery_code = #{lotteryCode}
+		and issue_code <![CDATA[>=]]> (select issue_code issueCode
+		from lottery_issue
+		where current_issue = 1
+		and lottery_code = #{lotteryCode})
+		order by issue_code asc
+		limit 0, 20) as t1
+	</select>
+  
+	<!-- sql语句块：彩期查询 -->
+  	<sql id="sql_statement_issue">
+	  	select lottery_code,
+		       issue_code,
+		       sale_status,
+		       official_end_time,
+		       sale_end_time,
+		       jackpot_amount,
+		       draw_code,
+		       draw_detail
+		  from lottery_issue li
+	</sql>
+	<!-- sql语句块：彩期查询条件 -->
+	<sql id="sql_condition_issue">
+  		where 1 = 1
+  		<if test="lotteryCode != null">
+          	and li.lottery_code = #{lotteryCode,jdbcType=INTEGER}
+        </if>
+        <if test="issueCode != null and issueCode != ''">
+          	and li.issue_code = #{issueCode,jdbcType=VARCHAR}
+        </if>
+        <if test="currentIssue != null">
+          	and li.current_issue = #{currentIssue,jdbcType=SMALLINT}
+        </if>
+        <if test="lotteryTime != null">
+            and DATE_FORMAT(lottery_time,'%Y-%M-%d') = DATE_FORMAT(#{lotteryTime},'%Y-%M-%d')
+        </if>
+	</sql>
+	<!-- 查询单个彩期 -->
+	<select id="findSingle" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO" resultMap="BaseResultMap">
+		<include refid="sql_statement_issue"/>
+		<include refid="sql_condition_issue"/>
+		limit 0,1
+	</select>
+	
+	<select id="findByCode" resultMap="BaseResultMap">
+		<include refid="sql_statement_issue"/>
+		where li.lottery_code = #{lotteryCode,jdbcType=INTEGER} and li.issue_code = #{issueCode,jdbcType=VARCHAR}
+	</select>	
+
+	<!-- 获取当前期以及下一期彩期issueCode -->
+	<select id="getCurrentAndNextIssue" resultType="java.lang.String" parameterType="java.lang.Integer">
+		select t.issue_code as issueCode
+        from (select li.issue_code
+  				from lottery_issue li
+ 				where li.lottery_code = #{lotteryCode}
+		and li.issue_code <![CDATA[>=]]>(
+   				           select issue_code
+                           from lottery_issue
+                           where lottery_code = #{lotteryCode}
+                           and current_issue = 1)
+		order by li.issue_code desc limit 0,3
+               ) t
+	</select>
+
+	<!-- 获取当前期以及下一期彩期issueCode对象 -->
+	<select id="getCurrentAndNextIssuePO" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select li.*
+		from lottery_issue li
+		where li.lottery_code = #{lotteryCode}
+		and li.issue_code >=(
+		select issue_code
+		from lottery_issue
+		where lottery_code = #{lotteryCode}
+		and current_issue = 1)
+		order by li.issue_code desc limit 0,5
+	</select>
+
+	<insert id="insert" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO" keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO lottery_issue (lottery_code, issue_code,
+								   lottery_name, current_issue, sale_status,
+								   official_end_time, lottery_time, sale_time,
+								   sale_end_time, sales_amount, jackpot_amount,
+								   draw_code, create_by, modify_by,
+								   modify_time, update_time, create_time,
+								   remark, official_start_time, issue_lastest,
+								   draw_detail)
+		VALUES (#{lotteryCode,jdbcType=SMALLINT}, #{issueCode,jdbcType=VARCHAR},
+												  #{lotteryName,jdbcType=VARCHAR}, #{currentIssue,jdbcType=BIT}, #{saleStatus,jdbcType=BIT},
+												  #{officialEndTime,jdbcType=TIMESTAMP}, #{lotteryTime,jdbcType=TIMESTAMP}, #{saleTime,jdbcType=TIMESTAMP},
+												  #{saleEndTime,jdbcType=TIMESTAMP}, #{salesAmount,jdbcType=INTEGER}, #{jackpotAmount,jdbcType=BIGINT},
+			#{drawCode,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{modifyBy,jdbcType=VARCHAR},
+			NOW(), NOW(), NOW(),
+			#{remark,jdbcType=VARCHAR}, #{officialStartTime,jdbcType=TIMESTAMP}, #{issueLastest,jdbcType=BIT},
+			#{drawDetail,jdbcType=LONGVARCHAR})
+	</insert>
+
+    <update id="highDrawUpdate" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO">
+        UPDATE lottery_issue
+        SET
+            current_issue = #{currentIssue,jdbcType=BIT},
+            update_time   = NOW(),
+            issue_lastest = #{issueLastest,jdbcType=BIT}
+        WHERE lottery_code = #{lotteryCode,jdbcType=INTEGER} AND issue_code = #{issueCode}
+    </update>
+
+	<update id="updateOtherData">
+		UPDATE lottery_issue
+		SET current_issue = 3, issue_lastest = 0
+		WHERE lottery_code = #{lotteryCode} AND (current_issue = 2 or issue_lastest = 1)
+	</update>
+    <update id="updateLastStatus">
+		update lottery_issue
+		set current_issue = 2, issue_lastest = 1
+		WHERE lottery_code = #{lotteryCode} and issue_code =
+												(
+													SELECT *
+													FROM (
+															 select max(issue_code)
+															 from lottery_issue
+															 where lottery_code = #{lotteryCode} AND
+																   lottery_time <![CDATA[ < ]]> current_time()
+														 ) tmp
+		)
+    </update>
+    
+    
+    <insert id="insertOrUpdateIssue" useGeneratedKeys="true" keyProperty="id" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssuePO">
+		insert into lottery_issue(lottery_code,issue_code,lottery_name, lottery_time,official_end_time,
+			draw_code, draw_code_test, draw_detail, sales_amount, jackpot_amount,
+			sale_status, current_issue, issue_lastest, remark,
+			create_by, create_time, modify_time, update_time)
+		select li.lottery_code, li.issue_code, lt.lottery_name,
+			<choose>
+				<when test="lotteryTime != null">
+					#{lotteryTime} lottery_time,
+				</when>
+				<otherwise>
+					li.lottery_time,
+				</otherwise>
+			</choose>
+			<choose>
+				<when test="officialEndTime != null">
+					#{officialEndTime} official_end_time,
+				</when>
+				<otherwise>
+					li.lottery_time official_end_time,
+				</otherwise>
+			</choose>
+			li.draw_code, li.draw_code_test, li.draw_detail, li.sales_amount, li.jackpot_amount,
+			5 sale_status, 3 current_issue, 0 issue_lastest, #{remark,jdbcType=VARCHAR},
+			#{createBy}, now(), now(), now()
+		from lottery_issue_source li
+		join lottery_type lt on li.lottery_code=lt.lottery_code
+		where li.lottery_code=#{lotteryCode} and issue_code=#{issueCode}
+		order by li.lottery_time desc, li.create_time desc limit 1
+		ON DUPLICATE KEY UPDATE
+		draw_code=values(draw_code), draw_code_test=values(draw_code_test),
+		lottery_time=values(lottery_time), official_end_time=values(official_end_time),
+		sales_amount=values(sales_amount), jackpot_amount=values(jackpot_amount),
+		update_time=now()
+    </insert>
+    <!-- 更新彩期状态 -->
+    <update id="updateCurrentIssue">
+    	update lottery_issue set current_issue=2
+		where lottery_code=#{lotteryCode, jdbcType=INTEGER} and issue_code=(
+			select * from (
+				select max(li.issue_code) from lottery_issue li
+				where li.lottery_code=#{lotteryCode, jdbcType=INTEGER} and li.lottery_time<![CDATA[<]]>now()
+			) t
+		)
+    </update>
+    <!-- 更新是否最新开奖 -->
+    <update id="updateIssueLastest">
+    	update lottery_issue set issue_lastest=1
+		where lottery_code=#{lotteryCode, jdbcType=INTEGER} and issue_code=(
+			select * from (
+				select max(li.issue_code) from lottery_issue li
+				where li.lottery_code=#{lotteryCode, jdbcType=INTEGER} and li.lottery_time<![CDATA[<]]>now()
+				and li.draw_code is not null
+			) t
+		)
+    </update>
+</mapper>

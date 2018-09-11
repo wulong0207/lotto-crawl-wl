@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.lottery.dao.LotteryIssueSourceDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.lottery.po.LotteryIssueSourcePO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="lottery_code" jdbcType="SMALLINT" property="lotteryCode"/>
+        <result column="issue_code" jdbcType="VARCHAR" property="issueCode"/>
+        <result column="lottery_name" jdbcType="VARCHAR" property="lotteryName"/>
+        <result column="lottery_type" jdbcType="VARCHAR" property="lotteryType"/>
+        <result column="lottery_time" jdbcType="TIMESTAMP" property="lotteryTime"/>
+        <result column="draw_code" jdbcType="VARCHAR" property="drawCode"/>
+        <result column="draw_detail" jdbcType="LONGVARCHAR" property="drawDetail"/>
+        <result column="sales_amount" jdbcType="INTEGER" property="salesAmount"/>
+        <result column="jackpot_amount" jdbcType="BIGINT" property="jackpotAmount"/>
+        <result column="source" jdbcType="TINYINT" property="source"/>
+        <result column="draw_code_test" jdbcType="VARCHAR" property="drawCodeTest"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="issue_status" jdbcType="BIT" property="issueStatus"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, lottery_code, issue_code, lottery_name, lottery_type, lottery_time, draw_code, draw_detail, sales_amount,
+        jackpot_amount, source, draw_code_test, create_time, update_time, issue_status
+    </sql>
+
+    <sql id="select_comm_sql">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM lottery_issue_source
+    </sql>
+
+    <!-- 公用条件sql -->
+    <sql id="condition_comm_sql">
+        <where>
+            <if test="lotteryCode != null">
+                lottery_code = #{lotteryCode,jdbcType=INTEGER}
+            </if>
+            <if test="issueCode != null and issueCode != ''">
+                and issue_code = #{issueCode,jdbcType=VARCHAR}
+            </if>
+            <if test="source != null">
+                and source = #{source,jdbcType=INTEGER}
+            </if>
+            <if test="lotteryTime != null">
+                and DATE_FORMAT(lottery_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+            </if>
+            <if test="issueId != null ">
+                and issue_id is null
+            </if>
+
+
+            <if test="orderSql != null">
+                order by ${orderSql}
+            </if>
+
+        </where>
+    </sql>
+    <!--更新公用条件 -->
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="lotteryCode != null">
+                and lottery_code = #{lotteryCode}
+            </if>
+            <if test="issueCode != null">
+                and issue_code = #{issueCode}
+            </if>
+        </where>
+    </sql>
+    <!--V2.0 start-->
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssueSourcePO">
+        insert into lottery_issue_source
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="lotteryCode != null">
+                lottery_code,
+            </if>
+            <if test="issueCode != null">
+                issue_code,
+            </if>
+            <if test="lotteryName != null">
+                lottery_name,
+            </if>
+            <if test="lotteryType != null">
+                lottery_type,
+            </if>
+            <if test="lotteryTime != null">
+                lottery_time,
+            </if>
+            <if test="drawCode != null">
+                draw_code,
+            </if>
+            <if test="drawDetail != null">
+                draw_detail,
+            </if>
+            <if test="salesAmount != null">
+                sales_amount,
+            </if>
+            <if test="jackpotAmount != null">
+                jackpot_amount,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="drawCodeTest != null">
+                draw_code_test,
+            </if>
+            create_time,
+            update_time,
+            <if test="issueStatus != null">
+                issue_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="lotteryCode != null">
+                #{lotteryCode,jdbcType=SMALLINT},
+            </if>
+            <if test="issueCode != null">
+                #{issueCode,jdbcType=VARCHAR},
+            </if>
+            <if test="lotteryName != null">
+                #{lotteryName,jdbcType=VARCHAR},
+            </if>
+            <if test="lotteryType != null">
+                #{lotteryType,jdbcType=INTEGER},
+            </if>
+            <if test="lotteryTime != null">
+                #{lotteryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawCode != null">
+                #{drawCode,jdbcType=VARCHAR},
+            </if>
+            <if test="drawDetail != null">
+                #{drawDetail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="salesAmount != null">
+                #{salesAmount,jdbcType=INTEGER},
+            </if>
+            <if test="jackpotAmount != null">
+                #{jackpotAmount,jdbcType=BIGINT},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=TINYINT},
+            </if>
+            <if test="drawCodeTest != null">
+                #{drawCodeTest,jdbcType=VARCHAR},
+            </if>
+            NOW(),
+            NOW(),
+            <if test="issueStatus != null">
+                #{issueStatus,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByExampleSelective" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssueSourcePO">
+        update lottery_issue_source
+        <set>
+            <if test="lotteryTime != null">
+                lottery_time = #{lotteryTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawCode != null">
+                draw_code = #{drawCode,jdbcType=VARCHAR},
+            </if>
+            <if test="salesAmount != null">
+                sales_amount = #{salesAmount,jdbcType=INTEGER},
+            </if>
+            <if test="jackpotAmount != null">
+                jackpot_amount = #{jackpotAmount,jdbcType=BIGINT},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=TINYINT},
+            </if>
+            <if test="drawCodeTest != null">
+                draw_code_test = #{drawCodeTest,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = NOW(),
+            <if test="issueStatus != null">
+                issue_status = #{issueStatus,jdbcType=BIT},
+            </if>
+            <if test="drawDetail != null">
+                draw_detail = #{drawDetail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="issueId != null">
+                issue_id = #{issueId,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+
+    <select id="selectCondition" parameterType="com.hhly.skeleton.task.lottery.vo.LotteryVO" resultMap="BaseResultMap">
+        <include refid="select_comm_sql"/>
+        <include refid="condition_comm_sql"/>
+    </select>
+
+    <select id="selectLotteryCode" resultType="com.hhly.skeleton.lotto.base.dic.bo.DicDataDetailBO">
+        SELECT
+            id,
+            dic_code       dicCode,
+            dic_data_name  dicDataName,
+            dic_data_value dicDataValue
+        FROM dic_data_detail
+        WHERE dic_code = 9995 AND status = 1
+    </select>
+
+    <select id="selectForLotteryTime" resultMap="BaseResultMap" parameterType="com.hhly.skeleton.task.lottery.vo.LotteryVO">
+        <!-- 需要处理开奖时间的非凡网数据-->
+        <include refid="select_comm_sql"/>
+        <include refid="condition_comm_sql"/>
+        /*SELECT * FROM lottery_issue_source WHERE lottery_code = 213 and source = 2 and DATE_FORMAT(lottery_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d');*/
+    </select>
+    <select id="selectWarningData" resultMap="BaseResultMap">
+        SELECT * FROM (
+        SELECT * from lottery_issue_source
+        WHERE lottery_code in
+        <foreach item="lotteryCodes" index="index" collection="lotteryCodes" open="(" separator="," close=")">
+            #{lotteryCodes}
+        </foreach>
+        and DATE_FORMAT(lottery_time, '%Y-%m-%d') = DATE_FORMAT(lottery_time, '%Y-%m-%d')
+        GROUP BY draw_code,lottery_code, issue_code
+        ) tempTab GROUP BY lottery_code, issue_code
+        HAVING count(tempTab.lottery_code) > 1
+
+    </select>
+
+    <select id="selectSynData" resultMap="BaseResultMap">
+        SELECT
+        *,
+        count(
+        DISTINCT issue_code,
+        lottery_code,
+        draw_code
+        ) ct
+        FROM
+        (
+        SELECT *
+        FROM
+        lottery_issue_source
+        WHERE
+        lottery_code = #{lotteryCode,jdbcType=INTEGER}
+        AND DATE_FORMAT(lottery_time, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+        AND issue_id IS NULL
+        and lottery_code IN (
+        SELECT lottery_code FROM lottery_type WHERE lottery_category = 2
+        )
+        <if test="issueCodes != null and issueCodes.size > 0">
+            AND issue_code NOT IN
+            <foreach item="issueCodes" index="index" collection="issueCodes" open="(" separator="," close=")">
+                #{issueCodes}
+            </foreach>
+        </if>
+        ORDER BY
+        issue_code ASC
+        ) tt
+        GROUP BY
+        issue_code,
+        lottery_code,
+        draw_code
+    </select>
+
+    <select id="synLocalData" resultMap="BaseResultMap">
+        SELECT
+        *,
+        count(
+        DISTINCT issue_code,
+        lottery_code,
+        draw_code
+        ) ct
+        FROM
+        (
+        SELECT *
+        FROM
+        lottery_issue_source
+        WHERE
+        lottery_code = #{lotteryCode,jdbcType=INTEGER}
+        AND issue_id IS NULL
+        AND lottery_code IN (
+        SELECT lottery_code
+        FROM lottery_type
+        WHERE lottery_category = 4
+        )
+        <if test="issueCodes != null and issueCodes.size > 0">
+            AND issue_code NOT IN
+            <foreach item="issueCodes" index="index" collection="issueCodes" open="(" separator="," close=")">
+                #{issueCodes}
+            </foreach>
+        </if>
+
+        ORDER BY
+        issue_code ASC
+        ) tt
+        GROUP BY
+        issue_code,
+        lottery_code,
+        draw_code
+    </select>
+
+    <select id="selectWarningLocal" resultMap="BaseResultMap">
+        SELECT * FROM (
+        SELECT * FROM lottery_issue_source WHERE lottery_code IN
+        <foreach item="lotteryCodes" index="index" collection="lotteryCodes" open="(" separator="," close=")">
+            #{lotteryCodes}
+        </foreach>
+
+        GROUP BY lottery_code,issue_code,DATE_FORMAT(lottery_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d'),draw_code
+        ) tempTab GROUP BY lottery_code,issue_code HAVING count(lottery_code) > 1
+    </select>
+
+    <select id="queryAlarmInfo" resultType="java.lang.Integer">
+        SELECT count(*)
+        from ticket_alarm_info
+        WHERE alarm_child = #{alarmChild} and alarm_info like CONCAT(#{alarmInfo}, '%') and DATE_FORMAT(alarm_time, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    </select>
+
+    <select id="querySingleDrawCode" resultMap="BaseResultMap">
+        SELECT
+            *,
+            count(DISTINCT lottery_code, issue_code, draw_detail) ct
+        FROM lottery_issue_source
+        WHERE lottery_code = #{lotteryCode} AND issue_code = #{issueCode}
+    </select>
+    <!--V2.0  END-->
+    
+    <!-- V2.1 Start -->
+    <select id="findWarningIssueList" resultMap="BaseResultMap">
+    	select li.lottery_code,lt.lottery_name, li.issue_code
+		from lottery_issue_source li
+		join lottery_type lt on li.lottery_code=lt.lottery_code
+		where li.lottery_code in (select d.dic_data_value from dic_data_detail d where d.dic_code=#{dicCode})
+		and li.issue_status=3
+		<if test="lotteryCategory != null">
+			and lt.lottery_category=#{lotteryCategory}
+		</if>
+		group by li.lottery_code, li.issue_code having count(distinct li.draw_code)>1
+		order by li.lottery_code, li.issue_code
+    </select>
+    
+    <select id="findMergeIssueList" resultMap="BaseResultMap">
+    	select li.lottery_code,lt.lottery_name, li.issue_code
+		from lottery_issue_source li
+		join lottery_type lt on li.lottery_code=lt.lottery_code
+		where li.lottery_code in (select d.dic_data_value from dic_data_detail d where d.dic_code=#{dicCode})
+		and li.issue_status=3
+		<if test="lotteryCategory != null">
+			and lt.lottery_category=#{lotteryCategory}
+		</if>
+		group by li.lottery_code, li.issue_code having count(distinct li.draw_code)=1
+		order by li.lottery_code, li.issue_code
+    </select>
+    
+    <update id="updateIssueSourceStatus" parameterType="com.hhly.crawlcore.persistence.lottery.po.LotteryIssueSourcePO">
+    	update lottery_issue_source li 
+    	set issue_status=#{issueStatus}, update_time=now()
+    	<if test="issueStatus != null and issueStatus == 5">
+			,issue_id=(select id from lottery_issue where lottery_code=#{lotteryCode, jdbcType=INTEGER} and issue_code=#{issueCode, jdbcType=VARCHAR}) 
+    	</if>
+		where lottery_code=#{lotteryCode, jdbcType=INTEGER} and issue_code=#{issueCode, jdbcType=VARCHAR}
+    </update>
+    
+    <select id="findMergeIssue" resultMap="BaseResultMap" >
+    	select li.lottery_code,lt.lottery_name, li.issue_code, li.lottery_time
+		from lottery_issue_source li
+		join lottery_type lt on li.lottery_code=lt.lottery_code
+		where li.lottery_code=#{lotteryCode} and issue_code=#{issueCode}
+		order by li.lottery_time desc limit 1
+    </select>
+    <!-- V2.1 END -->
+</mapper>

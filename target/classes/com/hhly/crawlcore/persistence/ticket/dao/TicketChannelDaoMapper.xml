@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.ticket.dao.TicketChannelDaoMapper">
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.ticket.po.TicketChannelPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ticket_channel_id" jdbcType="VARCHAR" property="ticketChannelId" />
+    <result column="drawer_name" jdbcType="VARCHAR" property="drawerName" />
+    <result column="drawer_account" jdbcType="VARCHAR" property="drawerAccount" />
+    <result column="account_password" jdbcType="VARCHAR" property="accountPassword" />
+    <result column="auth_code" jdbcType="VARCHAR" property="authCode" />
+    <result column="send_url" jdbcType="VARCHAR" property="sendUrl" />
+    <result column="search_url" jdbcType="VARCHAR" property="searchUrl" />
+    <result column="search_url_spare" jdbcType="VARCHAR" property="searchUrlSpare" />
+    <result column="notice_url" jdbcType="VARCHAR" property="noticeUrl" />
+    <result column="account_balance" jdbcType="DECIMAL" property="accountBalance" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="channel_status" jdbcType="BIT" property="channelStatus" />
+    <result column="lottery_status" jdbcType="BIT" property="lotteryStatus" />
+    <result column="ticket_status" jdbcType="BIT" property="ticketStatus" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, ticket_channel_id, drawer_name, drawer_account, account_password, auth_code, 
+    send_url, search_url, search_url_spare, notice_url, account_balance, modify_by, update_time, 
+    create_time, remark, create_by, channel_status, lottery_status, ticket_status
+  </sql>
+
+  <select id="findByChannelId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ticket_channel
+    where ticket_channel_id = #{ticketChannelId, jdbcType=VARCHAR}
+  </select>
+</mapper>

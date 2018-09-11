@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.copyorder.dao.OrderIssueInfoMapper">
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.copyorder.po.OrderIssueInfo">
+        insert into order_issue_info (id, user_issue_id, order_code,
+        max_roi, is_show, order_visible_type,
+        commission_rate, follow_num, follow_amount,
+        commission_amount, is_top, is_recommend,
+        create_time, modify_time, modify_by,
+        update_time, recent_record, hit_rate,
+        continue_hit, remark, issue_type,
+        charge_type, issue_content_info_id, master_id,
+         recommend_reason
+        )
+        values (#{id,jdbcType=INTEGER}, #{userIssueId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR},
+        #{maxRoi,jdbcType=DECIMAL}, #{isShow,jdbcType=INTEGER}, #{orderVisibleType,jdbcType=INTEGER},
+        #{commissionRate,jdbcType=DECIMAL}, #{followNum,jdbcType=INTEGER}, #{followAmount,jdbcType=DECIMAL},
+        #{commissionAmount,jdbcType=DECIMAL}, #{isTop,jdbcType=INTEGER}, #{isRecommend,jdbcType=INTEGER},
+        now(), now(), #{modifyBy,jdbcType=VARCHAR},
+        now(), #{recentRecord,jdbcType=VARCHAR}, #{hitRate,jdbcType=DECIMAL},
+        #{continueHit,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{issueType,jdbcType=INTEGER},
+        #{chargeType,jdbcType=INTEGER}, #{issueContentInfoId,jdbcType=INTEGER}, #{masterId,jdbcType=INTEGER},
+         #{recommendReason,jdbcType=LONGVARCHAR}
+        )
+  </insert>
+</mapper>

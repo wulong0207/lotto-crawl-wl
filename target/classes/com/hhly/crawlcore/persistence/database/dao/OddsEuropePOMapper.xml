@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.database.dao.OddsEuropePOMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.database.po.OddsEuropePO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="name_abb" jdbcType="VARCHAR" property="nameAbb"/>
+        <result column="isshow" jdbcType="BIT" property="isshow"/>
+        <result column="top_rank" jdbcType="SMALLINT" property="topRank"/>
+        <result column="reg_location" jdbcType="VARCHAR" property="regLocation"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="is_primary" jdbcType="BIT" property="isPrimary"/>
+        <result column="is_exchange" jdbcType="BIT" property="isExchange"/>
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId"/>
+        <result column="source_type" jdbcType="BIT" property="sourceType"/>
+        <result column="type" jdbcType="BIT" property="type"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, name_abb, isshow, top_rank, reg_location, remark, is_primary, is_exchange,
+        source_id, source_type, type, create_time, modify_time, modify_by, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from odds_europe
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM odds_europe
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.database.po.OddsEuropePO">
+        INSERT INTO odds_europe (id, name, name_abb,
+                                 isshow, top_rank, reg_location,
+                                 remark, is_primary, is_exchange,
+                                 source_id, source_type, type,
+                                 create_time, modify_time, modify_by,
+                                 update_time)
+        VALUES (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameAbb,jdbcType=VARCHAR},
+                                        #{isshow,jdbcType=BIT}, #{topRank,jdbcType=SMALLINT},
+                                        #{regLocation,jdbcType=VARCHAR},
+                                        #{remark,jdbcType=VARCHAR}, #{isPrimary,jdbcType=BIT},
+                                        #{isExchange,jdbcType=BIT},
+                                        #{sourceId,jdbcType=VARCHAR}, #{sourceType,jdbcType=BIT}, #{type,jdbcType=BIT},
+                #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.database.po.OddsEuropePO">
+        insert into odds_europe
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="nameAbb != null">
+                name_abb,
+            </if>
+            <if test="isshow != null">
+                isshow,
+            </if>
+            <if test="topRank != null">
+                top_rank,
+            </if>
+            <if test="regLocation != null">
+                reg_location,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isPrimary != null">
+                is_primary,
+            </if>
+            <if test="isExchange != null">
+                is_exchange,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nameAbb != null">
+                #{nameAbb,jdbcType=VARCHAR},
+            </if>
+            <if test="isshow != null">
+                #{isshow,jdbcType=BIT},
+            </if>
+            <if test="topRank != null">
+                #{topRank,jdbcType=SMALLINT},
+            </if>
+            <if test="regLocation != null">
+                #{regLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrimary != null">
+                #{isPrimary,jdbcType=BIT},
+            </if>
+            <if test="isExchange != null">
+                #{isExchange,jdbcType=BIT},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.hhly.crawlcore.persistence.database.po.OddsEuropePO">
+        update odds_europe
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="nameAbb != null">
+                name_abb = #{nameAbb,jdbcType=VARCHAR},
+            </if>
+            <if test="isshow != null">
+                isshow = #{isshow,jdbcType=BIT},
+            </if>
+            <if test="topRank != null">
+                top_rank = #{topRank,jdbcType=SMALLINT},
+            </if>
+            <if test="regLocation != null">
+                reg_location = #{regLocation,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isPrimary != null">
+                is_primary = #{isPrimary,jdbcType=BIT},
+            </if>
+            <if test="isExchange != null">
+                is_exchange = #{isExchange,jdbcType=BIT},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.database.po.OddsEuropePO">
+        UPDATE odds_europe
+        SET name         = #{name,jdbcType=VARCHAR},
+            name_abb     = #{nameAbb,jdbcType=VARCHAR},
+            isshow       = #{isshow,jdbcType=BIT},
+            top_rank     = #{topRank,jdbcType=SMALLINT},
+            reg_location = #{regLocation,jdbcType=VARCHAR},
+            remark       = #{remark,jdbcType=VARCHAR},
+            is_primary   = #{isPrimary,jdbcType=BIT},
+            is_exchange  = #{isExchange,jdbcType=BIT},
+            source_id    = #{sourceId,jdbcType=VARCHAR},
+            source_type  = #{sourceType,jdbcType=BIT},
+            type         = #{type,jdbcType=BIT},
+            create_time  = #{createTime,jdbcType=TIMESTAMP},
+            modify_time  = #{modifyTime,jdbcType=TIMESTAMP},
+            modify_by    = #{modifyBy,jdbcType=VARCHAR},
+            update_time  = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

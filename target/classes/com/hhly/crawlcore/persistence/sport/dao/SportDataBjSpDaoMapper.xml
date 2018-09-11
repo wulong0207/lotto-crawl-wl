@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBjSpDaoMapper">
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBjSpPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId" />
+    <result column="sp_0_goal" jdbcType="DECIMAL" property="sp0Goal" />
+    <result column="sp_1_goal" jdbcType="DECIMAL" property="sp1Goal" />
+    <result column="sp_2_goal" jdbcType="DECIMAL" property="sp2Goal" />
+    <result column="sp_3_goal" jdbcType="DECIMAL" property="sp3Goal" />
+    <result column="sp_4_goal" jdbcType="DECIMAL" property="sp4Goal" />
+    <result column="sp_5_goal" jdbcType="DECIMAL" property="sp5Goal" />
+    <result column="sp_6_goal" jdbcType="DECIMAL" property="sp6Goal" />
+    <result column="sp_7_goal" jdbcType="DECIMAL" property="sp7Goal" />
+    <result column="sp_w_w" jdbcType="DECIMAL" property="spWW" />
+    <result column="sp_w_d" jdbcType="DECIMAL" property="spWD" />
+    <result column="sp_w_f" jdbcType="DECIMAL" property="spWF" />
+    <result column="sp_d_w" jdbcType="DECIMAL" property="spDW" />
+    <result column="sp_d_d" jdbcType="DECIMAL" property="spDD" />
+    <result column="sp_d_f" jdbcType="DECIMAL" property="spDF" />
+    <result column="sp_f_w" jdbcType="DECIMAL" property="spFW" />
+    <result column="sp_f_d" jdbcType="DECIMAL" property="spFD" />
+    <result column="sp_f_f" jdbcType="DECIMAL" property="spFF" />
+    <result column="sp_1_0" jdbcType="DECIMAL" property="sp10" />
+    <result column="sp_2_0" jdbcType="DECIMAL" property="sp20" />
+    <result column="sp_2_1" jdbcType="DECIMAL" property="sp21" />
+    <result column="sp_3_0" jdbcType="DECIMAL" property="sp30" />
+    <result column="sp_3_1" jdbcType="DECIMAL" property="sp31" />
+    <result column="sp_3_2" jdbcType="DECIMAL" property="sp32" />
+    <result column="sp_4_0" jdbcType="DECIMAL" property="sp40" />
+    <result column="sp_4_1" jdbcType="DECIMAL" property="sp41" />
+    <result column="sp_4_2" jdbcType="DECIMAL" property="sp42" />
+    <result column="sp_w_other" jdbcType="DECIMAL" property="spWOther" />
+    <result column="sp_0_0" jdbcType="DECIMAL" property="sp00" />
+    <result column="sp_1_1" jdbcType="DECIMAL" property="sp11" />
+    <result column="sp_2_2" jdbcType="DECIMAL" property="sp22" />
+    <result column="sp_3_3" jdbcType="DECIMAL" property="sp33" />
+    <result column="sp_d_other" jdbcType="DECIMAL" property="spDOther" />
+    <result column="sp_0_1" jdbcType="DECIMAL" property="sp01" />
+    <result column="sp_0_2" jdbcType="DECIMAL" property="sp02" />
+    <result column="sp_1_2" jdbcType="DECIMAL" property="sp12" />
+    <result column="sp_0_3" jdbcType="DECIMAL" property="sp03" />
+    <result column="sp_1_3" jdbcType="DECIMAL" property="sp13" />
+    <result column="sp_2_3" jdbcType="DECIMAL" property="sp23" />
+    <result column="sp_0_4" jdbcType="DECIMAL" property="sp04" />
+    <result column="sp_1_4" jdbcType="DECIMAL" property="sp14" />
+    <result column="sp_2_4" jdbcType="DECIMAL" property="sp24" />
+    <result column="sp_f_other" jdbcType="DECIMAL" property="spFOther" />
+    <result column="sp_up_single" jdbcType="DECIMAL" property="spUpSingle" />
+    <result column="sp_up_double" jdbcType="DECIMAL" property="spUpDouble" />
+    <result column="sp_down_single" jdbcType="DECIMAL" property="spDownSingle" />
+    <result column="sp_down_double" jdbcType="DECIMAL" property="spDownDouble" />
+    <result column="let_num" jdbcType="DECIMAL" property="letNum" />
+    <result column="sp_win" jdbcType="DECIMAL" property="spWin" />
+    <result column="sp_draw" jdbcType="DECIMAL" property="spDraw" />
+    <result column="sp_fail" jdbcType="DECIMAL" property="spFail" />
+    <result column="let_score" jdbcType="DECIMAL" property="letScore" />
+    <result column="sp_win_wf" jdbcType="DECIMAL" property="spWinWf" />
+    <result column="sp_fail_wf" jdbcType="DECIMAL" property="spFailWf" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sport_against_info_id, sp_0_goal, sp_1_goal, sp_2_goal, sp_3_goal, sp_4_goal,
+    sp_5_goal, sp_6_goal, sp_7_goal, sp_w_w, sp_w_d, sp_w_f, sp_d_w, sp_d_d, sp_d_f,
+    sp_f_w, sp_f_d, sp_f_f, sp_1_0, sp_2_0, sp_2_1, sp_3_0, sp_3_1, sp_3_2, sp_4_0, sp_4_1,
+    sp_4_2, sp_w_other, sp_0_0, sp_1_1, sp_2_2, sp_3_3, sp_d_other, sp_0_1, sp_0_2, sp_1_2,
+    sp_0_3, sp_1_3, sp_2_3, sp_0_4, sp_1_4, sp_2_4, sp_f_other, sp_up_single, sp_up_double,
+    sp_down_single, sp_down_double, let_num, sp_win, sp_draw, sp_fail, let_score, sp_win_wf,
+    sp_fail_wf, update_time, create_time
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBjSpPO">
+    insert into sport_data_bj_sp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+        sport_against_info_id,
+      </if>
+      <if test="sp0Goal != null">
+        sp_0_goal,
+      </if>
+      <if test="sp1Goal != null">
+        sp_1_goal,
+      </if>
+      <if test="sp2Goal != null">
+        sp_2_goal,
+      </if>
+      <if test="sp3Goal != null">
+        sp_3_goal,
+      </if>
+      <if test="sp4Goal != null">
+        sp_4_goal,
+      </if>
+      <if test="sp5Goal != null">
+        sp_5_goal,
+      </if>
+      <if test="sp6Goal != null">
+        sp_6_goal,
+      </if>
+      <if test="sp7Goal != null">
+        sp_7_goal,
+      </if>
+      <if test="spWW != null">
+        sp_w_w,
+      </if>
+      <if test="spWD != null">
+        sp_w_d,
+      </if>
+      <if test="spWF != null">
+        sp_w_f,
+      </if>
+      <if test="spDW != null">
+        sp_d_w,
+      </if>
+      <if test="spDD != null">
+        sp_d_d,
+      </if>
+      <if test="spDF != null">
+        sp_d_f,
+      </if>
+      <if test="spFW != null">
+        sp_f_w,
+      </if>
+      <if test="spFD != null">
+        sp_f_d,
+      </if>
+      <if test="spFF != null">
+        sp_f_f,
+      </if>
+      <if test="sp10 != null">
+        sp_1_0,
+      </if>
+      <if test="sp20 != null">
+        sp_2_0,
+      </if>
+      <if test="sp21 != null">
+        sp_2_1,
+      </if>
+      <if test="sp30 != null">
+        sp_3_0,
+      </if>
+      <if test="sp31 != null">
+        sp_3_1,
+      </if>
+      <if test="sp32 != null">
+        sp_3_2,
+      </if>
+      <if test="sp40 != null">
+        sp_4_0,
+      </if>
+      <if test="sp41 != null">
+        sp_4_1,
+      </if>
+      <if test="sp42 != null">
+        sp_4_2,
+      </if>
+      <if test="spWOther != null">
+        sp_w_other,
+      </if>
+      <if test="sp00 != null">
+        sp_0_0,
+      </if>
+      <if test="sp11 != null">
+        sp_1_1,
+      </if>
+      <if test="sp22 != null">
+        sp_2_2,
+      </if>
+      <if test="sp33 != null">
+        sp_3_3,
+      </if>
+      <if test="spDOther != null">
+        sp_d_other,
+      </if>
+      <if test="sp01 != null">
+        sp_0_1,
+      </if>
+      <if test="sp02 != null">
+        sp_0_2,
+      </if>
+      <if test="sp12 != null">
+        sp_1_2,
+      </if>
+      <if test="sp03 != null">
+        sp_0_3,
+      </if>
+      <if test="sp13 != null">
+        sp_1_3,
+      </if>
+      <if test="sp23 != null">
+        sp_2_3,
+      </if>
+      <if test="sp04 != null">
+        sp_0_4,
+      </if>
+      <if test="sp14 != null">
+        sp_1_4,
+      </if>
+      <if test="sp24 != null">
+        sp_2_4,
+      </if>
+      <if test="spFOther != null">
+        sp_f_other,
+      </if>
+      <if test="spUpSingle != null">
+        sp_up_single,
+      </if>
+      <if test="spUpDouble != null">
+        sp_up_double,
+      </if>
+      <if test="spDownSingle != null">
+        sp_down_single,
+      </if>
+      <if test="spDownDouble != null">
+        sp_down_double,
+      </if>
+      <if test="letNum != null">
+        let_num,
+      </if>
+      <if test="spWin != null">
+        sp_win,
+      </if>
+      <if test="spDraw != null">
+        sp_draw,
+      </if>
+      <if test="spFail != null">
+        sp_fail,
+      </if>
+      <if test="letScore != null">
+        let_score,
+      </if>
+      <if test="spWinWf != null">
+        sp_win_wf,
+      </if>
+      <if test="spFailWf != null">
+        sp_fail_wf,
+      </if>
+      <if test="updateTime == null">
+        update_time,
+      </if>
+      <if test="createTime == null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+        (select id from sport_against_info where lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+        and issue_code=#{issueCode,jdbcType=VARCHAR}
+        and bj_num=#{bjNum,jdbcType=INTEGER}),
+      </if>
+      <if test="sp0Goal != null">
+        #{sp0Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp1Goal != null">
+        #{sp1Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp2Goal != null">
+        #{sp2Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp3Goal != null">
+        #{sp3Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp4Goal != null">
+        #{sp4Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp5Goal != null">
+        #{sp5Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp6Goal != null">
+        #{sp6Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp7Goal != null">
+        #{sp7Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="spWW != null">
+        #{spWW,jdbcType=DECIMAL},
+      </if>
+      <if test="spWD != null">
+        #{spWD,jdbcType=DECIMAL},
+      </if>
+      <if test="spWF != null">
+        #{spWF,jdbcType=DECIMAL},
+      </if>
+      <if test="spDW != null">
+        #{spDW,jdbcType=DECIMAL},
+      </if>
+      <if test="spDD != null">
+        #{spDD,jdbcType=DECIMAL},
+      </if>
+      <if test="spDF != null">
+        #{spDF,jdbcType=DECIMAL},
+      </if>
+      <if test="spFW != null">
+        #{spFW,jdbcType=DECIMAL},
+      </if>
+      <if test="spFD != null">
+        #{spFD,jdbcType=DECIMAL},
+      </if>
+      <if test="spFF != null">
+        #{spFF,jdbcType=DECIMAL},
+      </if>
+      <if test="sp10 != null">
+        #{sp10,jdbcType=DECIMAL},
+      </if>
+      <if test="sp20 != null">
+        #{sp20,jdbcType=DECIMAL},
+      </if>
+      <if test="sp21 != null">
+        #{sp21,jdbcType=DECIMAL},
+      </if>
+      <if test="sp30 != null">
+        #{sp30,jdbcType=DECIMAL},
+      </if>
+      <if test="sp31 != null">
+        #{sp31,jdbcType=DECIMAL},
+      </if>
+      <if test="sp32 != null">
+        #{sp32,jdbcType=DECIMAL},
+      </if>
+      <if test="sp40 != null">
+        #{sp40,jdbcType=DECIMAL},
+      </if>
+      <if test="sp41 != null">
+        #{sp41,jdbcType=DECIMAL},
+      </if>
+      <if test="sp42 != null">
+        #{sp42,jdbcType=DECIMAL},
+      </if>
+      <if test="spWOther != null">
+        #{spWOther,jdbcType=DECIMAL},
+      </if>
+      <if test="sp00 != null">
+        #{sp00,jdbcType=DECIMAL},
+      </if>
+      <if test="sp11 != null">
+        #{sp11,jdbcType=DECIMAL},
+      </if>
+      <if test="sp22 != null">
+        #{sp22,jdbcType=DECIMAL},
+      </if>
+      <if test="sp33 != null">
+        #{sp33,jdbcType=DECIMAL},
+      </if>
+      <if test="spDOther != null">
+        #{spDOther,jdbcType=DECIMAL},
+      </if>
+      <if test="sp01 != null">
+        #{sp01,jdbcType=DECIMAL},
+      </if>
+      <if test="sp02 != null">
+        #{sp02,jdbcType=DECIMAL},
+      </if>
+      <if test="sp12 != null">
+        #{sp12,jdbcType=DECIMAL},
+      </if>
+      <if test="sp03 != null">
+        #{sp03,jdbcType=DECIMAL},
+      </if>
+      <if test="sp13 != null">
+        #{sp13,jdbcType=DECIMAL},
+      </if>
+      <if test="sp23 != null">
+        #{sp23,jdbcType=DECIMAL},
+      </if>
+      <if test="sp04 != null">
+        #{sp04,jdbcType=DECIMAL},
+      </if>
+      <if test="sp14 != null">
+        #{sp14,jdbcType=DECIMAL},
+      </if>
+      <if test="sp24 != null">
+        #{sp24,jdbcType=DECIMAL},
+      </if>
+      <if test="spFOther != null">
+        #{spFOther,jdbcType=DECIMAL},
+      </if>
+      <if test="spUpSingle != null">
+        #{spUpSingle,jdbcType=DECIMAL},
+      </if>
+      <if test="spUpDouble != null">
+        #{spUpDouble,jdbcType=DECIMAL},
+      </if>
+      <if test="spDownSingle != null">
+        #{spDownSingle,jdbcType=DECIMAL},
+      </if>
+      <if test="spDownDouble != null">
+        #{spDownDouble,jdbcType=DECIMAL},
+      </if>
+      <if test="letNum != null">
+        #{letNum,jdbcType=DECIMAL},
+      </if>
+      <if test="spWin != null">
+        #{spWin,jdbcType=DECIMAL},
+      </if>
+      <if test="spDraw != null">
+        #{spDraw,jdbcType=DECIMAL},
+      </if>
+      <if test="spFail != null">
+        #{spFail,jdbcType=DECIMAL},
+      </if>
+      <if test="letScore != null">
+        #{letScore,jdbcType=DECIMAL},
+      </if>
+      <if test="spWinWf != null">
+        #{spWinWf,jdbcType=DECIMAL},
+      </if>
+      <if test="spFailWf != null">
+        #{spFailWf,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime == null">
+        now(),
+      </if>
+      <if test="createTime == null">
+        now(),
+      </if>
+    </trim>
+  </insert>
+
+
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBjSpPO">
+    update sport_data_bj_sp
+    <set>
+      <if test="sp0Goal != null">
+        sp_0_goal = #{sp0Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp1Goal != null">
+        sp_1_goal = #{sp1Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp2Goal != null">
+        sp_2_goal = #{sp2Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp3Goal != null">
+        sp_3_goal = #{sp3Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp4Goal != null">
+        sp_4_goal = #{sp4Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp5Goal != null">
+        sp_5_goal = #{sp5Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp6Goal != null">
+        sp_6_goal = #{sp6Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="sp7Goal != null">
+        sp_7_goal = #{sp7Goal,jdbcType=DECIMAL},
+      </if>
+      <if test="spWW != null">
+        sp_w_w = #{spWW,jdbcType=DECIMAL},
+      </if>
+      <if test="spWD != null">
+        sp_w_d = #{spWD,jdbcType=DECIMAL},
+      </if>
+      <if test="spWF != null">
+        sp_w_f = #{spWF,jdbcType=DECIMAL},
+      </if>
+      <if test="spDW != null">
+        sp_d_w = #{spDW,jdbcType=DECIMAL},
+      </if>
+      <if test="spDD != null">
+        sp_d_d = #{spDD,jdbcType=DECIMAL},
+      </if>
+      <if test="spDF != null">
+        sp_d_f = #{spDF,jdbcType=DECIMAL},
+      </if>
+      <if test="spFW != null">
+        sp_f_w = #{spFW,jdbcType=DECIMAL},
+      </if>
+      <if test="spFD != null">
+        sp_f_d = #{spFD,jdbcType=DECIMAL},
+      </if>
+      <if test="spFF != null">
+        sp_f_f = #{spFF,jdbcType=DECIMAL},
+      </if>
+      <if test="sp10 != null">
+        sp_1_0 = #{sp10,jdbcType=DECIMAL},
+      </if>
+      <if test="sp20 != null">
+        sp_2_0 = #{sp20,jdbcType=DECIMAL},
+      </if>
+      <if test="sp21 != null">
+        sp_2_1 = #{sp21,jdbcType=DECIMAL},
+      </if>
+      <if test="sp30 != null">
+        sp_3_0 = #{sp30,jdbcType=DECIMAL},
+      </if>
+      <if test="sp31 != null">
+        sp_3_1 = #{sp31,jdbcType=DECIMAL},
+      </if>
+      <if test="sp32 != null">
+        sp_3_2 = #{sp32,jdbcType=DECIMAL},
+      </if>
+      <if test="sp40 != null">
+        sp_4_0 = #{sp40,jdbcType=DECIMAL},
+      </if>
+      <if test="sp41 != null">
+        sp_4_1 = #{sp41,jdbcType=DECIMAL},
+      </if>
+      <if test="sp42 != null">
+        sp_4_2 = #{sp42,jdbcType=DECIMAL},
+      </if>
+      <if test="spWOther != null">
+        sp_w_other = #{spWOther,jdbcType=DECIMAL},
+      </if>
+      <if test="sp00 != null">
+        sp_0_0 = #{sp00,jdbcType=DECIMAL},
+      </if>
+      <if test="sp11 != null">
+        sp_1_1 = #{sp11,jdbcType=DECIMAL},
+      </if>
+      <if test="sp22 != null">
+        sp_2_2 = #{sp22,jdbcType=DECIMAL},
+      </if>
+      <if test="sp33 != null">
+        sp_3_3 = #{sp33,jdbcType=DECIMAL},
+      </if>
+      <if test="spDOther != null">
+        sp_d_other = #{spDOther,jdbcType=DECIMAL},
+      </if>
+      <if test="sp01 != null">
+        sp_0_1 = #{sp01,jdbcType=DECIMAL},
+      </if>
+      <if test="sp02 != null">
+        sp_0_2 = #{sp02,jdbcType=DECIMAL},
+      </if>
+      <if test="sp12 != null">
+        sp_1_2 = #{sp12,jdbcType=DECIMAL},
+      </if>
+      <if test="sp03 != null">
+        sp_0_3 = #{sp03,jdbcType=DECIMAL},
+      </if>
+      <if test="sp13 != null">
+        sp_1_3 = #{sp13,jdbcType=DECIMAL},
+      </if>
+      <if test="sp23 != null">
+        sp_2_3 = #{sp23,jdbcType=DECIMAL},
+      </if>
+      <if test="sp04 != null">
+        sp_0_4 = #{sp04,jdbcType=DECIMAL},
+      </if>
+      <if test="sp14 != null">
+        sp_1_4 = #{sp14,jdbcType=DECIMAL},
+      </if>
+      <if test="sp24 != null">
+        sp_2_4 = #{sp24,jdbcType=DECIMAL},
+      </if>
+      <if test="spFOther != null">
+        sp_f_other = #{spFOther,jdbcType=DECIMAL},
+      </if>
+      <if test="spUpSingle != null">
+        sp_up_single = #{spUpSingle,jdbcType=DECIMAL},
+      </if>
+      <if test="spUpDouble != null">
+        sp_up_double = #{spUpDouble,jdbcType=DECIMAL},
+      </if>
+      <if test="spDownSingle != null">
+        sp_down_single = #{spDownSingle,jdbcType=DECIMAL},
+      </if>
+      <if test="spDownDouble != null">
+        sp_down_double = #{spDownDouble,jdbcType=DECIMAL},
+      </if>
+      <if test="letNum != null">
+        let_num = #{letNum,jdbcType=DECIMAL},
+      </if>
+      <if test="spWin != null">
+        sp_win = #{spWin,jdbcType=DECIMAL},
+      </if>
+      <if test="spDraw != null">
+        sp_draw = #{spDraw,jdbcType=DECIMAL},
+      </if>
+      <if test="spFail != null">
+        sp_fail = #{spFail,jdbcType=DECIMAL},
+      </if>
+      <if test="letScore != null">
+        let_score = #{letScore,jdbcType=DECIMAL},
+      </if>
+      <if test="spWinWf != null">
+        sp_win_wf = #{spWinWf,jdbcType=DECIMAL},
+      </if>
+      <if test="spFailWf != null">
+        sp_fail_wf = #{spFailWf,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime == null">
+        update_time = now(),
+      </if>
+      <if test="createTime != null">
+        create_time = now(),
+      </if>
+    </set>
+    where
+    <if test="issueCode != null and lotteryCode!=null and bjNum!=null">
+      sport_against_info_id = (SELECT id FROM sport_against_info WHERE lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+      AND issue_code=#{issueCode,jdbcType=VARCHAR}
+      AND bj_num=#{bjNum,jdbcType=INTEGER})
+    </if>
+  </update>
+  
+   <!-- 新版2.0 优化北单  start --> 
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBjSpPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_bj_sp (sport_against_info_id, sp_0_goal, 
+      sp_1_goal, sp_2_goal, sp_3_goal, 
+      sp_4_goal, sp_5_goal, sp_6_goal, 
+      sp_7_goal, sp_w_w, sp_w_d, 
+      sp_w_f, sp_d_w, sp_d_d, sp_d_f, 
+      sp_f_w, sp_f_d, sp_f_f, sp_1_0, 
+      sp_2_0, sp_2_1, sp_3_0, sp_3_1, 
+      sp_3_2, sp_4_0, sp_4_1, sp_4_2, 
+      sp_w_other, sp_0_0, sp_1_1, 
+      sp_2_2, sp_3_3, sp_d_other, 
+      sp_0_1, sp_0_2, sp_1_2, sp_0_3, 
+      sp_1_3, sp_2_3, sp_0_4, sp_1_4, 
+      sp_2_4, sp_f_other, sp_up_single, 
+      sp_up_double, sp_down_single, sp_down_double, 
+      let_num, sp_win, sp_draw, 
+      sp_fail, let_score, sp_win_wf, 
+      sp_fail_wf, update_time, create_time
+      )
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{sp0Goal,jdbcType=DECIMAL}, 
+      #{sp1Goal,jdbcType=DECIMAL}, #{sp2Goal,jdbcType=DECIMAL}, #{sp3Goal,jdbcType=DECIMAL}, 
+      #{sp4Goal,jdbcType=DECIMAL}, #{sp5Goal,jdbcType=DECIMAL}, #{sp6Goal,jdbcType=DECIMAL}, 
+      #{sp7Goal,jdbcType=DECIMAL}, #{spWW,jdbcType=DECIMAL}, #{spWD,jdbcType=DECIMAL}, 
+      #{spWF,jdbcType=DECIMAL}, #{spDW,jdbcType=DECIMAL}, #{spDD,jdbcType=DECIMAL}, #{spDF,jdbcType=DECIMAL}, 
+      #{spFW,jdbcType=DECIMAL}, #{spFD,jdbcType=DECIMAL}, #{spFF,jdbcType=DECIMAL}, #{sp10,jdbcType=DECIMAL}, 
+      #{sp20,jdbcType=DECIMAL}, #{sp21,jdbcType=DECIMAL}, #{sp30,jdbcType=DECIMAL}, #{sp31,jdbcType=DECIMAL}, 
+      #{sp32,jdbcType=DECIMAL}, #{sp40,jdbcType=DECIMAL}, #{sp41,jdbcType=DECIMAL}, #{sp42,jdbcType=DECIMAL}, 
+      #{spWOther,jdbcType=DECIMAL}, #{sp00,jdbcType=DECIMAL}, #{sp11,jdbcType=DECIMAL}, 
+      #{sp22,jdbcType=DECIMAL}, #{sp33,jdbcType=DECIMAL}, #{spDOther,jdbcType=DECIMAL}, 
+      #{sp01,jdbcType=DECIMAL}, #{sp02,jdbcType=DECIMAL}, #{sp12,jdbcType=DECIMAL}, #{sp03,jdbcType=DECIMAL}, 
+      #{sp13,jdbcType=DECIMAL}, #{sp23,jdbcType=DECIMAL}, #{sp04,jdbcType=DECIMAL}, #{sp14,jdbcType=DECIMAL}, 
+      #{sp24,jdbcType=DECIMAL}, #{spFOther,jdbcType=DECIMAL}, #{spUpSingle,jdbcType=DECIMAL}, 
+      #{spUpDouble,jdbcType=DECIMAL}, #{spDownSingle,jdbcType=DECIMAL}, #{spDownDouble,jdbcType=DECIMAL}, 
+      #{letNum,jdbcType=DECIMAL}, #{spWin,jdbcType=DECIMAL}, #{spDraw,jdbcType=DECIMAL}, 
+      #{spFail,jdbcType=DECIMAL}, #{letScore,jdbcType=DECIMAL}, #{spWinWf,jdbcType=DECIMAL}, 
+      #{spFailWf,jdbcType=DECIMAL}, now(), now())  
+      ON DUPLICATE KEY UPDATE
+     <if test="sp0Goal != null">
+        sp_0_goal = values(sp_0_goal),
+      </if>
+      <if test="sp1Goal != null">
+        sp_1_goal = values(sp_1_goal),
+      </if>
+      <if test="sp2Goal != null">
+        sp_2_goal = values(sp_2_goal),
+      </if>
+      <if test="sp3Goal != null">
+        sp_3_goal = values(sp_3_goal),
+      </if>
+      <if test="sp4Goal != null">
+        sp_4_goal = values(sp_4_goal),
+      </if>
+      <if test="sp5Goal != null">
+        sp_5_goal = values(sp_5_goal),
+      </if>
+      <if test="sp6Goal != null">
+        sp_6_goal = values(sp_6_goal),
+      </if>
+      <if test="sp7Goal != null">
+        sp_7_goal = values(sp_7_goal),
+      </if>
+      <if test="spWW != null">
+        sp_w_w = values(sp_w_w),
+      </if>
+      <if test="spWD != null">
+        sp_w_d = values(sp_w_d),
+      </if>
+      <if test="spWF != null">
+        sp_w_f = values(sp_w_f),
+      </if>
+      <if test="spDW != null">
+        sp_d_w = values(sp_d_w),
+      </if>
+      <if test="spDD != null">
+        sp_d_d = values(sp_d_d),
+      </if>
+      <if test="spDF != null">
+        sp_d_f = values(sp_d_f),
+      </if>
+      <if test="spFW != null">
+        sp_f_w = values(sp_f_w),
+      </if>
+      <if test="spFD != null">
+        sp_f_d = values(sp_f_d),
+      </if>
+      <if test="spFF != null">
+        sp_f_f = values(sp_f_f),
+      </if>
+      <if test="sp10 != null">
+        sp_1_0 = values(sp_1_0),
+      </if>
+      <if test="sp20 != null">
+        sp_2_0 = values(sp_2_0),
+      </if>
+      <if test="sp21 != null">
+        sp_2_1 = values(sp_2_1),
+      </if>
+      <if test="sp30 != null">
+        sp_3_0 = values(sp_3_0),
+      </if>
+      <if test="sp31 != null">
+        sp_3_1 = values(sp_3_1),
+      </if>
+      <if test="sp32 != null">
+        sp_3_2 = values(sp_3_2),
+      </if>
+      <if test="sp40 != null">
+        sp_4_0 = values(sp_4_0),
+      </if>
+      <if test="sp41 != null">
+        sp_4_1 = values(sp_4_1),
+      </if>
+      <if test="sp42 != null">
+        sp_4_2 = values(sp_4_2),
+      </if>
+      <if test="spWOther != null">
+        sp_w_other = values(sp_w_other),
+      </if>
+      <if test="sp00 != null">
+        sp_0_0 = values(sp_0_0),
+      </if>
+      <if test="sp11 != null">
+        sp_1_1 = values(sp_1_1),
+      </if>
+      <if test="sp22 != null">
+        sp_2_2 = values(sp_2_2),
+      </if>
+      <if test="sp33 != null">
+        sp_3_3 = values(sp_3_3),
+      </if>
+      <if test="spDOther != null">
+        sp_d_other = values(sp_d_other),
+      </if>
+      <if test="sp01 != null">
+        sp_0_1 = values(sp_0_1),
+      </if>
+      <if test="sp02 != null">
+        sp_0_2 = values(sp_0_2),
+      </if>
+      <if test="sp12 != null">
+        sp_1_2 = values(sp_1_2),
+      </if>
+      <if test="sp03 != null">
+        sp_0_3 = values(sp_0_3),
+      </if>
+      <if test="sp13 != null">
+        sp_1_3 = values(sp_1_3),
+      </if>
+      <if test="sp23 != null">
+        sp_2_3 = values(sp_2_3),
+      </if>
+      <if test="sp04 != null">
+        sp_0_4 = values(sp_0_4),
+      </if>
+      <if test="sp14 != null">
+        sp_1_4 = values(sp_1_4),
+      </if>
+      <if test="sp24 != null">
+        sp_2_4 = values(sp_2_4),
+      </if>
+      <if test="spFOther != null">
+        sp_f_other = values(sp_f_other),
+      </if>
+      <if test="spUpSingle != null">
+        sp_up_single = values(sp_up_single),
+      </if>
+      <if test="spUpDouble != null">
+        sp_up_double = values(sp_up_double),
+      </if>
+      <if test="spDownSingle != null">
+        sp_down_single = values(sp_down_single),
+      </if>
+      <if test="spDownDouble != null">
+        sp_down_double = values(sp_down_double),
+      </if>
+      <if test="letNum != null">
+        let_num = values(let_num),
+      </if>
+      <if test="spWin != null">
+        sp_win = values(sp_win),
+      </if>
+      <if test="spDraw != null">
+        sp_draw = values(sp_draw),
+      </if>
+      <if test="spFail != null">
+        sp_fail = values(sp_fail),
+      </if>
+      <if test="letScore != null">
+        let_score = values(let_score),
+      </if>
+      <if test="spWinWf != null">
+        sp_win_wf = values(sp_win_wf),
+      </if>
+      <if test="spFailWf != null">
+        sp_fail_wf = values(sp_fail_wf),
+      </if>      
+      update_time = now();
+  </insert>
+  
+  <select id="findByMatchId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from sport_data_bj_sp
+    where sport_against_info_id = #{sportAgainstInfoId,jdbcType=INTEGER};
+  </select>  
+   <!-- 新版2.0 优化北单  end -->   
+  
+</mapper>

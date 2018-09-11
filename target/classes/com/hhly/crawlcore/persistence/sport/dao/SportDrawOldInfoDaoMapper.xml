@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDrawOldInfoDaoMapper" >
+
+
+    <sql id="Base_Column_List" >
+        ID, SPORT_AGAINST_INFO_ID, HALF_SCORE, FULL_SCORE, FOUR_GOAL,
+        SIX_HF_WDF, FOURTEEN_WDF, DRAW_TIME, MODIFY_BY, MODIFY_TIME, UPDATE_TIME, CREATE_TIME
+    </sql>
+
+    <!-- 保存老足彩开奖信息 -->
+    <!--<insert id="saveOldDrawInfo" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawOldInfoPO">-->
+
+    <!--</insert>-->
+
+</mapper>

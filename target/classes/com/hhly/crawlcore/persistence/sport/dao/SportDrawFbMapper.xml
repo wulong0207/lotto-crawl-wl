@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDrawFbMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDrawFbPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sport_against_info_id" jdbcType="INTEGER" property="sportAgainstInfoId"/>
+        <result column="half_score" jdbcType="VARCHAR" property="halfScore"/>
+        <result column="full_score" jdbcType="VARCHAR" property="fullScore"/>
+        <result column="full_spf" jdbcType="BIT" property="fullSpf"/>
+        <result column="let_spf" jdbcType="BIT" property="letSpf"/>
+        <result column="let_num" jdbcType="TINYINT" property="letNum"/>
+        <result column="score" jdbcType="VARCHAR" property="score"/>
+        <result column="goal_num" jdbcType="BIT" property="goalNum"/>
+        <result column="hf_wdf" jdbcType="VARCHAR" property="hfWdf"/>
+        <result column="draw_time" jdbcType="TIMESTAMP" property="drawTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, sport_against_info_id, half_score, full_score, full_spf, let_spf, let_num, score,
+        goal_num, hf_wdf, draw_time, modify_by, modify_time, update_time, create_time
+    </sql>
+
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawFbPO">
+        INSERT INTO sport_draw_fb (id, sport_against_info_id, half_score,
+                                   full_score, full_spf, let_spf,
+                                   let_num, score, goal_num,
+                                   hf_wdf, draw_time, modify_by,
+                                   modify_time, update_time, create_time
+        )
+        VALUES (#{id,jdbcType=INTEGER}, (
+                                            SELECT id
+                                            FROM sport_against_info
+                                            WHERE lottery_code = #{lotteryCode,jdbcType=VARCHAR}
+                                                  AND DATE_FORMAT(start_time, '%Y-%m-%d %H:%i:%S') = #{startTime,jdbcType=VARCHAR} AND
+                                                  official_match_code = #{officialMatchCode,jdbcType=VARCHAR}
+                                        ), #{halfScore,jdbcType=VARCHAR},
+                                        #{fullScore,jdbcType=VARCHAR}, #{fullSpf,jdbcType=BIT}, #{letSpf,jdbcType=BIT},
+                                        #{letNum,jdbcType=TINYINT}, #{score,jdbcType=VARCHAR}, #{goalNum,jdbcType=BIT},
+                                        #{hfWdf,jdbcType=VARCHAR}, #{drawTime,jdbcType=TIMESTAMP}, #{modifyBy,jdbcType=VARCHAR},
+                NOW(), NOW(), NOW()
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawFbPO">
+        insert into sport_draw_fb
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            sport_against_info_id,
+            <if test="halfScore != null">
+                half_score,
+            </if>
+            <if test="fullScore != null">
+                full_score,
+            </if>
+            <if test="fullSpf != null">
+                full_spf,
+            </if>
+            <if test="letSpf != null">
+                let_spf,
+            </if>
+            <if test="letNum != null">
+                let_num,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="goalNum != null">
+                goal_num,
+            </if>
+            <if test="hfWdf != null">
+                hf_wdf,
+            </if>
+            <if test="drawTime != null">
+                draw_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            update_time,
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            (
+            select id from sport_against_info where lottery_code = #{lotteryCode,jdbcType=VARCHAR}
+            and DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%S') = DATE_FORMAT(#{startTime},'%Y-%m-%d %H:%i:%S') and official_match_code = #{officialMatchCode,jdbcType=VARCHAR}
+            ),
+            <if test="halfScore != null">
+                #{halfScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullScore != null">
+                #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullSpf != null">
+                #{fullSpf,jdbcType=BIT},
+            </if>
+            <if test="letSpf != null">
+                #{letSpf,jdbcType=BIT},
+            </if>
+            <if test="letNum != null">
+                #{letNum,jdbcType=TINYINT},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=VARCHAR},
+            </if>
+            <if test="goalNum != null">
+                #{goalNum,jdbcType=BIT},
+            </if>
+            <if test="hfWdf != null">
+                #{hfWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="drawTime != null">
+                #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            NOW(),
+            NOW(),
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawFbPO">
+        update sport_draw_fb
+        <set>
+            <if test="halfScore != null">
+                half_score = #{halfScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullScore != null">
+                full_score = #{fullScore,jdbcType=VARCHAR},
+            </if>
+            <if test="fullSpf != null">
+                full_spf = #{fullSpf,jdbcType=BIT},
+            </if>
+            <if test="letSpf != null">
+                let_spf = #{letSpf,jdbcType=BIT},
+            </if>
+            <if test="letNum != null">
+                let_num = #{letNum,jdbcType=TINYINT},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=VARCHAR},
+            </if>
+            <if test="goalNum != null">
+                goal_num = #{goalNum,jdbcType=BIT},
+            </if>
+            <if test="hfWdf != null">
+                hf_wdf = #{hfWdf,jdbcType=VARCHAR},
+            </if>
+            <if test="drawTime != null">
+                draw_time = #{drawTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where
+        sport_against_info_id = (
+        select id from sport_against_info where lottery_code = #{lotteryCode}
+        and DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%S') = DATE_FORMAT(#{startTime},'%Y-%m-%d %H:%i:%S') and official_match_code = #{officialMatchCode}
+        )
+    </update>
+
+    <select id="selectCondition" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDrawFbPO" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sport_draw_fb
+        where
+        1=1
+        <include refid="condition_sql"/>
+
+    </select>
+    <sql id="condition_sql">
+        <if test="lotteryCode != null and startTime != null and officialMatchCode !=null ">
+            and sport_against_info_id = (
+            select id from sport_against_info where lottery_code = #{lotteryCode}
+            and DATE_FORMAT(start_time,'%Y-%m-%d %H:%i:%S') = DATE_FORMAT(#{startTime},'%Y-%m-%d %H:%i:%S') and official_match_code = #{officialMatchCode}
+            )
+        </if>
+    </sql>
+</mapper>

@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportAgainstInfoDaoMapper" >
+
+  <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="lottery_code" jdbcType="SMALLINT" property="lotteryCode" />
+    <result column="issue_code" jdbcType="VARCHAR" property="issueCode" />
+    <result column="fb_schedule_id" jdbcType="INTEGER" property="fbScheduleId" />
+    <result column="sport_match_info_id" jdbcType="INTEGER" property="sportMatchInfoId" />
+    <result column="match_name" jdbcType="VARCHAR" property="matchName" />
+    <result column="home_team_id" jdbcType="INTEGER" property="homeTeamId" />
+    <result column="home_name" jdbcType="VARCHAR" property="homeName" />
+    <result column="visiti_team_id" jdbcType="INTEGER" property="visitiTeamId" />
+    <result column="visiti_name" jdbcType="VARCHAR" property="visitiName" />
+    <result column="match_analysis_url" jdbcType="VARCHAR" property="matchAnalysisUrl" />
+    <result column="match_info_url" jdbcType="VARCHAR" property="matchInfoUrl" />
+    <result column="is_recommend" jdbcType="BIT" property="isRecommend" />
+    <result column="match_label_color" jdbcType="VARCHAR" property="matchLabelColor" />
+    <result column="official_match_code" jdbcType="VARCHAR" property="officialMatchCode" />
+    <result column="system_code" jdbcType="VARCHAR" property="systemCode" />
+    <result column="match_status" jdbcType="TINYINT" property="matchStatus" />
+    <result column="official_id" jdbcType="VARCHAR" property="officialId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="sale_end_time" jdbcType="TIMESTAMP" property="saleEndTime" />
+    <result column="is_neutral" jdbcType="BIT" property="isNeutral" />
+    <result column="stadium" jdbcType="VARCHAR" property="stadium" />
+    <result column="weather" jdbcType="VARCHAR" property="weather" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="old_match_index" jdbcType="INTEGER" property="oldMatchIndex" />
+    <result column="odds_win" jdbcType="DECIMAL" property="oddsWin" />
+    <result column="odds_draw" jdbcType="DECIMAL" property="oddsDraw" />
+    <result column="odds_fail" jdbcType="DECIMAL" property="oddsFail" />
+    <result column="sale_date" jdbcType="TIMESTAMP" property="saleDate" />
+    <result column="bj_num" jdbcType="INTEGER" property="bjNum" />
+    <result column="win_prob" jdbcType="VARCHAR" property="winProb" />
+    <result column="round" jdbcType="VARCHAR" property="round" />
+    <result column="gameweek" jdbcType="VARCHAR" property="gameweek" />
+    <result column="official_lottery_id" jdbcType="VARCHAR" property="officialLotteryId" />
+  </resultMap>    
+
+    <sql id="Base_Column_List" >
+        id, lottery_code, issue_code, sport_match_info_id, home_team_id, visiti_team_id,
+        match_analysis_url, match_info_url, is_recommend, match_label_color, official_match_code,
+        system_code, match_status, official_id, start_time, sale_end_time, is_neutral, stadium,
+        weather,odds_win, odds_draw,odds_fail, modify_by, modify_time, create_by, update_time, create_time, remark
+    </sql>
+
+
+
+    <!-- 查询胜负彩最近10天的对阵对应的竞彩足球的对阵 -->
+    <select id="findSfcMatch" resultMap="BaseResultMap">
+        <![CDATA[
+            select official_id,sport_match_info_id,home_team_id,visiti_team_id,
+            match_analysis_url,match_info_url,is_recommend,odds_win, odds_draw,
+            odds_fail from sport_against_info where lottery_code=300 and official_id in
+            (select official_id from sport_against_info where lottery_code=304
+            and start_time > (date_add(now(),interval -5 day)) and start_time<
+            (date_add(now(),interval 5 day)) and match_status!=3 and official_id is not null)
+        ]]>
+    </select>
+
+    <select id="findCondition" resultMap="BaseResultMap" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sport_against_info
+        WHERE 1=1
+        <include refid="comm_sql"/>
+    </select>
+
+    <sql id="comm_sql">
+        <if test="issueCode != null">
+            and issue_code = #{issueCode}
+        </if>
+        <if test="bjNum != null">
+            and bj_num = #{bjNum}
+        </if>
+        <if test="lotteryCode != null">
+            and lottery_code = #{lotteryCode}
+        </if>
+        <if test="officialId != null">
+            and official_id = #{officialId}
+        </if>
+        <if test="officialMatchCode != null">
+            and official_match_code = #{officialMatchCode}
+        </if>
+        <if test="startTime != null">
+            and DATE_FORMAT(start_time,'%Y-%m-%d') = DATE_FORMAT(#{startTime},'%Y-%m-%d')
+        </if>        
+    </sql>
+
+    <update id="updateMatchInfoByOfficialId" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update sport_against_info
+            <set>
+                <if test="item.weather != null">
+                    weather = #{item.weather,jdbcType=VARCHAR},
+                </if>
+                <if test="item.remark != null">
+                    remark = #{item.remark,jdbcType=VARCHAR},
+                </if>
+                <if test="item.isNeutral != null">
+                    is_neutral = #{item.isNeutral,jdbcType=VARCHAR},
+                </if>
+                <if test="item.matchAnalysisUrl != null">
+                    match_analysis_url = #{item.matchAnalysisUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.matchInfoUrl != null">
+                    match_info_url = #{item.matchInfoUrl,jdbcType=VARCHAR},
+                </if>
+                <if test="item.oddsWin != null">
+                    odds_win = #{item.oddsWin,jdbcType=DECIMAL},
+                </if>
+                <if test="item.oddsDraw != null">
+                    odds_draw = #{item.oddsDraw,jdbcType=DECIMAL},
+                </if>
+                <if test="item.oddsFail != null">
+                    odds_fail = #{item.oddsFail,jdbcType=DECIMAL},
+                </if>
+                update_time=now(),
+                modify_time=now()
+            </set>
+            where official_id=#{item.officialId}
+        </foreach>
+    </update>
+
+    <!-- 更新平均欧赔 -->
+    <update id="updateAvgOdds" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" separator=";">
+            update sport_against_info
+            <set>
+                <if test="item.winAvg != null">
+                    odds_win = #{item.winAvg,jdbcType=DECIMAL},
+                </if>
+                <if test="item.drawAvg != null">
+                    odds_draw = #{item.drawAvg,jdbcType=DECIMAL},
+                </if>
+                <if test="item.lostAvg != null">
+                    odds_fail = #{item.lostAvg,jdbcType=DECIMAL},
+                </if>
+                update_time=now(),
+                modify_time=now()
+            </set>
+            where match_info_url=#{item.matchId,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+    <!-- V2.0 数据抓取   start -->
+    
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_against_info (id, lottery_code, issue_code, 
+      sport_match_info_id, 
+      match_name, home_team_id, home_name, 
+      visiti_team_id, visiti_name, match_analysis_url, 
+      match_info_url, is_recommend, match_label_color, 
+      official_match_code, system_code, match_status, 
+      official_id, start_time, sale_end_time, 
+      is_neutral, stadium, weather, 
+      modify_time, create_by, 
+      update_time, create_time, remark, 
+      old_match_index, odds_win, odds_draw, 
+      odds_fail, sale_date, bj_num, win_prob, round, gameweek)
+    values (#{id,jdbcType=INTEGER}, #{lotteryCode,jdbcType=SMALLINT}, #{issueCode,jdbcType=VARCHAR}, 
+      #{sportMatchInfoId,jdbcType=INTEGER}, #{matchName,jdbcType=VARCHAR}, 
+      #{homeTeamId,jdbcType=INTEGER}, #{homeName,jdbcType=VARCHAR}, 
+      #{visitiTeamId,jdbcType=INTEGER}, #{visitiName,jdbcType=VARCHAR}, #{matchAnalysisUrl,jdbcType=VARCHAR}, 
+      #{matchInfoUrl,jdbcType=VARCHAR}, #{isRecommend,jdbcType=BIT}, #{matchLabelColor,jdbcType=VARCHAR}, 
+      #{officialMatchCode,jdbcType=VARCHAR}, #{systemCode,jdbcType=VARCHAR}, #{matchStatus,jdbcType=TINYINT}, 
+      #{officialId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{saleEndTime,jdbcType=TIMESTAMP}, 
+      #{isNeutral,jdbcType=BIT}, #{stadium,jdbcType=VARCHAR}, #{weather,jdbcType=VARCHAR}, 
+      now(), #{createBy,jdbcType=VARCHAR}, 
+      now(), now(), #{remark,jdbcType=VARCHAR}, 
+      #{oldMatchIndex,jdbcType=INTEGER}, #{oddsWin,jdbcType=DECIMAL}, #{oddsDraw,jdbcType=DECIMAL}, 
+      #{oddsFail,jdbcType=DECIMAL}, #{saleDate,jdbcType=TIMESTAMP}, #{bjNum,jdbcType=INTEGER}, 
+      #{winProb,jdbcType=VARCHAR}, #{round,jdbcType=VARCHAR}, #{gameweek,jdbcType=VARCHAR})
+		ON DUPLICATE KEY UPDATE
+		<if test="sportMatchInfoId != null">		
+		sport_match_info_id = values(sport_match_info_id),
+		</if>			
+		<if test="matchName != null">		
+		match_name = values(match_name), 
+		</if>
+		<if test="homeTeamId != null">		
+		home_team_id = values(home_team_id),
+		</if>				
+		<if test="homeName != null">		
+		home_name = values(home_name),
+		</if>		
+		<if test="visitiTeamId != null">
+		visiti_team_id = values(visiti_team_id),
+		</if>		
+		<if test="visitiName != null">
+		visiti_name = values(visiti_name),
+		</if>
+		match_status = values(match_status), 
+		start_time	= values(start_time),
+		sale_end_time = values(sale_end_time),
+		<if test="officialId != null">
+			official_id = values(official_id), 
+		</if>
+		<if test="oddsWin != null and oddsWin != ''">
+			odds_win = values(odds_win),
+		</if>
+		<if test="winProb != null and winProb != ''">
+			win_prob = values(win_prob),
+		</if>
+		modify_by = #{modifyBy, jdbcType=VARCHAR},
+		modify_time = now()	          	
+  </insert>
+    
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_against_info (lottery_code, issue_code, 
+      sport_match_info_id, 
+      match_name, home_team_id, home_name, 
+      visiti_team_id, visiti_name, match_analysis_url, 
+      match_info_url, is_recommend, match_label_color, 
+      official_match_code, system_code, match_status, 
+      official_id, start_time, sale_end_time, 
+      is_neutral, stadium, weather, 
+      modify_time, create_by, 
+      update_time, create_time, remark, 
+      old_match_index, odds_win, odds_draw, 
+      odds_fail, sale_date, bj_num, round, gameweek)
+    values (#{lotteryCode,jdbcType=SMALLINT}, #{issueCode,jdbcType=VARCHAR}, 
+      #{sportMatchInfoId,jdbcType=INTEGER}, #{matchName,jdbcType=VARCHAR}, 
+      #{homeTeamId,jdbcType=INTEGER}, #{homeName,jdbcType=VARCHAR}, 
+      #{visitiTeamId,jdbcType=INTEGER}, #{visitiName,jdbcType=VARCHAR}, #{matchAnalysisUrl,jdbcType=VARCHAR}, 
+      #{matchInfoUrl,jdbcType=VARCHAR}, #{isRecommend,jdbcType=BIT}, #{matchLabelColor,jdbcType=VARCHAR}, 
+      #{officialMatchCode,jdbcType=VARCHAR}, #{systemCode,jdbcType=VARCHAR}, #{matchStatus,jdbcType=TINYINT}, 
+      #{officialId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{saleEndTime,jdbcType=TIMESTAMP}, 
+      #{isNeutral,jdbcType=BIT}, #{stadium,jdbcType=VARCHAR}, #{weather,jdbcType=VARCHAR}, 
+      now(), #{createBy,jdbcType=VARCHAR}, 
+      now(), now(), #{remark,jdbcType=VARCHAR}, 
+      #{oldMatchIndex,jdbcType=INTEGER}, #{oddsWin,jdbcType=DECIMAL}, #{oddsDraw,jdbcType=DECIMAL}, 
+      #{oddsFail,jdbcType=DECIMAL}, #{saleDate,jdbcType=TIMESTAMP}, #{bjNum,jdbcType=INTEGER}, 
+      #{round,jdbcType=VARCHAR}, #{gameweek,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO">
+    update sport_against_info
+    <set>
+      <if test="lotteryCode != null">
+        lottery_code = #{lotteryCode,jdbcType=SMALLINT},
+      </if>
+      <if test="issueCode != null">
+        issue_code = #{issueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sportMatchInfoId != null">
+        sport_match_info_id = #{sportMatchInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="matchName != null">
+        match_name = #{matchName,jdbcType=VARCHAR},
+      </if>
+      <if test="homeTeamId != null">
+        home_team_id = #{homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="homeName != null">
+        home_name = #{homeName,jdbcType=VARCHAR},
+      </if>
+      <if test="visitiTeamId != null">
+        visiti_team_id = #{visitiTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="visitiName != null">
+        visiti_name = #{visitiName,jdbcType=VARCHAR},
+      </if>
+      <if test="matchAnalysisUrl != null">
+        match_analysis_url = #{matchAnalysisUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="matchInfoUrl != null">
+        match_info_url = #{matchInfoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null">
+        is_recommend = #{isRecommend,jdbcType=BIT},
+      </if>
+      <if test="matchLabelColor != null">
+        match_label_color = #{matchLabelColor,jdbcType=VARCHAR},
+      </if>
+      <if test="officialMatchCode != null">
+        official_match_code = #{officialMatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="systemCode != null">
+        system_code = #{systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="matchStatus != null">
+        match_status = #{matchStatus,jdbcType=TINYINT},
+      </if>
+      <if test="officialId != null">
+        official_id = #{officialId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleEndTime != null">
+        sale_end_time = #{saleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isNeutral != null">
+        is_neutral = #{isNeutral,jdbcType=BIT},
+      </if>
+      <if test="stadium != null">
+        stadium = #{stadium,jdbcType=VARCHAR},
+      </if>
+      <if test="weather != null">
+        weather = #{weather,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="oldMatchIndex != null">
+        old_match_index = #{oldMatchIndex,jdbcType=INTEGER},
+      </if>
+      <if test="oddsWin != null">
+        odds_win = #{oddsWin,jdbcType=DECIMAL},
+      </if>
+      <if test="oddsDraw != null">
+        odds_draw = #{oddsDraw,jdbcType=DECIMAL},
+      </if>
+      <if test="oddsFail != null">
+        odds_fail = #{oddsFail,jdbcType=DECIMAL},
+      </if>
+      <if test="saleDate != null">
+        sale_date = #{saleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bjNum != null">
+        bj_num = #{bjNum,jdbcType=INTEGER},
+      </if>
+      <if test="round != null">
+        round = #{round,jdbcType=VARCHAR},
+      </if>
+      <if test="gameweek != null">
+        gameweek = #{gameweek,jdbcType=VARCHAR},
+      </if>
+        update_time = now(),
+        modify_time = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateBatch" parameterType="java.util.List">
+  	<foreach collection="list" item="item" index="index" separator=";">
+    update sport_against_info
+    <set>
+      <if test="item.lotteryCode != null">
+        lottery_code = #{item.lotteryCode,jdbcType=SMALLINT},
+      </if>
+      <if test="item.issueCode != null">
+        issue_code = #{item.issueCode,jdbcType=VARCHAR},
+      </if>
+      <if test="item.sportMatchInfoId != null">
+        sport_match_info_id = #{item.sportMatchInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="item.matchName != null">
+        match_name = #{item.matchName,jdbcType=VARCHAR},
+      </if>
+      <if test="item.homeTeamId != null">
+        home_team_id = #{item.homeTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="item.homeName != null">
+        home_name = #{item.homeName,jdbcType=VARCHAR},
+      </if>
+      <if test="item.visitiTeamId != null">
+        visiti_team_id = #{item.visitiTeamId,jdbcType=INTEGER},
+      </if>
+      <if test="item.visitiName != null">
+        visiti_name = #{item.visitiName,jdbcType=VARCHAR},
+      </if>
+      <if test="item.matchAnalysisUrl != null">
+        match_analysis_url = #{item.matchAnalysisUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="item.matchInfoUrl != null">
+        match_info_url = #{item.matchInfoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="item.isRecommend != null">
+        is_recommend = #{item.isRecommend,jdbcType=BIT},
+      </if>
+      <if test="item.matchLabelColor != null">
+        match_label_color = #{item.matchLabelColor,jdbcType=VARCHAR},
+      </if>
+      <if test="item.officialMatchCode != null">
+        official_match_code = #{item.officialMatchCode,jdbcType=VARCHAR},
+      </if>
+      <if test="item.systemCode != null">
+        system_code = #{item.systemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="item.matchStatus != null">
+        match_status = #{item.matchStatus,jdbcType=TINYINT},
+      </if>
+      <if test="item.officialId != null">
+        official_id = #{item.officialId,jdbcType=VARCHAR},
+      </if>
+      <if test="item.startTime != null">
+        start_time = #{item.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="item.saleEndTime != null">
+        sale_end_time = #{item.saleEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="item.isNeutral != null">
+        is_neutral = #{item.isNeutral,jdbcType=BIT},
+      </if>
+      <if test="item.stadium != null">
+        stadium = #{item.stadium,jdbcType=VARCHAR},
+      </if>
+      <if test="item.weather != null">
+        weather = #{item.weather,jdbcType=VARCHAR},
+      </if>
+      <if test="item.modifyBy != null">
+        modify_by = #{item.modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="item.remark != null">
+        remark = #{item.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="item.oldMatchIndex != null">
+        old_match_index = #{item.oldMatchIndex,jdbcType=INTEGER},
+      </if>
+      <if test="item.oddsWin != null">
+        odds_win = #{item.oddsWin,jdbcType=DECIMAL},
+      </if>
+      <if test="item.oddsDraw != null">
+        odds_draw = #{item.oddsDraw,jdbcType=DECIMAL},
+      </if>
+      <if test="item.oddsFail != null">
+        odds_fail = #{item.oddsFail,jdbcType=DECIMAL},
+      </if>
+      <if test="item.saleDate != null">
+        sale_date = #{item.saleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="item.bjNum != null">
+        bj_num = #{item.bjNum,jdbcType=INTEGER},
+      </if>
+      <if test="item.round != null">
+        round = #{item.round,jdbcType=VARCHAR},
+      </if>
+      <if test="item.gameweek != null">
+        gameweek = #{item.gameweek,jdbcType=VARCHAR},
+      </if>
+        update_time = now(),
+        modify_time = now()
+    </set>
+    where id = #{item.id,jdbcType=INTEGER}  		
+  	</foreach>
+  </update>         
+    
+    <!-- 更新暂定赛程 -->
+    <update id="updateInterimMatch" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO">
+        update sport_against_info
+        <set>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            modify_time = now(),
+            update_time = now()
+        </set>
+        where
+        lottery_code=#{lotteryCode,jdbcType=SMALLINT}
+        AND home_name = #{homeName,jdbcType=VARCHAR}
+        AND visiti_name = #{visitiName,jdbcType=VARCHAR}
+        AND start_time = #{startTime,jdbcType=TIMESTAMP}
+    </update>
+    
+    <!-- 修改竞足一比分信息和平均欧赔到老足彩 -->
+    <update id="updateSynFbMatchInfo">
+		update sport_against_info a, (select official_id, match_analysis_url,match_info_url,odds_win,odds_draw,odds_fail
+	 	from sport_against_info where lottery_code = '300' and start_time > now() and match_status = 9) b
+		set a.match_analysis_url = b.match_analysis_url, 
+		a.match_info_url = b.match_info_url,
+		a.odds_win = b.odds_win,
+		a.odds_draw = b.odds_draw,
+		a.odds_fail = b.odds_fail
+		where a.official_id = b.official_id    
+    </update>
+        
+    <!-- 查询销售中的赛事集合  -->
+    <select id="findSaleMatchList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sport_against_info
+        where match_status = 9
+        and lottery_code = #{lotteryCode,jdbcType=INTEGER}
+        and start_time>=now()
+    </select>
+    
+    <select id="findSaleMatchIssueList" resultType="string">
+		select DISTINCT DATE_FORMAT(issue_code,'%Y-%m-%d') from sport_against_info 
+    	where lottery_code = #{lotteryCode,jdbcType=SMALLINT} and match_status = 9 and start_time>=now()	    
+    </select>
+    
+    <!-- 通过对阵po查询id -->
+    <select id="findId" parameterType="com.hhly.crawlcore.persistence.sport.po.SportAgainstInfoPO" resultType="java.lang.Long">
+    	select id from sport_against_info
+    	<where>
+    		<include refid="comm_sql"/>
+    	</where>
+    </select>
+    
+    <!-- 通过彩种,彩期,赛事编码查询id -->
+    <select id="findIdByCode" resultType="java.lang.Long">
+		 SELECT id
+          FROM sport_against_info
+        WHERE lottery_code = #{lotteryCode} AND system_code = #{systemCode}
+        <if test="issueCode != null and issueCode != ''">
+             AND issue_code = #{issueCode}
+        </if>
+    </select> 
+    
+    <!-- 通过彩种,彩期,赛事编码查询对象详情 -->
+    <select id="findByCode" resultMap="BaseResultMap">
+		 SELECT *
+          FROM sport_against_info
+        WHERE lottery_code = #{lotteryCode} AND system_code = #{systemCode}
+        <if test="issueCode != null and issueCode != ''">
+             AND issue_code = #{issueCode}
+        </if>        
+    </select>
+    
+    <!-- 通过彩种编码查询销售中未同步比赛年月日集合 --> 
+    <select id="findSynSaleMatchTimeList" resultType="string">
+    	select DISTINCT DATE_FORMAT(start_time,'%Y-%m-%d') from sport_against_info 
+    	where lottery_code = #{lotteryCode,jdbcType=SMALLINT} and match_status = 9 and start_time>=now()
+    	<!-- and match_analysis_url is null and match_info_url is null  -->
+    	order by start_time;
+    </select>
+    
+    <!-- 通过彩种编码查询销售中未同步比赛集合 -->
+    <select id="findSynSaleMatch" resultMap="BaseResultMap">
+    	select * from sport_against_info 
+    	where lottery_code = #{lotteryCode,jdbcType=SMALLINT} and match_status = 9 and start_time>=now()
+    	<!-- and match_analysis_url is null and match_info_url is null  -->
+    	order by id;
+    </select>    
+             
+    <!-- V2.0 数据抓取 end -->
+</mapper>

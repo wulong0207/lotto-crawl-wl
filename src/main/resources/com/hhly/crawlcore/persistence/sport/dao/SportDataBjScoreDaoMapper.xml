@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBjScoreDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBjScorePO">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="SPORT_AGAINST_INFO_ID" jdbcType="DECIMAL" property="sportAgainstInfoId"/>
+        <result column="SP_1_0" jdbcType="DECIMAL" property="sp10"/>
+        <result column="SP_2_0" jdbcType="DECIMAL" property="sp20"/>
+        <result column="SP_2_1" jdbcType="DECIMAL" property="sp21"/>
+        <result column="SP_3_0" jdbcType="DECIMAL" property="sp30"/>
+        <result column="SP_3_1" jdbcType="DECIMAL" property="sp31"/>
+        <result column="SP_3_2" jdbcType="DECIMAL" property="sp32"/>
+        <result column="SP_4_0" jdbcType="DECIMAL" property="sp40"/>
+        <result column="SP_4_1" jdbcType="DECIMAL" property="sp41"/>
+        <result column="SP_4_2" jdbcType="DECIMAL" property="sp42"/>
+        <result column="SP_W_OTHER" jdbcType="DECIMAL" property="spWOther"/>
+        <result column="SP_0_0" jdbcType="DECIMAL" property="sp00"/>
+        <result column="SP_1_1" jdbcType="DECIMAL" property="sp11"/>
+        <result column="SP_2_2" jdbcType="DECIMAL" property="sp22"/>
+        <result column="SP_3_3" jdbcType="DECIMAL" property="sp33"/>
+        <result column="SP_D_OTHER" jdbcType="DECIMAL" property="spDOther"/>
+        <result column="SP_0_1" jdbcType="DECIMAL" property="sp01"/>
+        <result column="SP_0_2" jdbcType="DECIMAL" property="sp02"/>
+        <result column="SP_1_2" jdbcType="DECIMAL" property="sp12"/>
+        <result column="SP_0_3" jdbcType="DECIMAL" property="sp03"/>
+        <result column="SP_1_3" jdbcType="DECIMAL" property="sp13"/>
+        <result column="SP_2_3" jdbcType="DECIMAL" property="sp23"/>
+        <result column="SP_0_4" jdbcType="DECIMAL" property="sp04"/>
+        <result column="SP_1_4" jdbcType="DECIMAL" property="sp14"/>
+        <result column="SP_2_4" jdbcType="DECIMAL" property="sp24"/>
+        <result column="SP_F_OTHER" jdbcType="DECIMAL" property="spFOther"/>
+        <result column="RELEASE_TIME" jdbcType="DATE" property="releaseTime"/>
+        <result column="UPDATE_TIME" jdbcType="DATE" property="updateTime"/>
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+</mapper>

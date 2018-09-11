@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.database.dao.OddsFbEuropeOddsDetailMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="europeodds_id" jdbcType="INTEGER" property="europeoddsId"/>
+        <result column="homewin" jdbcType="DECIMAL" property="homewin"/>
+        <result column="draw" jdbcType="DECIMAL" property="draw"/>
+        <result column="guestwin" jdbcType="DECIMAL" property="guestwin"/>
+        <result column="source_id" jdbcType="VARCHAR" property="sourceId"/>
+        <result column="source_type" jdbcType="BIT" property="sourceType"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, europeodds_id, homewin, draw, guestwin, source_id, source_type, create_time,
+        modify_time, modify_by, update_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from odds_fb_europeodds_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 查询欧赔明细 -->
+    <select id="findOddsDetail" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from odds_fb_europeodds_detail
+        where source_id = #{sourceId,jdbcType=INTEGER}
+        and source_type=#{sourceType}
+        and europeodds_id=#{europeoddsId}
+        and update_time=#{updateTime}
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        DELETE FROM odds_fb_europeodds_detail
+        WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO">
+        INSERT INTO odds_fb_europeodds_detail (europeodds_id, homewin,
+                                               draw, guestwin, source_id,
+                                               source_type, create_time, modify_time,
+                                               modify_by, update_time)
+        VALUES (#{europeoddsId,jdbcType=INTEGER}, #{homewin,jdbcType=DECIMAL},
+                #{draw,jdbcType=DECIMAL}, #{guestwin,jdbcType=DECIMAL},
+                #{sourceId,jdbcType=VARCHAR},
+                #{sourceType,jdbcType=BIT}, now(),
+                now(),
+                #{modifyBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO">
+        insert into odds_fb_europeodds_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="europeoddsId != null">
+                europeodds_id,
+            </if>
+            <if test="homewin != null">
+                homewin,
+            </if>
+            <if test="draw != null">
+                draw,
+            </if>
+            <if test="guestwin != null">
+                guestwin,
+            </if>
+            <if test="sourceId != null">
+                source_id,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="modifyBy != null">
+                modify_by,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="europeoddsId != null">
+                #{europeoddsId,jdbcType=INTEGER},
+            </if>
+            <if test="homewin != null">
+                #{homewin,jdbcType=DECIMAL},
+            </if>
+            <if test="draw != null">
+                #{draw,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwin != null">
+                #{guestwin,jdbcType=DECIMAL},
+            </if>
+            <if test="sourceId != null">
+                #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO">
+        update odds_fb_europeodds_detail
+        <set>
+            <if test="europeoddsId != null">
+                europeodds_id = #{europeoddsId,jdbcType=INTEGER},
+            </if>
+            <if test="homewin != null">
+                homewin = #{homewin,jdbcType=DECIMAL},
+            </if>
+            <if test="draw != null">
+                draw = #{draw,jdbcType=DECIMAL},
+            </if>
+            <if test="guestwin != null">
+                guestwin = #{guestwin,jdbcType=DECIMAL},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=BIT},
+            </if>
+            modify_time = now(),
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where source_id = #{sourceId,jdbcType=INTEGER}
+        and source_type=#{sourceType}
+        and europeodds_id=#{europeoddsId}
+        and update_time=#{updateTime}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.database.po.OddsFbEuropeOddsDetailPO">
+        UPDATE odds_fb_europeodds_detail
+        SET europeodds_id = #{europeoddsId,jdbcType=INTEGER},
+            homewin       = #{homewin,jdbcType=DECIMAL},
+            draw          = #{draw,jdbcType=DECIMAL},
+            guestwin      = #{guestwin,jdbcType=DECIMAL},
+            source_id     = #{sourceId,jdbcType=VARCHAR},
+            source_type   = #{sourceType,jdbcType=BIT},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            modify_time   = #{modifyTime,jdbcType=TIMESTAMP},
+            modify_by     = #{modifyBy,jdbcType=VARCHAR},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

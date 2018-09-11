@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.lottery.dao.LotteryTypeDaoMapper">
+
+	<select id="findTypeUseAddIssue" resultType="com.hhly.crawlcore.persistence.lottery.po.LotteryTypePO">
+		select
+        id,
+        admin_category adminCategory,
+        start_sail_time startSailTime,
+        end_sail_time endSailTime,
+        sail_day_cycle sailDayCycle,
+        vacations vacations,
+        lottery_code lotteryCode,
+        lottery_name lotteryName,
+        con_issue_num conIssueNum,
+        stop_add_issue stopAddIssue,
+        lottery_category lotteryCategory,
+        sale_status saleStatus,
+        syn_issue synIssue,
+        sale_time saleTime,
+        buy_end_time buyEndTime,
+        end_check_time endCheckTime,
+        draw_time drawtime,
+		format
+        from lottery_type
+        where lottery_code = #{lotteryCode}
+	</select>
+	
+</mapper>

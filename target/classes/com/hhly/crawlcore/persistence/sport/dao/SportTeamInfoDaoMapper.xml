@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportTeamInfoDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportTeamInfoPO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="team_id" jdbcType="INTEGER" property="teamId"/>
+        <result column="team_type" jdbcType="BIT" property="teamType"/>
+        <result column="team_data_url" jdbcType="VARCHAR" property="teamDataUrl"/>
+        <result column="team_full_name" jdbcType="VARCHAR" property="teamFullName"/>
+        <result column="team_short_name" jdbcType="VARCHAR" property="teamShortName"/>
+        <result column="team_order" jdbcType="VARCHAR" property="teamOrder"/>
+        <result column="logo_url" jdbcType="VARCHAR" property="logoUrl"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_by" jdbcType="VARCHAR" property="modifyBy"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="md5_value" jdbcType="VARCHAR" property="md5Value"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, team_data_url, team_full_name, team_short_name, team_order, logo_url,
+        modify_time, modify_by, create_by, update_time, create_time, remark, md5_value
+    </sql>
+
+    
+   <!-- V2.0 数据抓取   start -->
+  	<insert id="insert" parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamInfoPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_team_info (team_id, team_type, 
+      team_data_url, team_full_name, team_short_name, 
+      team_order, logo_url, modify_time, 
+      modify_by, create_by, update_time, 
+      create_time, remark, md5_value
+      )
+    values (#{teamId,jdbcType=INTEGER}, #{teamType,jdbcType=BIT}, 
+      #{teamDataUrl,jdbcType=VARCHAR}, #{teamFullName,jdbcType=VARCHAR}, #{teamShortName,jdbcType=VARCHAR}, 
+      #{teamOrder,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, now(), 
+      #{modifyBy,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, now(), 
+      now(), #{remark,jdbcType=VARCHAR}, #{md5Value,jdbcType=VARCHAR}
+      )
+  	</insert> 
+  
+    <update id="update" parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamInfoPO">
+        update sport_team_info
+        <set>
+            <if test="teamId != null">
+                team_id = #{teamId,jdbcType=INTEGER},
+            </if>
+            <if test="teamType != null">
+                team_type = #{teamType,jdbcType=BIT},
+            </if>
+            <if test="teamDataUrl != null">
+                team_data_url = #{teamDataUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="teamFullName != null">
+                team_full_name = #{teamFullName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamShortName != null">
+                team_short_name = #{teamShortName,jdbcType=VARCHAR},
+            </if>
+            <if test="teamOrder != null">
+                team_order = #{teamOrder,jdbcType=VARCHAR},
+            </if>
+            <if test="logoUrl != null">
+                logo_url = #{logoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                modify_by = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="md5Value != null">
+                md5_value = #{md5Value,jdbcType=VARCHAR},
+            </if>
+            update_time = now()
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>   
+  
+    <!-- 批量更新球队信息 -->
+    <update id="updateBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            update sport_team_info
+            <set>
+                <if test="item.teamDataUrl != null">
+                    team_data_url = #{item.teamDataUrl},
+                </if>
+                <if test="item.teamOrder != null">
+                    team_order = #{item.teamOrder},
+                </if>
+                <if test="item.logoUrl != null">
+                    logo_url = #{item.logoUrl},
+                </if>
+                <if test="item.modifyBy != null">
+                    modify_by = #{item.modifyBy},
+                </if>
+                <if test="item.remark != null">
+                    remark = #{item.remark},
+                </if>
+                update_time=now()
+            </set>
+            where id=#{item.id}
+        </foreach>
+    </update>
+    
+    <!-- 查询球队 -->
+    <select id="findTeam" resultMap="BaseResultMap"
+            parameterType="com.hhly.crawlcore.persistence.sport.po.SportTeamInfoPO">
+        select
+        <include refid="Base_Column_List"/>
+        from sport_team_info
+        <where>
+        	<if test="teamType != null">
+        		and team_type=#{teamType,jdbcType=TINYINT}
+        	</if>
+	        <if test="teamFullName != null">
+	            and team_full_name = #{teamFullName,jdbcType=VARCHAR}
+	        </if>
+	        <if test="teamShortName != null">
+	            and team_short_name = #{teamShortName,jdbcType=VARCHAR}
+	        </if>
+	        <if test="md5Value != null">
+	        	and md5_value = #{md5Value,jdbcType=VARCHAR}
+	        </if>        	
+        </where>
+    </select>
+
+	<select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sport_team_info
+        where id = #{id}		
+	</select>
+   <!-- V2.0 数据抓取   end -->   
+</mapper>

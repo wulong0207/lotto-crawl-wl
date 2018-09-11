@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.copyorder.dao.MUserIssueInfoMapper">
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.copyorder.po.MUserIssueInfo"  useGeneratedKeys="true"
+          keyProperty="id">
+    insert into m_user_issue_info (id, user_id, status, 
+      recent_record, hit_rate, profit_rate, 
+      focus_num, issue_num, issue_amount, 
+      hit_num, hit_money, commission_amount, 
+      follow_num, follow_amount, win_amount, 
+      create_time, modify_by, modify_time, 
+      update_time, continue_hit, remark, 
+      yibifen_user_id)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+      #{recentRecord,jdbcType=VARCHAR}, #{hitRate,jdbcType=DECIMAL}, #{profitRate,jdbcType=DECIMAL}, 
+      #{focusNum,jdbcType=INTEGER}, #{issueNum,jdbcType=INTEGER}, #{issueAmount,jdbcType=DECIMAL}, 
+      #{hitNum,jdbcType=INTEGER}, #{hitMoney,jdbcType=DECIMAL}, #{commissionAmount,jdbcType=DECIMAL}, 
+      #{followNum,jdbcType=INTEGER}, #{followAmount,jdbcType=INTEGER}, #{winAmount,jdbcType=DECIMAL}, 
+      now(), #{modifyBy,jdbcType=VARCHAR}, now(),
+      now(), #{continueHit,jdbcType=BIT}, #{remark,jdbcType=VARCHAR},
+      #{yibifenUserId,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.hhly.crawlcore.persistence.copyorder.po.MUserIssueInfo">
+    update m_user_issue_info
+    set
+      recent_record = #{recentRecord,jdbcType=VARCHAR},
+      issue_num = #{issueNum,jdbcType=INTEGER},
+      hit_num = #{hitNum,jdbcType=INTEGER},
+      continue_hit = #{continueHit,jdbcType=INTEGER},
+      hit_rate = #{hitRate,jdbcType=DECIMAL}
+    where yibifen_user_id = #{yibifenUserId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="queryUserByYiBiFenUserId" parameterType="String" resultType="Integer">
+     select id from m_user_issue_info where yibifen_user_id=#{yibifenUserId}
+  </select>
+
+  <select id="queryAllYiBiFenUserIds" resultType="com.hhly.crawlcore.persistence.copyorder.po.MUserIssueInfo">
+      select user_id userId,yibifen_user_id yibifenUserId from m_user_issue_info where yibifen_user_id is not null
+  </select>
+
+</mapper>

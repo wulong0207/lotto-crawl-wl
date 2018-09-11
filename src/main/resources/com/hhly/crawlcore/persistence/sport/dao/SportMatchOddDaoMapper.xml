@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportMatchOddDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportMatchOddPO">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="MATCH_ID" jdbcType="VARCHAR" property="matchId"/>
+        <result column="GAME_ID" jdbcType="DECIMAL" property="gameId"/>
+        <result column="HOME_WIN" jdbcType="DECIMAL" property="homeWin"/>
+        <result column="STAND_OFF" jdbcType="DECIMAL" property="standOff"/>
+        <result column="GUEST_WIN" jdbcType="DECIMAL" property="guestWin"/>
+        <result column="MODIFY_TIME" jdbcType="DATE" property="modifyTime"/>
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+    <!-- 批量新增赔率变化 -->
+    <insert id="insert" parameterType="java.util.List">
+        insert into sport_match_odd (match_id, game_id,
+        home_win, stand_off, guest_win,create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.matchId,jdbcType=VARCHAR}, #{item.gameId,jdbcType=BIGINT},
+            #{item.homeWin,jdbcType=DECIMAL}, #{item.standOff,jdbcType=DECIMAL},
+            #{item.guestWin,jdbcType=DECIMAL},now())
+        </foreach>
+    </insert>
+
+
+    <!-- 根据对阵查询平均欧赔 -->
+    <select id="selectAvgOddsByMatchId" resultType="com.hhly.skeleton.lotto.base.sport.bo.JcAvgOddsBO"
+            parameterType="java.util.List">
+        select match_id as matchId,avg(home_win) as winAvg,avg(stand_off) as drawAvg,avg(guest_win) as lostAvg
+        from sport_match_odd
+        where match_id in (
+        <foreach collection="list" item="item" index="index" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>)
+        group by match_id
+  </select>
+</mapper>

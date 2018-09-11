@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBbSpDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBbSpPO">
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="SPORT_AGAINST_INFO_ID" jdbcType="DECIMAL" property="sportAgainstInfoId"/>
+        <result column="INITIAL_LET_SCORE" jdbcType="DECIMAL" property="initialLetScore"/>
+        <result column="INITIAL_LET_SP_WIN" jdbcType="DECIMAL" property="initialLetSpWin"/>
+        <result column="INITIAL_LET_SP_FAIL" jdbcType="DECIMAL" property="initialLetSpFail"/>
+        <result column="INITIAL_SP_WIN" jdbcType="DECIMAL" property="initialSpWin"/>
+        <result column="INITIAL_SP_FAIL" jdbcType="DECIMAL" property="initialSpFail"/>
+        <result column="NEWEST_LET_SCORE" jdbcType="DECIMAL" property="newestLetScore"/>
+        <result column="NEWEST_LET_SP_WIN" jdbcType="DECIMAL" property="newestLetSpWin"/>
+        <result column="NEWEST_LET_SP_FAIL" jdbcType="DECIMAL" property="newestLetSpFail"/>
+        <result column="NEWEST_SP_WIN" jdbcType="DECIMAL" property="newestSpWin"/>
+        <result column="NEWEST_SP_SMALL" jdbcType="DECIMAL" property="newestSpSmall"/>
+        <result column="NEWEST_SP_FAIL" jdbcType="DECIMAL" property="newestSpFail"/>
+        <result column="INITIAL_PRESET_SCORE" jdbcType="DECIMAL" property="initialPresetScore"/>
+        <result column="INITIAL_SP_BIG" jdbcType="DECIMAL" property="initialSpBig"/>
+        <result column="INITIAL_SP_SMALL" jdbcType="DECIMAL" property="initialSpSmall"/>
+        <result column="NEWEST_PRESET_SCORE" jdbcType="DECIMAL" property="newestPresetScore"/>
+        <result column="NEWEST_SP_BIG" jdbcType="DECIMAL" property="newestSpBig"/>
+        <result column="INITIAL_SP_FAIL_1_5" jdbcType="DECIMAL" property="initialSpFail15"/>
+        <result column="INITIAL_SP_FAIL_6_10" jdbcType="DECIMAL" property="initialSpFail610"/>
+        <result column="INITIAL_SP_FAIL_11_15" jdbcType="DECIMAL" property="initialSpFail1115"/>
+        <result column="INITIAL_SP_FAIL_16_20" jdbcType="DECIMAL" property="initialSpFail1620"/>
+        <result column="INITIAL_SP_FAIL_21_25" jdbcType="DECIMAL" property="initialSpFail2125"/>
+        <result column="INITIAL_SP_FAIL_26" jdbcType="DECIMAL" property="initialSpFail26"/>
+        <result column="NEWEST_SP_WIN_1_5" jdbcType="DECIMAL" property="newestSpWin15"/>
+        <result column="NEWEST_SP_WIN_6_10" jdbcType="DECIMAL" property="newestSpWin610"/>
+        <result column="NEWEST_SP_WIN_11_15" jdbcType="DECIMAL" property="newestSpWin1115"/>
+        <result column="NEWEST_SP_WIN_16_20" jdbcType="DECIMAL" property="newestSpWin1620"/>
+        <result column="NEWEST_SP_WIN_21_25" jdbcType="DECIMAL" property="newestSpWin2125"/>
+        <result column="NEWEST_SP_WIN_26" jdbcType="DECIMAL" property="newestSpWin26"/>
+        <result column="INITIAL_SP_WIN_1_5" jdbcType="DECIMAL" property="initialSpWin15"/>
+        <result column="INITIAL_SP_WIN_6_10" jdbcType="DECIMAL" property="initialSpWin610"/>
+        <result column="INITIAL_SP_WIN_11_15" jdbcType="DECIMAL" property="initialSpWin1115"/>
+        <result column="INITIAL_SP_WIN_16_20" jdbcType="DECIMAL" property="initialSpWin1620"/>
+        <result column="INITIAL_SP_WIN_21_25" jdbcType="DECIMAL" property="initialSpWin2125"/>
+        <result column="INITIAL_SP_WIN_26" jdbcType="DECIMAL" property="initialSpWin26"/>
+        <result column="NEWEST_SP_FAIL_1_5" jdbcType="DECIMAL" property="newestSpFail15"/>
+        <result column="NEWEST_SP_FAIL_6_10" jdbcType="DECIMAL" property="newestSpFail610"/>
+        <result column="NEWEST_SP_FAIL_11_15" jdbcType="DECIMAL" property="newestSpFail1115"/>
+        <result column="NEWEST_SP_FAIL_16_20" jdbcType="DECIMAL" property="newestSpFail1620"/>
+        <result column="NEWEST_SP_FAIL_21_25" jdbcType="DECIMAL" property="newestSpFail2125"/>
+        <result column="NEWEST_SP_FAIL_26" jdbcType="DECIMAL" property="newestSpFail26"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, SPORT_AGAINST_INFO_ID, INITIAL_LET_SCORE, INITIAL_LET_SP_WIN, INITIAL_LET_SP_FAIL,
+        INITIAL_SP_WIN, INITIAL_SP_FAIL, NEWEST_LET_SCORE, NEWEST_LET_SP_WIN, NEWEST_LET_SP_FAIL,
+        NEWEST_SP_WIN, NEWEST_SP_SMALL, NEWEST_SP_FAIL, INITIAL_PRESET_SCORE, INITIAL_SP_BIG,
+        INITIAL_SP_SMALL, NEWEST_PRESET_SCORE, NEWEST_SP_BIG, INITIAL_SP_FAIL_1_5, INITIAL_SP_FAIL_6_10,
+        INITIAL_SP_FAIL_11_15, INITIAL_SP_FAIL_16_20, INITIAL_SP_FAIL_21_25, INITIAL_SP_FAIL_26,
+        NEWEST_SP_WIN_1_5, NEWEST_SP_WIN_6_10, NEWEST_SP_WIN_11_15, NEWEST_SP_WIN_16_20,
+        NEWEST_SP_WIN_21_25, NEWEST_SP_WIN_26, UPDATE_TIME, CREATE_TIME, INITIAL_SP_WIN_1_5,
+        INITIAL_SP_WIN_6_10, INITIAL_SP_WIN_11_15, INITIAL_SP_WIN_16_20, INITIAL_SP_WIN_21_25,
+        INITIAL_SP_WIN_26, NEWEST_SP_FAIL_1_5, NEWEST_SP_FAIL_6_10, NEWEST_SP_FAIL_11_15,
+        NEWEST_SP_FAIL_16_20, NEWEST_SP_FAIL_21_25, NEWEST_SP_FAIL_26
+    </sql>
+  
+    <!-- V2.0 数据抓取 start -->
+    
+  <insert id="merge" parameterType="com.hhly.crawlcore.persistence.sport.po.SportDataBbSpPO" useGeneratedKeys="true" keyProperty="id">
+    insert into sport_data_bb_sp (sport_against_info_id, initial_let_score, 
+      initial_let_sp_win, initial_let_sp_fail, initial_sp_win, 
+      initial_sp_fail, newest_let_score, newest_let_sp_win, 
+      newest_let_sp_fail, newest_sp_win, newest_sp_small, 
+      newest_sp_fail, initial_preset_score, initial_sp_big, 
+      initial_sp_small, newest_preset_score, newest_sp_big, 
+      initial_sp_fail_1_5, initial_sp_fail_6_10, initial_sp_fail_11_15, 
+      initial_sp_fail_16_20, initial_sp_fail_21_25, initial_sp_fail_26, 
+      newest_sp_win_1_5, newest_sp_win_6_10, newest_sp_win_11_15, 
+      newest_sp_win_16_20, newest_sp_win_21_25, newest_sp_win_26, 
+      update_time, create_time, initial_sp_win_1_5, 
+      initial_sp_win_6_10, initial_sp_win_11_15, initial_sp_win_16_20, 
+      initial_sp_win_21_25, initial_sp_win_26, newest_sp_fail_1_5, 
+      newest_sp_fail_6_10, newest_sp_fail_11_15, newest_sp_fail_16_20, 
+      newest_sp_fail_21_25, newest_sp_fail_26)
+    values (#{sportAgainstInfoId,jdbcType=INTEGER}, #{initialLetScore,jdbcType=DECIMAL}, 
+      #{initialLetSpWin,jdbcType=DECIMAL}, #{initialLetSpFail,jdbcType=DECIMAL}, #{initialSpWin,jdbcType=DECIMAL}, 
+      #{initialSpFail,jdbcType=DECIMAL}, #{newestLetScore,jdbcType=DECIMAL}, #{newestLetSpWin,jdbcType=DECIMAL}, 
+      #{newestLetSpFail,jdbcType=DECIMAL}, #{newestSpWin,jdbcType=DECIMAL}, #{newestSpSmall,jdbcType=DECIMAL}, 
+      #{newestSpFail,jdbcType=DECIMAL}, #{initialPresetScore,jdbcType=DECIMAL}, #{initialSpBig,jdbcType=DECIMAL}, 
+      #{initialSpSmall,jdbcType=DECIMAL}, #{newestPresetScore,jdbcType=DECIMAL}, #{newestSpBig,jdbcType=DECIMAL}, 
+      #{initialSpFail15,jdbcType=DECIMAL}, #{initialSpFail610,jdbcType=DECIMAL}, #{initialSpFail1115,jdbcType=DECIMAL}, 
+      #{initialSpFail1620,jdbcType=DECIMAL}, #{initialSpFail2125,jdbcType=DECIMAL}, #{initialSpFail26,jdbcType=DECIMAL}, 
+      #{newestSpWin15,jdbcType=DECIMAL}, #{newestSpWin610,jdbcType=DECIMAL}, #{newestSpWin1115,jdbcType=DECIMAL}, 
+      #{newestSpWin1620,jdbcType=DECIMAL}, #{newestSpWin2125,jdbcType=DECIMAL}, #{newestSpWin26,jdbcType=DECIMAL}, 
+      now(),now(), #{initialSpWin15,jdbcType=DECIMAL}, 
+      #{initialSpWin610,jdbcType=DECIMAL}, #{initialSpWin1115,jdbcType=DECIMAL}, #{initialSpWin1620,jdbcType=DECIMAL}, 
+      #{initialSpWin2125,jdbcType=DECIMAL}, #{initialSpWin26,jdbcType=DECIMAL}, #{newestSpFail15,jdbcType=DECIMAL}, 
+      #{newestSpFail610,jdbcType=DECIMAL}, #{newestSpFail1115,jdbcType=DECIMAL}, #{newestSpFail1620,jdbcType=DECIMAL}, 
+      #{newestSpFail2125,jdbcType=DECIMAL}, #{newestSpFail26,jdbcType=DECIMAL})
+	  ON DUPLICATE KEY UPDATE
+	  <if test="newestLetScore !=null and newestLetScore !=''">
+	  newest_let_score = values(newest_let_score), 	  	
+	  </if>
+	  <if test="newestLetSpWin !=null and newestLetSpWin !=''">
+	  newest_let_sp_win = values(newest_let_sp_win), 	
+	  </if>
+	  <if test="newestLetSpFail !=null and newestLetSpFail !=''">
+	  newest_let_sp_fail = values(newest_let_sp_fail), 
+	  </if>
+	  <if test="newestSpWin !=null and newestSpWin !=''">
+	  newest_sp_win = values(newest_sp_win), 
+	  </if>
+	  <if test="newestSpFail !=null and newestSpFail !=''">
+	  newest_sp_fail = values(newest_sp_fail), 
+	  </if>
+	  <if test="newestSpSmall !=null and newestSpSmall !=''">
+	  newest_sp_small = values(newest_sp_small), 
+	  </if>
+	  <if test="newestPresetScore !=null and newestPresetScore !=''">
+	  newest_preset_score = values(newest_preset_score), 
+	  </if>
+	  <if test="newestSpBig !=null and newestSpBig !=''">
+	  newest_sp_big = values(newest_sp_big), 
+	  </if>
+	  <if test="newestSpWin15 !=null and newestSpWin15 !=''">
+	  newest_sp_win_1_5 = values(newest_sp_win_1_5), 
+	  </if>
+	  <if test="newestSpWin610 !=null and newestSpWin610 !=''">
+	  newest_sp_win_6_10 = values(newest_sp_win_6_10), 
+	  </if>
+	  <if test="newestSpWin1115 !=null and newestSpWin1115 !=''">
+	  newest_sp_win_11_15 = values(newest_sp_win_11_15), 
+	  </if>
+	  <if test="newestSpWin1620 !=null and newestSpWin1620 !=''">
+	  newest_sp_win_16_20 = values(newest_sp_win_16_20),
+	  </if>
+	  <if test="newestSpWin2125 !=null and newestSpWin2125 !=''">
+	  newest_sp_win_21_25 = values(newest_sp_win_21_25), 
+	  </if>
+	  <if test="newestSpWin26 !=null and newestSpWin26 !=''">
+	  newest_sp_win_26 = values(newest_sp_win_26), 
+	  </if>
+	  <if test="newestSpFail15 !=null and newestSpFail15 !=''">
+	  newest_sp_fail_1_5 = values(newest_sp_fail_1_5), 
+	  </if>	 
+	  <if test="newestSpFail610 !=null and newestSpFail610 !=''">
+	  newest_sp_fail_6_10 = values(newest_sp_fail_6_10), 
+	  </if>
+	  <if test="newestSpFail1115 !=null and newestSpFail1115 !=''">
+	  newest_sp_fail_11_15 = values(newest_sp_fail_11_15), 
+	  </if>
+	  <if test="newestSpFail1620 !=null and newestSpFail1620 !=''">
+	  newest_sp_fail_16_20 = values(newest_sp_fail_16_20),
+	  </if>
+	  <if test="newestSpFail2125 !=null and newestSpFail2125 !=''">
+	  newest_sp_fail_21_25 = values(newest_sp_fail_21_25), 
+	  </if>
+	  <if test="newestSpFail26 !=null and newestSpFail26 !=''">
+	  newest_sp_fail_26 = values(newest_sp_fail_26), 	
+	  </if>
+	  update_time = now()	      
+  </insert>
+  
+  <select id="findByMatchId" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from sport_data_bb_sp where sport_against_info_id = #{sportAgainstInfoId,jdbcType=INTEGER}
+  </select>    
+
+  <!-- V2.0 数据抓取  end -->
+</mapper>

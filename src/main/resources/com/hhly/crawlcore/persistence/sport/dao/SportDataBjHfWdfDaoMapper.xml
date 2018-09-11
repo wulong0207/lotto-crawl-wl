@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.sport.dao.SportDataBjHfWdfDaoMapper">
+    <resultMap id="BaseResultMap" type="com.hhly.crawlcore.persistence.sport.po.SportDataBjHfWdfPO">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="SPORT_AGAINST_INFO_ID" jdbcType="DECIMAL" property="sportAgainstInfoId"/>
+        <result column="SP_W_W" jdbcType="DECIMAL" property="spWW"/>
+        <result column="SP_W_D" jdbcType="DECIMAL" property="spWD"/>
+        <result column="SP_W_F" jdbcType="DECIMAL" property="spWF"/>
+        <result column="SP_D_W" jdbcType="DECIMAL" property="spDW"/>
+        <result column="SP_D_D" jdbcType="DECIMAL" property="spDD"/>
+        <result column="SP_D_F" jdbcType="DECIMAL" property="spDF"/>
+        <result column="SP_F_W" jdbcType="DECIMAL" property="spFW"/>
+        <result column="SP_F_D" jdbcType="DECIMAL" property="spFD"/>
+        <result column="SP_F_F" jdbcType="DECIMAL" property="spFF"/>
+        <result column="RELEASE_TIME" jdbcType="DATE" property="releaseTime"/>
+        <result column="UPDATE_TIME" jdbcType="DATE" property="updateTime"/>
+        <result column="CREATE_TIME" jdbcType="DATE" property="createTime"/>
+    </resultMap>
+
+</mapper>

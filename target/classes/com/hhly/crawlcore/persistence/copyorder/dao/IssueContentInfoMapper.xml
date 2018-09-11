@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hhly.crawlcore.persistence.copyorder.dao.IssueContentInfoMapper">
+
+  <insert id="insert" parameterType="com.hhly.crawlcore.persistence.copyorder.po.IssueContentInfo" useGeneratedKeys="true"
+          keyProperty="id">
+    insert into issue_content_info (id, issue_content_original_id, issue_code, 
+      plan_content, order_status,lottery_code, lottery_child_code,
+      amount, create_time,buy_screen,begin_team_name, sale_end_time,source_issue_id)
+    values (#{id,jdbcType=INTEGER}, #{issueContentOriginalId,jdbcType=INTEGER}, #{issueCode,jdbcType=VARCHAR}, 
+      #{planContent,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER},#{lotteryCode,jdbcType=INTEGER}, #{lotteryChildCode,jdbcType=INTEGER},
+      #{amount,jdbcType=DECIMAL}, now(),#{buyScreen,jdbcType=VARCHAR},#{beginTeamName,jdbcType=VARCHAR}, #{saleEndTime,jdbcType=TIMESTAMP},#{sourceIssueId,jdbcType=INTEGER})
+  </insert>
+
+  <select id="queryIssueContentByOriginalIssueId" parameterType="int" resultType="int">
+    select count(1) from issue_content_info where source_issue_id = #{sourceIssueId}
+  </select>
+
+</mapper>

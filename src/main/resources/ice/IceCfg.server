@@ -1,0 +1,51 @@
+#
+# The server creates one single object adapter with the name
+# "Hello". The following line sets the endpoints for this
+# adapter.
+#
+#IceServer=tcp -h 10.14.188.83 -p 30000:tcp -h 203.19.33.83 -p 30001生产环境
+#IceServer=ssl -h 192.168.31.135 -p 40001:tcp -h 192.168.31.135 -p 40000
+Ice.ThreadPool.Server.Size=1
+Ice.ThreadPool.Server.SizeMax=10
+Ice.MessageSizeMax=2048
+#
+# Warn about connection exceptions
+#
+Ice.Warn.Connections=1
+
+#
+# Network Tracing
+#
+# 0 = no network tracing
+# 1 = trace connection establishment and closure
+# 2 = like 1, but more detailed
+# 3 = like 2, but also trace data transfer
+#
+#Ice.Trace.Network=1
+
+#
+# Protocol Tracing
+#
+# 0 = no protocol tracing
+# 1 = trace protocol messages
+#
+#Ice.Trace.Protocol=1
+#Ice.Override.Secure=1
+
+#
+# Security Tracing
+#
+# 0 = no security tracing
+# 1 = trace messages
+#
+IceSSL.Trace.Security=1
+
+#
+# SSL Configuration
+#
+Ice.Plugin.IceSSL=IceSSL.PluginFactory
+IceSSL.DefaultDir==ice
+IceSSL.Keystore=ICEServer.ks
+IceSSL.Password=BDC_SGFM_EXG_5488
+IceSSL.Truststore=ICEServer.ts
+IceSSL.TruststorePassword=EXG_5488_BDC_SGFM
